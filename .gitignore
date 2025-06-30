@@ -47,3 +47,10 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
+
+# Temporary files
+		*.log
+		*.tmp
+	
+# System files
+Thumbs.db       # Windows
