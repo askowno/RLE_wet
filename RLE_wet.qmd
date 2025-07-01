@@ -1,0 +1,462 @@
+---
+title: "RLE_riv"
+format: html
+---
+
+Preparation
+
+```{r}
+# Add packages: 
+library(sf)
+library(tidyverse)
+
+# Add data
+
+wetlands <-st_read("C:/Users/skownoa/Dropbox/NBAwork/Wetlands/freshwater.gdb", "NBA_wet_test") 
+#ensure it uses proj =  wgs84 aea cm 25 -24 -33
+st_crs(wetlands)
+
+```
+
+Clean up input data
+
+```{r}
+
+wet <- wetlands %>%
+  # make a type column
+  mutate(TYPE = paste(T_BIOREGIO, HGM_4A, sep = " - "))%>%
+  # clean up non SA type and remove estuaries and foreign features
+  filter(T_BIOREGIO != "Estuary") %>%
+  # recode blank (not blank but one space actually ) PES 2022 scores to "Data Deficient" code = DD
+  mutate(EC22ALL = if_else(EC22ALL == " ", "DD", EC22ALL)) %>%
+  mutate(EC18ALL = if_else(EC18ALL == " ", "DD", EC18ALL)) %>%
+  filter(Shape_Area > 10)
+  
+# make a table to work with 
+  wet_tb <- st_drop_geometry(wet)
+  
+# make a simple table of TYPE and HGM to join with results later 
+  type_hgm_tb <- wet_tb %>% select(TYPE, HGM_4A) %>% distinct(TYPE, .keep_all = TRUE)
+
+```
+
+Calculate EOO using convex hulls in sf
+
+```{r}
+# Initialize a list to store results
+options(scipen = 999)
+
+eoo_list <- list()
+
+# Iterate through unique T_MAPCODE values 
+for (wet_type in unique(wet$TYPE)) {
+  subset_data <- wet %>% filter(TYPE == wet_type)
+  if (nrow(subset_data) > 0) {
+    convex_hull <- st_convex_hull(st_union(subset_data))
+    hull_area <- st_area(convex_hull)
+    eoo_list[[wet_type]] <- as.numeric(hull_area)
+  }
+}
+
+eoo_df <- data.frame(
+  TYPE = names(eoo_list),
+  AREA_EOO = unlist(eoo_list)
+) %>%
+  mutate(eoo_km2 = AREA_EOO/1000000) %>%
+  select(!AREA_EOO)
+
+write.csv(eoo_df, "outputs/EOO_all.csv")
+
+
+```
+
+```{r}
+
+#summarise by wetland type including  area per type per condition class - this allows for inclusion of condition in the RLE formula
+
+#overall summary
+wet_type_24 <- wet_tb %>%
+    group_by(TYPE, EC22ALL) %>%
+  summarise(area_sum = sum(as.numeric(Shape_Area), na.rm = TRUE)) %>%
+  ungroup() %>%
+  pivot_wider(names_from = EC22ALL, values_from = area_sum, values_fill = list(area_sum = 0))  %>%
+  mutate(type_m2 = rowSums(across(c(A, B, C, D, E, F, `DD`))))
+
+wet_type_18 <- wet_tb %>%
+    group_by(TYPE, EC18ALL) %>%
+  summarise(area_sum = sum(as.numeric(Shape_Area), na.rm = TRUE)) %>%
+  ungroup() %>%
+  pivot_wider(names_from = EC18ALL, values_from = area_sum, values_fill = list(area_sum = 0)) %>%
+  rename(A18=A, B18=B, C18=C, D18=D, E18=E, F18=F, DD18 = `DD`)
+ 
+# Join the tables above - this makes a single table in which all the required metrics can be found to compute EPL and RLE
+ 
+ wet_type_metrics <- wet_type_24 %>%
+  left_join(wet_type_18, by = "TYPE") %>%
+  left_join(eoo_df, by = "TYPE") %>%
+    mutate(prp18_cdef = (C18 + D18 + E18 + F18)/type_m2) %>%
+    mutate(prp18_def = (D18 + E18 + F18 )/type_m2) %>%
+    mutate(prp18_ef= (E18 + F18)/type_m2) %>%
+    mutate(prp18_f= F18/type_m2) %>%
+    mutate(prp24_cdef = (C + D + E + F)/type_m2) %>%
+    mutate(prp24_def = (D + E + F )/type_m2) %>%
+    mutate(prp24_ef= (E + F)/type_m2) %>%
+    mutate(prp24_f= F/type_m2) %>%
+    mutate(D3_18 = case_when( prp18_ef >= 0.9 ~ "CR", 
+                                 prp18_ef >= 0.7 | prp18_def >=0.9 ~ "EN",
+                                 prp18_ef >= 0.5 | prp18_def >=0.7 | 
+                                                  prp18_cdef >= 0.9 ~ "VU", 
+                                 TRUE ~ "LC")) %>% 
+    mutate(D3_24 = case_when( prp24_ef >= 0.9 ~ "CR", 
+                                 prp24_def >= 0.3 | prp24_def >=0.9 ~ "EN",
+                                 prp24_ef >= 0.5 | prp24_def >=0.7 | 
+                                                  prp24_cdef >= 0.9 ~ "VU", 
+                                 TRUE ~ "LC")) %>%
+   mutate(B1_18 = case_when( prp18_def >= 0.3 & eoo_km2  <= 2000 ~ "CR",
+                             prp18_def >= 0.3 & eoo_km2  <= 20000 ~ "EN",
+                              prp18_def >= 0.3 & eoo_km2  <= 50000 ~ "VU",
+                                 TRUE ~ "LC")) %>%
+   mutate(B1_24 = case_when( prp24_def >= 0.3 & eoo_km2  <= 2000 ~ "CR",
+                             prp24_def >= 0.3 & eoo_km2  <= 20000 ~ "EN",
+                              prp24_def >= 0.3 & eoo_km2  <= 50000 ~ "VU",
+                                 TRUE ~ "LC")) %>%
+   mutate(RLE_18 = case_when(B1_18 == "CR" | D3_18 == "CR" ~ "CR", 
+                             B1_18 == "EN" | D3_18 == "EN" ~ "EN",
+                             B1_18 == "VU" | D3_18 == "VU" ~ "VU",
+                              TRUE ~ "LC")) %>%
+   mutate(RLE_24 = case_when(B1_24 == "CR" | D3_24 == "CR" ~ "CR", 
+                             B1_24 == "EN" | D3_24 == "EN" ~ "EN",
+                             B1_24 == "VU" | D3_24 == "VU" ~ "VU",
+                              TRUE ~ "LC")) %>%
+   # add in Nel 2011 and van Deventer 2018 method: SA approach assuming A and B are intact rest is lost but also counting C towards  VU
+      mutate(A3sa_24 = case_when( prp24_cdef >= 0.8 ~ "CR", 
+                              prp24_cdef >= 0.65 ~ "EN",
+                              prp24_def >= 0.4 ~ "VU", 
+                                 TRUE ~ "LC")) %>%
+    mutate(A3sa_18 = case_when( prp18_cdef >= 0.8 ~ "CR", 
+                               prp18_cdef >= 0.65 ~ "EN",
+                               prp18_def >= 0.4 ~ "VU", 
+                                 TRUE ~ "LC")) %>%
+     # add in HGM type
+   left_join(type_hgm_tb, by = "TYPE") %>%
+   mutate(hgm_simple = case_when( HGM_4A == "Channelled valley-bottom" ~ "Valley-bottom",
+                                  HGM_4A == "Unchannelled valley-bottom" ~ "Valley-bottom",
+                                  HGM_4A == "Valley-bottom" ~ "Valley-bottom",
+                                  HGM_4A == "River" ~ "Valley-bottom",
+                                  HGM_4A == "Wetland flat" ~ "Seep",
+                                  TRUE ~ HGM_4A))
+   
+   
+   # export a csv of results - Condition and EPL per river type 2018 and 2024
+   write.csv(wet_type_metrics, file = "outputs/rle_wet_metrics_per_type.csv")
+   
+   
+```
+
+RLE for Wetlands using IUCN RLE methods
+
+```{r}
+# 2018 summaries IUCN RLE approach 
+# make summary counts of RLE categories per Wetland HGM4A Zones  IUCN approach D3& B
+rle18_sum <- wet_type_metrics %>%
+    group_by(RLE_18, hgm_simple) %>%
+  summarise(count = n(),.groups = 'drop') %>%
+  pivot_wider(names_from = RLE_18, 
+              values_from = count, values_fill = 0) %>%
+   relocate(VU, .after = EN) %>%
+   # Add row-wise TOTAL
+  rowwise() %>%
+  mutate(Total = sum(c_across(where(is.numeric)))) %>%
+  ungroup() %>%
+  # Add TOTAL row (column-wise sums)
+  bind_rows(summarise(., hgm_simple = "Total", across(where(is.numeric), sum))) %>%
+  # Add index
+  mutate(RLIE = (1-((CR*4)+(EN*3)+(VU*2)+(LC*1))/((CR+EN+VU+LC)*5)))  %>%
+    mutate(hgm_simple = factor(hgm_simple, levels = c("Total", "Floodplain", "Valley-bottom" , "Depression", "Seep"))) %>% ## ggplot plots inverted factors!
+   arrange(hgm_simple)
+ 
+ # export a csv of results - COUNT of RLE 18 per slope zone
+ write.csv(rle18_sum, file = "outputs/rle18_wet_count.csv") 
+ 
+# 2024 summaries IUCN RLE approach 
+ # make summary counts of RLE categories per Wetland HGM4A Zones  IUCN approach D3& B
+rle24_sum <- wet_type_metrics %>%
+    group_by(RLE_24, hgm_simple) %>%
+  summarise(count = n(),.groups = 'drop') %>%
+  pivot_wider(names_from = RLE_24, 
+              values_from = count, values_fill = 0) %>%
+   relocate(VU, .after = EN) %>%
+   # Add row-wise TOTAL
+  rowwise() %>%
+  mutate(Total = sum(c_across(where(is.numeric)))) %>%
+  ungroup() %>%
+  # Add TOTAL row (column-wise sums)
+  bind_rows(summarise(., hgm_simple = "Total", across(where(is.numeric), sum))) %>%
+  # Add index
+  mutate(RLIE = (1-((CR*4)+(EN*3)+(VU*2)+(LC*1))/((CR+EN+VU+LC)*5)))  %>%
+    mutate(hgm_simple = factor(hgm_simple, levels = c("Total", "Floodplain", "Valley-bottom" , "Depression", "Seep"))) %>% ## ggplot plots inverted factors!
+   arrange(hgm_simple)
+ 
+ # export a csv of results - COUNT of RLE 24 per slope zone
+ write.csv(rle24_sum, file = "outputs/rle24_wet_count.csv")
+ 
+
+# make summary of extent of RLE 2024 for ploting 
+ rle24_ext <- wet_type_metrics %>%
+    group_by(RLE_24, hgm_simple) %>%
+  summarise(extent = round(sum(type_m2)/1000000, 0),.groups = 'drop') %>%
+  pivot_wider(names_from = RLE_24, 
+              values_from = extent, values_fill = 0) %>%
+    relocate(VU, .after = EN) %>%
+   # Add row-wise TOTAL
+  rowwise() %>%
+  mutate(Total = sum(c_across(where(is.numeric)))) %>%
+  ungroup() %>%
+  # Add TOTAL row (column-wise sums)
+  bind_rows(summarise(., hgm_simple = "Total", across(where(is.numeric), sum))) %>%
+    mutate(hgm_simple = factor(hgm_simple, levels = c("Total", "Floodplain", "Valley-bottom" , "Depression", "Seep"))) %>% ## ggplot plots inverted factors!
+   arrange(hgm_simple)
+ 
+ # export a csv of results - EXTENT (km) of RLE 24 per slope zone
+  write.csv(rle24_ext, file = "outputs/rle24_wet_ext.csv")
+  
+ # Convert extent per rle category to proportion 
+  rle24_prpext <- rle24_ext %>%
+  filter(hgm_simple != "Total") %>%
+  mutate(across(c(CR, EN, VU, LC), ~ round(.x / Total, 3))) %>%
+  select(hgm_simple, CR, EN, VU, LC)
+  
+  # export a csv of results - PROPORTIONAL EXTENT  (km) of RLE 24 per slope zone
+   write.csv(rle24_prpext, file = "outputs/rle24_wet_prp.csv")
+   
+```
+
+RLE for Wetlands using van Deventer et al 2028 method
+
+```{r}
+# RLE A3 SA methods results 
+# COUNTS - summary for 2024 using SA methods 
+rle24sa_sum <- wet_type_metrics %>%
+    group_by(A3sa_24, hgm_simple) %>%
+  summarise(count = n(),.groups = 'drop') %>%
+  pivot_wider(names_from = A3sa_24, 
+              values_from = count, values_fill = 0) %>%
+   relocate(VU, .after = EN) %>%
+   # Add row-wise TOTAL
+  rowwise() %>%
+  mutate(Total = sum(c_across(where(is.numeric)))) %>%
+  ungroup() %>%
+  # Add TOTAL row (column-wise sums)
+  bind_rows(summarise(., hgm_simple = "Total", across(where(is.numeric), sum))) %>%
+  # Add RLE index
+  mutate(RLIE = (1-((CR*4)+(EN*3)+(VU*2)+(LC*1))/((CR+EN+VU+LC)*5)))  %>%
+    mutate(hgm_simple = factor(hgm_simple, levels = c("Total", "Floodplain", "Valley-bottom" , "Depression", "Seep"))) %>% ## ggplot plots inverted factors!
+   arrange(hgm_simple)
+  
+  # export a csv of results - COUNT of SA RLE 24 per hgm
+   write.csv(rle24sa_sum, file = "outputs/rle24sa_wet_count.csv")
+
+# COUNTS - summary for 2018 using SA methods 
+   rle18sa_sum <- wet_type_metrics %>%
+    group_by(A3sa_18, hgm_simple) %>%
+  summarise(count = n(),.groups = 'drop') %>%
+  pivot_wider(names_from = A3sa_18, 
+              values_from = count, values_fill = 0) %>%
+   relocate(VU, .after = EN) %>%
+   # Add row-wise TOTAL
+  rowwise() %>%
+  mutate(Total = sum(c_across(where(is.numeric)))) %>%
+  ungroup() %>%
+  # Add TOTAL row (column-wise sums)
+  bind_rows(summarise(., hgm_simple = "Total", across(where(is.numeric), sum))) %>%
+  # Add RLE index
+ mutate(RLIE = (1-((CR*4)+(EN*3)+(VU*2)+(LC*1))/((CR+EN+VU+LC)*5)))  %>%
+    mutate(hgm_simple = factor(hgm_simple, levels = c("Total", "Floodplain", "Valley-bottom" , "Depression", "Seep"))) %>% ## ggplot plots inverted factors!
+   arrange(hgm_simple)
+
+# export a csv of results - COUNT of RLE 24 per slope zone
+   write.csv(rle18sa_sum, file = "outputs/rle18sa_wet_count.csv")
+   
+#EXENTS - summary for 2024  using SA methods 
+ rle24sa_ext <- wet_type_metrics %>%
+    group_by(A3sa_24, hgm_simple) %>%
+  summarise(extent = round(sum(type_m2)/1000000, 0),.groups = 'drop') %>%
+  pivot_wider(names_from = A3sa_24, 
+              values_from = extent, values_fill = 0) %>%
+    relocate(VU, .after = EN) %>%
+   # Add row-wise TOTAL
+  rowwise() %>%
+  mutate(Total = sum(c_across(where(is.numeric)))) %>%
+  ungroup() %>%
+  # Add TOTAL row (column-wise sums)
+  bind_rows(summarise(., hgm_simple = "Total", across(where(is.numeric), sum))) %>%
+    mutate(hgm_simple = factor(hgm_simple, levels = c("Total", "Floodplain", "Valley-bottom" , "Depression", "Seep"))) %>% ## ggplot plots inverted factors!
+   arrange(hgm_simple)
+ 
+ # export a csv of results - EXTENT (km) of RLE 24 per slope zone
+  write.csv(rle24sa_ext, file = "outputs/rle24sa_wet_ext.csv")
+  
+ # Convert extent per epl category to proportion 
+  rle24sa_prpext <- rle24sa_ext %>%
+  filter(hgm_simple != "Total") %>%
+  mutate(across(c(CR, EN, VU, LC), ~ round(.x / Total, 3))) %>%
+  select(hgm_simple, CR, EN, VU, LC)
+  
+  # export a csv of results - PROPORTIONAL EXTENT  (km) of RLE 24 per slope zone
+   write.csv(rle24sa_prpext, file = "outputs/rle24sa_wet_prp.csv") 
+   
+   #EXENTS - summary for 2018  using SA methods 
+  
+ rle18sa_ext <- wet_type_metrics %>%
+    group_by(A3sa_18, hgm_simple) %>%
+  summarise(extent = round(sum(type_m2)/1000000, 0),.groups = 'drop') %>%
+  pivot_wider(names_from = A3sa_18, 
+              values_from = extent, values_fill = 0) %>%
+    relocate(VU, .after = EN) %>%
+   # Add row-wise TOTAL
+  rowwise() %>%
+  mutate(Total = sum(c_across(where(is.numeric)))) %>%
+  ungroup() %>%
+  # Add TOTAL row (column-wise sums)
+  bind_rows(summarise(., hgm_simple = "Total", across(where(is.numeric), sum))) %>%
+    mutate(hgm_simple = factor(hgm_simple, levels = c("Total", "Floodplain", "Valley-bottom" , "Depression", "Seep"))) %>% ## ggplot plots inverted factors!
+   arrange(hgm_simple)
+ 
+ # export a csv of results - EXTENT (km) of RLE 24 per slope zone
+  write.csv(rle18sa_ext, file = "outputs/rle18sa_wet_ext.csv")
+  
+ # Convert extent per epl category to proportion 
+  rle18sa_prpext <- rle18sa_ext %>%
+  filter(hgm_simple != "Total") %>%
+  mutate(across(c(CR, EN, VU, LC), ~ round(.x / Total, 3))) %>%
+  select(hgm_simple, CR, EN, VU, LC)
+  
+  # export a csv of results - PROPORTIONAL EXTENT  (km) of RLE 24 per slope zone
+   write.csv(rle18sa_prpext, file = "outputs/rle18sa_wet_prp.csv") 
+```
+
+#### **Make graphs for NBA**
+
+```{r}
+
+# load nbaR package : first run this in console devtools::install_github("SANBI-NBA/nbaR") 
+library(nbaR)
+
+# Use NBA package to make RLE 2024  plot  using  Nel 2011 methods
+pd_rle24sa_count <- rle24sa_sum %>%
+    rename(`Critically Endangered` = CR, 
+           `Endangered` = EN, 
+           `Vulnerable` = VU, 
+           `Least Concern` = LC ) # %>%
+  # select(-...1) # required if importing from CSV
+ 
+rle24sa_barplot_count <- nba_plot(pd_rle24sa_count,
+                  `hgm_simple`,
+                  2:5,
+                 CHRT = "bar",
+                 NUM = TRUE,
+                 LAB = "Percentage of ecosystem types",
+                SAVE = NULL)
+
+rle24sa_barplot_count
+
+#export the 2024 plot of counts 
+ggsave(
+  filename = "outputs/rle24sa_wet_barplot_count.jpeg", # File name
+  plot = rle24sa_barplot_count,                  # Plot object
+  device = "jpeg",                        # File format
+  width = 16, height = 12, units = "cm",   # Dimensions
+  dpi = 300                               # Resolution
+)
+
+# Use NBA package to make RLE 2018  plot  using  Nel 2011 methods
+pd_rle18sa_count <- rle18sa_sum %>%
+    rename(`Critically Endangered` = CR, 
+           `Endangered` = EN, 
+           `Vulnerable` = VU, 
+           `Least Concern` = LC ) # %>%
+  # select(-...1) # required if importing from CSV
+ 
+rle18sa_barplot_count <- nba_plot(pd_rle18sa_count,
+                  `hgm_simple`,
+                  2:5,
+                 CHRT = "bar",
+                 NUM = TRUE,
+                 LAB = "Percentage of ecosystem types",
+                SAVE = NULL)
+
+rle18sa_barplot_count
+
+#export the graph
+ggsave(
+  filename = "outputs/rle18sa_wet_barplot_count.jpeg", # File name
+  plot = rle18sa_barplot_count,                  # Plot object
+  device = "jpeg",                        # File format
+  width = 16, height = 12, units = "cm",   # Dimensions
+  dpi = 300                               # Resolution
+)
+
+## Make plots of extent per slope zone per RLE SA methods  #########################################################
+
+# 2024  plots of extent of RLE SA 
+pd_rle24sa_ext <- rle24sa_ext %>%
+     rename(`Critically Endangered` = CR,
+           `Endangered` = EN,
+           `Vulnerable` = VU,
+           `Least Concern` = LC ) # %>%
+  # select(-...1) # required if importing from CSV
+
+rle24sa_barplot_ext <- nba_plot(pd_rle24sa_ext,
+                  `hgm_simple`,
+                  2:5,
+                 CHRT = "bar",
+                 NUM = FALSE,
+                 LAB = "Percentage of ecosystem extent (km)",
+                SAVE = NULL)
+
+rle24sa_barplot_ext
+
+#export the graph of SA RLE 2014 extent summary 
+ggsave(
+  filename = "outputs/rle24sa_wet_barplot_ext.jpeg", # File name
+  plot = rle24sa_barplot_ext,                   # Plot object
+  device = "jpeg",                        # File format
+  width = 16, height = 12, units = "cm",   # Dimensions
+  dpi = 300                               # Resolution
+)
+
+# 2018 plots of extent of RLE SA 
+
+pd_rle18sa_ext <- rle18sa_ext %>%
+     rename(`Critically Endangered` = CR,
+           `Endangered` = EN,
+           `Vulnerable` = VU,
+           `Least Concern` = LC ) # %>%
+  # select(-...1) # required if importing from CSV
+
+rle18sa_barplot_ext <- nba_plot(pd_rle18sa_ext,
+                  `hgm_simple`,
+                  2:5,
+                 CHRT = "bar",
+                 NUM = FALSE,
+                 LAB = "Percentage of ecosystem extent (km)",
+                SAVE = NULL)
+
+rle18sa_barplot_ext
+
+#export the graph of SA RLE 2014 extent summary 
+ggsave(
+  filename = "outputs/rle18sa_wet_barplot_ext.jpeg", # File name
+  plot = rle18sa_barplot_ext,                   # Plot object
+  device = "jpeg",                        # File format
+  width = 16, height = 12, units = "cm",   # Dimensions
+  dpi = 300                               # Resolution
+)
+
+```
+
+Make Maps
+
+```{r}
+
+```
