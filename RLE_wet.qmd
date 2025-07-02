@@ -3,40 +3,47 @@ title: "RLE_riv"
 format: html
 ---
 
-Preparation
+### Set up the Project and import the data 
 
 ```{r}
 # Add packages: 
+
 library(sf)
 library(tidyverse)
 
 # Add data
 
-wetlands <-st_read("C:/Users/skownoa/Dropbox/NBAwork/Wetlands/freshwater.gdb", "NBA_wet_test") 
+wetlands <-st_read("C:/Users/skownoa/Dropbox/NBAwork/Wetlands/NBA_wetl_TFonly_20250701.shp") 
 #ensure it uses proj =  wgs84 aea cm 25 -24 -33
-st_crs(wetlands)
+#st_crs(wetlands)
 
 ```
 
-Clean up input data
+### Clean up input data
 
 ```{r}
+## NB to resolve exactly how types are made - Bioregion x HGM4A but all cases are not valid (very few features or too similar (valley-bottoms for example, is there lumping required, and are any depressions carved off eg Limnetic depressions? as per Heidi))
+options(scipen = 999)
 
 wet <- wetlands %>%
-  # make a type column
-  mutate(TYPE = paste(T_BIOREGIO, HGM_4A, sep = " - "))%>%
-  # clean up non SA type and remove estuaries and foreign features
-  filter(T_BIOREGIO != "Estuary") %>%
+  # make a type column by simplifying the HGM units and concat with bioregion
+  filter(HGM_type != "River") %>%
+  mutate(hgm_simple = case_when(  HGM_type == "Channelled valley-bottom" ~ "Valley-bottom",
+                                  HGM_type == "Unchannelled valley-bottom" ~ "Valley-bottom",
+                                  HGM_type == "Valley-bottom" ~ "Valley-bottom",
+                                  HGM_type == "Wetland flat" ~ "Depression",
+                                  TRUE ~ HGM_type)) %>%
+  mutate(TYPE = paste0(Bioregion, " (", hgm_simple, ")")) %>%
   # recode blank (not blank but one space actually ) PES 2022 scores to "Data Deficient" code = DD
-  mutate(EC22ALL = if_else(EC22ALL == " ", "DD", EC22ALL)) %>%
-  mutate(EC18ALL = if_else(EC18ALL == " ", "DD", EC18ALL)) %>%
-  filter(Shape_Area > 10)
+  mutate(EC22ALL = if_else(is.na(EC22ALL), "DD", EC22ALL)) %>%
+  mutate(EC18ALL = if_else(is.na(EC18ALL), "DD", EC18ALL)) %>%
+  filter(Area > 10)
   
 # make a table to work with 
   wet_tb <- st_drop_geometry(wet)
   
 # make a simple table of TYPE and HGM to join with results later 
-  type_hgm_tb <- wet_tb %>% select(TYPE, HGM_4A) %>% distinct(TYPE, .keep_all = TRUE)
+  type_hgm_tb <- wet_tb %>% select(TYPE, hgm_simple) %>% distinct(TYPE, .keep_all = TRUE)
 
 ```
 
@@ -44,8 +51,6 @@ Calculate EOO using convex hulls in sf
 
 ```{r}
 # Initialize a list to store results
-options(scipen = 999)
-
 eoo_list <- list()
 
 # Iterate through unique T_MAPCODE values 
@@ -77,17 +82,17 @@ write.csv(eoo_df, "outputs/EOO_all.csv")
 #overall summary
 wet_type_24 <- wet_tb %>%
     group_by(TYPE, EC22ALL) %>%
-  summarise(area_sum = sum(as.numeric(Shape_Area), na.rm = TRUE)) %>%
+  summarise(area_sum = sum(as.numeric(Area), na.rm = TRUE)) %>%
   ungroup() %>%
   pivot_wider(names_from = EC22ALL, values_from = area_sum, values_fill = list(area_sum = 0))  %>%
-  mutate(type_m2 = rowSums(across(c(A, B, C, D, E, F, `DD`))))
+  mutate(type_m2 = rowSums(across(c(A, B, C, D, E, F, DD))))
 
 wet_type_18 <- wet_tb %>%
     group_by(TYPE, EC18ALL) %>%
-  summarise(area_sum = sum(as.numeric(Shape_Area), na.rm = TRUE)) %>%
+  summarise(area_sum = sum(as.numeric(Area), na.rm = TRUE)) %>%
   ungroup() %>%
   pivot_wider(names_from = EC18ALL, values_from = area_sum, values_fill = list(area_sum = 0)) %>%
-  rename(A18=A, B18=B, C18=C, D18=D, E18=E, F18=F, DD18 = `DD`)
+  rename(A18=A, B18=B, C18=C, D18=D, E18=E, F18=F, DD18 = DD)
  
 # Join the tables above - this makes a single table in which all the required metrics can be found to compute EPL and RLE
  
@@ -138,13 +143,7 @@ wet_type_18 <- wet_tb %>%
                                prp18_def >= 0.4 ~ "VU", 
                                  TRUE ~ "LC")) %>%
      # add in HGM type
-   left_join(type_hgm_tb, by = "TYPE") %>%
-   mutate(hgm_simple = case_when( HGM_4A == "Channelled valley-bottom" ~ "Valley-bottom",
-                                  HGM_4A == "Unchannelled valley-bottom" ~ "Valley-bottom",
-                                  HGM_4A == "Valley-bottom" ~ "Valley-bottom",
-                                  HGM_4A == "River" ~ "Valley-bottom",
-                                  HGM_4A == "Wetland flat" ~ "Seep",
-                                  TRUE ~ HGM_4A))
+   left_join(type_hgm_tb, by = "TYPE")
    
    
    # export a csv of results - Condition and EPL per river type 2018 and 2024
