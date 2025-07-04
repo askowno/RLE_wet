@@ -3,7 +3,7 @@ title: "RLE_riv"
 format: html
 ---
 
-### Set up the Project and import the data 
+### Set up the Project and import the data
 
 ```{r}
 # Add packages: 
@@ -147,7 +147,7 @@ wet_type_18 <- wet_tb %>%
    
    
    # export a csv of results - Condition and EPL per river type 2018 and 2024
-   write.csv(wet_type_metrics, file = "outputs/rle_wet_metrics_per_type.csv")
+   write_csv(wet_type_metrics, file = "outputs/rle_wet_metrics_per_type.csv")
    
    
 ```
@@ -155,30 +155,12 @@ wet_type_18 <- wet_tb %>%
 RLE for Wetlands using IUCN RLE methods
 
 ```{r}
-# 2018 summaries IUCN RLE approach 
-# make summary counts of RLE categories per Wetland HGM4A Zones  IUCN approach D3& B
-rle18_sum <- wet_type_metrics %>%
-    group_by(RLE_18, hgm_simple) %>%
-  summarise(count = n(),.groups = 'drop') %>%
-  pivot_wider(names_from = RLE_18, 
-              values_from = count, values_fill = 0) %>%
-   relocate(VU, .after = EN) %>%
-   # Add row-wise TOTAL
-  rowwise() %>%
-  mutate(Total = sum(c_across(where(is.numeric)))) %>%
-  ungroup() %>%
-  # Add TOTAL row (column-wise sums)
-  bind_rows(summarise(., hgm_simple = "Total", across(where(is.numeric), sum))) %>%
-  # Add index
-  mutate(RLIE = (1-((CR*4)+(EN*3)+(VU*2)+(LC*1))/((CR+EN+VU+LC)*5)))  %>%
-    mutate(hgm_simple = factor(hgm_simple, levels = c("Total", "Floodplain", "Valley-bottom" , "Depression", "Seep"))) %>% ## ggplot plots inverted factors!
-   arrange(hgm_simple)
- 
- # export a csv of results - COUNT of RLE 18 per slope zone
- write.csv(rle18_sum, file = "outputs/rle18_wet_count.csv") 
- 
-# 2024 summaries IUCN RLE approach 
- # make summary counts of RLE categories per Wetland HGM4A Zones  IUCN approach D3& B
+
+# make summary counts of RLE categories per Wetland HGM4A Zones  IUCN approach D3 & B
+wet_type_metrics <- read_csv("outputs/rle_wet_metrics_per_type.csv") 
+
+# 2024 summaries IUCN RLE approach COUNTS Criterion D3 and B1 per Wetland HGM4A Zone
+
 rle24_sum <- wet_type_metrics %>%
     group_by(RLE_24, hgm_simple) %>%
   summarise(count = n(),.groups = 'drop') %>%
@@ -197,7 +179,7 @@ rle24_sum <- wet_type_metrics %>%
    arrange(hgm_simple)
  
  # export a csv of results - COUNT of RLE 24 per slope zone
- write.csv(rle24_sum, file = "outputs/rle24_wet_count.csv")
+ write_csv(rle24_sum, file = "outputs/rle24_wet_count.csv")
  
 
 # make summary of extent of RLE 2024 for ploting 
@@ -217,20 +199,40 @@ rle24_sum <- wet_type_metrics %>%
    arrange(hgm_simple)
  
  # export a csv of results - EXTENT (km) of RLE 24 per slope zone
-  write.csv(rle24_ext, file = "outputs/rle24_wet_ext.csv")
+  write_csv(rle24_ext, file = "outputs/rle24_wet_ext.csv")
   
- # Convert extent per rle category to proportion 
+# Convert extent per rle category to proportion 
   rle24_prpext <- rle24_ext %>%
   filter(hgm_simple != "Total") %>%
   mutate(across(c(CR, EN, VU, LC), ~ round(.x / Total, 3))) %>%
   select(hgm_simple, CR, EN, VU, LC)
   
   # export a csv of results - PROPORTIONAL EXTENT  (km) of RLE 24 per slope zone
-   write.csv(rle24_prpext, file = "outputs/rle24_wet_prp.csv")
+   write_csv(rle24_prpext, file = "outputs/rle24_wet_prp.csv")
    
+# 2018 summaries IUCN RLE approach 
+      rle18_sum <- wet_type_metrics %>%
+    group_by(RLE_18, hgm_simple) %>%
+  summarise(count = n(),.groups = 'drop') %>%
+  pivot_wider(names_from = RLE_18, 
+              values_from = count, values_fill = 0) %>%
+   relocate(VU, .after = EN) %>%
+   # Add row-wise TOTAL
+  rowwise() %>%
+  mutate(Total = sum(c_across(where(is.numeric)))) %>%
+  ungroup() %>%
+  # Add TOTAL row (column-wise sums)
+  bind_rows(summarise(., hgm_simple = "Total", across(where(is.numeric), sum))) %>%
+  # Add index
+  mutate(RLIE = (1-((CR*4)+(EN*3)+(VU*2)+(LC*1))/((CR+EN+VU+LC)*5)))  %>%
+    mutate(hgm_simple = factor(hgm_simple, levels = c("Total", "Floodplain", "Valley-bottom" , "Depression", "Seep"))) %>% ## ggplot plots inverted factors!
+   arrange(hgm_simple)
+ 
+ # export a csv of results - COUNT of RLE 18 per slope zone
+ write_csv(rle18_sum, file = "outputs/rle18_wet_count.csv") 
 ```
 
-RLE for Wetlands using van Deventer et al 2028 method
+RLE for Wetlands using van Deventer et al 2019 method
 
 ```{r}
 # RLE A3 SA methods results 
@@ -253,7 +255,7 @@ rle24sa_sum <- wet_type_metrics %>%
    arrange(hgm_simple)
   
   # export a csv of results - COUNT of SA RLE 24 per hgm
-   write.csv(rle24sa_sum, file = "outputs/rle24sa_wet_count.csv")
+   write_csv(rle24sa_sum, file = "outputs/rle24sa_wet_count.csv")
 
 # COUNTS - summary for 2018 using SA methods 
    rle18sa_sum <- wet_type_metrics %>%
@@ -274,7 +276,7 @@ rle24sa_sum <- wet_type_metrics %>%
    arrange(hgm_simple)
 
 # export a csv of results - COUNT of RLE 24 per slope zone
-   write.csv(rle18sa_sum, file = "outputs/rle18sa_wet_count.csv")
+   write_csv(rle18sa_sum, file = "outputs/rle18sa_wet_count.csv")
    
 #EXENTS - summary for 2024  using SA methods 
  rle24sa_ext <- wet_type_metrics %>%
@@ -293,7 +295,7 @@ rle24sa_sum <- wet_type_metrics %>%
    arrange(hgm_simple)
  
  # export a csv of results - EXTENT (km) of RLE 24 per slope zone
-  write.csv(rle24sa_ext, file = "outputs/rle24sa_wet_ext.csv")
+  write_csv(rle24sa_ext, file = "outputs/rle24sa_wet_ext.csv")
   
  # Convert extent per epl category to proportion 
   rle24sa_prpext <- rle24sa_ext %>%
@@ -302,7 +304,7 @@ rle24sa_sum <- wet_type_metrics %>%
   select(hgm_simple, CR, EN, VU, LC)
   
   # export a csv of results - PROPORTIONAL EXTENT  (km) of RLE 24 per slope zone
-   write.csv(rle24sa_prpext, file = "outputs/rle24sa_wet_prp.csv") 
+   write_csv(rle24sa_prpext, file = "outputs/rle24sa_wet_prp.csv") 
    
    #EXENTS - summary for 2018  using SA methods 
   
@@ -322,7 +324,7 @@ rle24sa_sum <- wet_type_metrics %>%
    arrange(hgm_simple)
  
  # export a csv of results - EXTENT (km) of RLE 24 per slope zone
-  write.csv(rle18sa_ext, file = "outputs/rle18sa_wet_ext.csv")
+  write_csv(rle18sa_ext, file = "outputs/rle18sa_wet_ext.csv")
   
  # Convert extent per epl category to proportion 
   rle18sa_prpext <- rle18sa_ext %>%
@@ -331,7 +333,7 @@ rle24sa_sum <- wet_type_metrics %>%
   select(hgm_simple, CR, EN, VU, LC)
   
   # export a csv of results - PROPORTIONAL EXTENT  (km) of RLE 24 per slope zone
-   write.csv(rle18sa_prpext, file = "outputs/rle18sa_wet_prp.csv") 
+   write_csv(rle18sa_prpext, file = "outputs/rle18sa_wet_prp.csv") 
 ```
 
 #### **Make graphs for NBA**
@@ -341,7 +343,7 @@ rle24sa_sum <- wet_type_metrics %>%
 # load nbaR package : first run this in console devtools::install_github("SANBI-NBA/nbaR") 
 library(nbaR)
 
-# Use NBA package to make RLE 2024  plot  using  Nel 2011 methods
+####### Use NBA package to make ETS  2024  plot  using  Nel 2011 methods
 pd_rle24sa_count <- rle24sa_sum %>%
     rename(`Critically Endangered` = CR, 
            `Endangered` = EN, 
@@ -355,18 +357,50 @@ rle24sa_barplot_count <- nba_plot(pd_rle24sa_count,
                  CHRT = "bar",
                  NUM = TRUE,
                  LAB = "Percentage of ecosystem types",
-                SAVE = NULL)
+                 SAVE = NULL,
+                 SCALE_TEXT = 0.6)
 
-rle24sa_barplot_count
+rle24sa_barplot_count <- rle24sa_barplot_count +
+  theme(
+    legend.position = "bottom",             # keep it at the bottom
+    legend.margin = margin(l = -45, r = -5, t = -5, b = -5)) 
 
 #export the 2024 plot of counts 
 ggsave(
   filename = "outputs/rle24sa_wet_barplot_count.jpeg", # File name
   plot = rle24sa_barplot_count,                  # Plot object
-  device = "jpeg",                        # File format
-  width = 16, height = 12, units = "cm",   # Dimensions
-  dpi = 300                               # Resolution
-)
+    width = 8, height = 6, units = "cm")   # Dimensions
+    # dpi = 300                               # Resolution
+
+####### Use NBA package to make RLE  2024  plot  using  IUCN RLE v2
+pd_rle24_count <- rle24_sum %>%
+    rename(`Critically Endangered` = CR, 
+           `Endangered` = EN, 
+           `Vulnerable` = VU, 
+           `Least Concern` = LC ) # %>%
+  # select(-...1) # required if importing from CSV
+ 
+rle24_barplot_count <- nba_plot(pd_rle24_count,
+                  `hgm_simple`,
+                  2:5,
+                 CHRT = "bar",
+                 NUM = TRUE,
+                 LAB = "Percentage of ecosystem types",
+                 SAVE = NULL,
+                 SCALE_TEXT = 0.6)
+
+rle24_barplot_count <- rle24_barplot_count +
+  theme(
+    legend.position = "bottom",             # keep it at the bottom
+    legend.margin = margin(l = -45, r = -5, t = -5, b = -5)) 
+
+#export the 2024 plot of counts 
+ggsave(
+  filename = "outputs/rle24_wet_barplot_count.jpeg", # File name
+  plot = rle24_barplot_count,                  # Plot object
+    width = 8, height = 6, units = "cm")   # Dimensions
+    # dpi = 300                               # Resolution
+
 
 # Use NBA package to make RLE 2018  plot  using  Nel 2011 methods
 pd_rle18sa_count <- rle18sa_sum %>%
@@ -451,11 +485,5 @@ ggsave(
   width = 16, height = 12, units = "cm",   # Dimensions
   dpi = 300                               # Resolution
 )
-
-```
-
-Make Maps
-
-```{r}
 
 ```

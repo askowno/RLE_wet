@@ -1,5 +1,5 @@
-"","hgm_simple","CR","EN","VU","LC"
-"1","Floodplain",0.015,0.382,0.048,0.556
-"2","Valley-bottom",0,0.161,0,0.839
-"3","Depression",0,0,0,1
-"4","Seep",0,0.373,0,0.627
+hgm_simple,CR,EN,VU,LC
+Floodplain,0.015,0.382,0.048,0.556
+Valley-bottom,0,0.161,0,0.839
+Depression,0,0,0,1
+Seep,0,0.373,0,0.627
