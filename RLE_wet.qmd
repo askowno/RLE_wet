@@ -75,6 +75,8 @@ write.csv(eoo_df, "outputs/EOO_all.csv")
 
 ```
 
+RLE and ETS assessment of wetland ecosystem types
+
 ```{r}
 
 #summarise by wetland type including  area per type per condition class - this allows for inclusion of condition in the RLE formula
@@ -107,6 +109,14 @@ wet_type_18 <- wet_tb %>%
     mutate(prp24_def = (D + E + F )/type_m2) %>%
     mutate(prp24_ef= (E + F)/type_m2) %>%
     mutate(prp24_f= F/type_m2) %>%
+# add change in PES for B1i ongoing decline evidence (PES ABC & DD extent decline > 1%)  
+   # extent of good-fair wetland (ABC&DDef) declined by >1% from t1 to t2
+   mutate(pes_decline1824 = ifelse(
+      (((A18 + B18 + C18 + DD18) - (A + B + C + DD))
+      / (A18 + B18 + C18 + DD18)) 
+      > 0.01, "decline1824", "nodecline1824"))  %>%  
+# note for RLEindex the we recompute 2018 RLE but no earlier period of PES is available, so decline in PES observed in          2018-2024 is assumed to be ongoing and applicable to 2014-2018 period for the B1i assessment
+# add D3 using PES scores for severity estimates: EF >=90% severity, DEF >=70-% severity, CDEF>=50% severity
     mutate(D3_18 = case_when( prp18_ef >= 0.9 ~ "CR", 
                                  prp18_ef >= 0.7 | prp18_def >=0.9 ~ "EN",
                                  prp18_ef >= 0.5 | prp18_def >=0.7 | 
@@ -117,24 +127,21 @@ wet_type_18 <- wet_tb %>%
                                  prp24_ef >= 0.5 | prp24_def >=0.7 | 
                                                   prp24_cdef >= 0.9 ~ "VU", 
                                  TRUE ~ "LC")) %>%
-   mutate(B1_18 = case_when( prp18_def >= 0.3 & eoo_km2  <= 2000 ~ "CR",
-                             prp18_def >= 0.3 & eoo_km2  <= 20000 ~ "EN",
-                              prp18_def >= 0.3 & eoo_km2  <= 50000 ~ "VU",
+# add B1i using ongoing decline calculated above 
+   mutate(B1i_24 = case_when( pes_decline1824 == "decline1824" & eoo_km2  <= 2000 ~ "CR",
+                              pes_decline1824 == "decline1824" & eoo_km2  <= 20000 ~ "EN",
+                              pes_decline1824 == "decline1824" & eoo_km2  <= 50000 ~ "VU",
                                  TRUE ~ "LC")) %>%
-   mutate(B1_24 = case_when( prp24_def >= 0.3 & eoo_km2  <= 2000 ~ "CR",
-                             prp24_def >= 0.3 & eoo_km2  <= 20000 ~ "EN",
-                              prp24_def >= 0.3 & eoo_km2  <= 50000 ~ "VU",
-                                 TRUE ~ "LC")) %>%
-   mutate(RLE_18 = case_when(B1_18 == "CR" | D3_18 == "CR" ~ "CR", 
-                             B1_18 == "EN" | D3_18 == "EN" ~ "EN",
-                             B1_18 == "VU" | D3_18 == "VU" ~ "VU",
+   mutate(RLE_18 = case_when(B1i_24 == "CR" | D3_18 == "CR" ~ "CR", 
+                             B1i_24 == "EN" | D3_18 == "EN" ~ "EN",
+                             B1i_24 == "VU" | D3_18 == "VU" ~ "VU",
+                              TRUE ~ "LC")) %>% # using decline 2018-2024 as proxy for decline 2014-2018
+   mutate(RLE_24 = case_when(B1i_24 == "CR" | D3_24 == "CR" ~ "CR", 
+                             B1i_24 == "EN" | D3_24 == "EN" ~ "EN",
+                             B1i_24 == "VU" | D3_24 == "VU" ~ "VU",
                               TRUE ~ "LC")) %>%
-   mutate(RLE_24 = case_when(B1_24 == "CR" | D3_24 == "CR" ~ "CR", 
-                             B1_24 == "EN" | D3_24 == "EN" ~ "EN",
-                             B1_24 == "VU" | D3_24 == "VU" ~ "VU",
-                              TRUE ~ "LC")) %>%
-   # add in Nel 2011 and van Deventer 2018 method: SA approach assuming A and B are intact rest is lost but also counting C towards  VU
-      mutate(A3sa_24 = case_when( prp24_cdef >= 0.8 ~ "CR", 
+# add in van Deventer 2018 method: SA approach assuming A and B are intact rest is lost but also counting C towards  VU
+    mutate(A3sa_24 = case_when( prp24_cdef >= 0.8 ~ "CR", 
                               prp24_cdef >= 0.65 ~ "EN",
                               prp24_def >= 0.4 ~ "VU", 
                                  TRUE ~ "LC")) %>%
@@ -152,7 +159,7 @@ wet_type_18 <- wet_tb %>%
    
 ```
 
-RLE for Wetlands using IUCN RLE methods
+RLE Summary per HGM zone
 
 ```{r}
 
@@ -232,7 +239,7 @@ rle24_sum <- wet_type_metrics %>%
  write_csv(rle18_sum, file = "outputs/rle18_wet_count.csv") 
 ```
 
-RLE for Wetlands using van Deventer et al 2019 method
+ETS Summary per HGM zone
 
 ```{r}
 # RLE A3 SA methods results 
