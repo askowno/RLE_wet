@@ -53,7 +53,7 @@ Calculate EOO using convex hulls in sf
 # Initialize a list to store results
 eoo_list <- list()
 
-# Iterate through unique T_MAPCODE values 
+# Iterate through unique WET TYPE values 
 for (wet_type in unique(wet$TYPE)) {
   subset_data <- wet %>% filter(TYPE == wet_type)
   if (nrow(subset_data) > 0) {
