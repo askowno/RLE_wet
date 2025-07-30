@@ -1,6 +1,6 @@
-hgm_simple,CR,EN,VU,LC,Total
-Total,11,5486,173,16453,22123
-Floodplain,6,1517,173,2107,3803
-Valley-bottom,0,2182,0,11326,13508
-Depression,5,0,0,68,73
-Seep,0,1787,0,2952,4739
+hgm,LC,EN,VU,CR,Total
+Total,19837,9363,526,29,29755
+Unchannelled valley-bottom,3233,231,0,0,3464
+Seep,3097,1789,0,0,4886
+Floodplain,10212,3012,511,29,13764
+Depression,3295,4331,15,0,7641

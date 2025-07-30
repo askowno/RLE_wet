@@ -1,101 +1,82 @@
-"","TYPE","eoo_km2"
-"Dry Highveld Grassland Bioregion (Seep)","Dry Highveld Grassland Bioregion (Seep)",268321.779753587
-"Dry Highveld Grassland Bioregion (Valley-bottom)","Dry Highveld Grassland Bioregion (Valley-bottom)",264450.253762023
-"Drakensberg Grassland Bioregion (Valley-bottom)","Drakensberg Grassland Bioregion (Valley-bottom)",78765.9933718688
-"Drakensberg Grassland Bioregion (Seep)","Drakensberg Grassland Bioregion (Seep)",82462.8627055616
-"Nama Karoo Biome (Valley-bottom)","Nama Karoo Biome (Valley-bottom)",165671.156281522
-"Mesic Highveld Bioregion (Valley-bottom)","Mesic Highveld Bioregion (Valley-bottom)",240766.085213269
-"Mesic Highveld Bioregion (Seep)","Mesic Highveld Bioregion (Seep)",242807.256316579
-"Nama Karoo Biome (Seep)","Nama Karoo Biome (Seep)",135805.330428423
-"Drakensberg Grassland Bioregion (Floodplain)","Drakensberg Grassland Bioregion (Floodplain)",11981.3710601138
-"Drakensberg Grassland Bioregion (Depression)","Drakensberg Grassland Bioregion (Depression)",0.146913759617494
-"Dry Highveld Grassland Bioregion (Depression)","Dry Highveld Grassland Bioregion (Depression)",0.207112927998001
-"Central Bushveld Bioregion (Valley-bottom)","Central Bushveld Bioregion (Valley-bottom)",173241.142080906
-"Central Bushveld Bioregion (Seep)","Central Bushveld Bioregion (Seep)",153740.49428176
-"Mesic Highveld Bioregion (Floodplain)","Mesic Highveld Bioregion (Floodplain)",87819.8064962714
-"Dry Highveld Grassland Bioregion (Floodplain)","Dry Highveld Grassland Bioregion (Floodplain)",52791.0721193858
-"Sub-escarpment Grassland Bioregion (Valley-bottom)","Sub-escarpment Grassland Bioregion (Valley-bottom)",136826.156763308
-"Sub-escarpment Grassland Bioregion (Seep)","Sub-escarpment Grassland Bioregion (Seep)",131741.627810133
-"Eastern Kalahari Bushveld Bioregion (Valley-bottom)","Eastern Kalahari Bushveld Bioregion (Valley-bottom)",114386.406298924
-"Eastern Kalahari Bushveld Bioregion (Seep)","Eastern Kalahari Bushveld Bioregion (Seep)",51249.1362475822
-"Central Bushveld Bioregion (Floodplain)","Central Bushveld Bioregion (Floodplain)",103017.79221189
-"Lowveld Bioregion (Valley-bottom)","Lowveld Bioregion (Valley-bottom)",100007.166309532
-"Lowveld Bioregion (Seep)","Lowveld Bioregion (Seep)",101274.830671409
-"Lowveld Bioregion (Floodplain)","Lowveld Bioregion (Floodplain)",61829.9425897627
-"Mopane Bioregion (Valley-bottom)","Mopane Bioregion (Valley-bottom)",34689.4698173355
-"Mopane Bioregion (Seep)","Mopane Bioregion (Seep)",23127.3767334705
-"Mopane Bioregion (Floodplain)","Mopane Bioregion (Floodplain)",6077.31330781787
-"Sub-escarpment Grassland Bioregion (Floodplain)","Sub-escarpment Grassland Bioregion (Floodplain)",60357.9324537778
-"Sub-escarpment Savanna Bioregion (Seep)","Sub-escarpment Savanna Bioregion (Seep)",87480.1094811416
-"Sub-escarpment Savanna Bioregion (Valley-bottom)","Sub-escarpment Savanna Bioregion (Valley-bottom)",85438.8602872486
-"Pondoland Coastal Belt (Seep)","Pondoland Coastal Belt (Seep)",4511.93713816423
-"Kwa-Zulu Natal Coastal Belt (Seep)","Kwa-Zulu Natal Coastal Belt (Seep)",8814.8168589907
-"Kwa-Zulu Natal Coastal Belt (Valley-bottom)","Kwa-Zulu Natal Coastal Belt (Valley-bottom)",7399.51518489499
-"Pondoland Coastal Belt (Valley-bottom)","Pondoland Coastal Belt (Valley-bottom)",3119.5640202276
-"Sub-escarpment Savanna Bioregion (Floodplain)","Sub-escarpment Savanna Bioregion (Floodplain)",9116.40388953358
-"Kwa-Zulu Natal Coastal Belt (Floodplain)","Kwa-Zulu Natal Coastal Belt (Floodplain)",1463.42277508525
-"Maputoland Coastal Belt (Floodplain)","Maputoland Coastal Belt (Floodplain)",10034.8470915824
-"Maputoland Coastal Belt (Seep)","Maputoland Coastal Belt (Seep)",10920.0014947479
-"Maputoland Coastal Belt (Valley-bottom)","Maputoland Coastal Belt (Valley-bottom)",9565.37534848974
-"Northwest Fynbos Bioregion (Valley-bottom)","Northwest Fynbos Bioregion (Valley-bottom)",19445.7539035374
-"Karoo Renosterveld Bioregion (Valley-bottom)","Karoo Renosterveld Bioregion (Valley-bottom)",4947.81977976161
-"Northwest Fynbos Bioregion (Seep)","Northwest Fynbos Bioregion (Seep)",17371.9042781143
-"Karoo Renosterveld Bioregion (Seep)","Karoo Renosterveld Bioregion (Seep)",6985.83896989954
-"Northwest Fynbos Bioregion (Depression)","Northwest Fynbos Bioregion (Depression)",48.4572944408954
-"Bushmanland Bioregion (Seep)","Bushmanland Bioregion (Seep)",51938.6381813654
-"Succulent Karoo Biome (Valley-bottom)","Succulent Karoo Biome (Valley-bottom)",127236.925733118
-"Succulent Karoo Biome (Seep)","Succulent Karoo Biome (Seep)",115305.415838178
-"Bushmanland Bioregion (Valley-bottom)","Bushmanland Bioregion (Valley-bottom)",76240.8033154036
-"Succulent Karoo Biome (Floodplain)","Succulent Karoo Biome (Floodplain)",69439.4537700809
-"Bushmanland Bioregion (Floodplain)","Bushmanland Bioregion (Floodplain)",0.855617636573485
-"Desert Biome (Seep)","Desert Biome (Seep)",0.36741881024291
-"Desert Biome (Valley-bottom)","Desert Biome (Valley-bottom)",17482.664611087
-"Kalahari Duneveld Bioregion (Seep)","Kalahari Duneveld Bioregion (Seep)",411.158083782426
-"Eastern Kalahari Bushveld Bioregion (Floodplain)","Eastern Kalahari Bushveld Bioregion (Floodplain)",2954.47949901936
-"Northwest Fynbos Bioregion (Floodplain)","Northwest Fynbos Bioregion (Floodplain)",6284.37026464843
-"Knersvlakte Bioregion (Floodplain)","Knersvlakte Bioregion (Floodplain)",119.831473979154
-"Western Fynbos-Renosterveld Bioregion (Seep)","Western Fynbos-Renosterveld Bioregion (Seep)",16407.5652894592
-"Southwest Fynbos Bioregion (Seep)","Southwest Fynbos Bioregion (Seep)",29160.2999916938
-"West Strandveld Bioregion (Seep)","West Strandveld Bioregion (Seep)",8237.98439559859
-"Knersvlakte Bioregion (Seep)","Knersvlakte Bioregion (Seep)",680.987306337907
-"Western Fynbos-Renosterveld Bioregion (Valley-bottom)","Western Fynbos-Renosterveld Bioregion (Valley-bottom)",11833.4637055242
-"West Strandveld Bioregion (Valley-bottom)","West Strandveld Bioregion (Valley-bottom)",7011.2382753661
-"Knersvlakte Bioregion (Valley-bottom)","Knersvlakte Bioregion (Valley-bottom)",143.033009959563
-"West Coast Renosterveld Bioregion (Depression)","West Coast Renosterveld Bioregion (Depression)",0.00170784620377571
-"West Coast Renosterveld Bioregion (Floodplain)","West Coast Renosterveld Bioregion (Floodplain)",4860.35120879838
-"West Coast Renosterveld Bioregion (Seep)","West Coast Renosterveld Bioregion (Seep)",8448.02770932683
-"West Coast Renosterveld Bioregion (Valley-bottom)","West Coast Renosterveld Bioregion (Valley-bottom)",7969.53352723372
-"Southwest Fynbos Bioregion (Floodplain)","Southwest Fynbos Bioregion (Floodplain)",18813.6399615534
-"Southwest Fynbos Bioregion (Valley-bottom)","Southwest Fynbos Bioregion (Valley-bottom)",28825.9216426558
-"West Strandveld Bioregion (Floodplain)","West Strandveld Bioregion (Floodplain)",159.952448910184
-"East Coast Renosterveld Bioregion (Valley-bottom)","East Coast Renosterveld Bioregion (Valley-bottom)",23424.9732819135
-"East Coast Renosterveld Bioregion (Seep)","East Coast Renosterveld Bioregion (Seep)",21751.4681985319
-"Eastern Fynbos-Renosterveld Bioregion (Valley-bottom)","Eastern Fynbos-Renosterveld Bioregion (Valley-bottom)",19650.4994470929
-"South Coast Fynbos Bioregion (Seep)","South Coast Fynbos Bioregion (Seep)",7995.54003587569
-"Southwest Fynbos Bioregion (Depression)","Southwest Fynbos Bioregion (Depression)",6842.33609296188
-"Succulent Karoo Biome (Depression)","Succulent Karoo Biome (Depression)",10.1366864562491
-"Western Fynbos-Renosterveld Bioregion (Depression)","Western Fynbos-Renosterveld Bioregion (Depression)",490.49585861762
-"South Strandveld Bioregion (Depression)","South Strandveld Bioregion (Depression)",7.74373491204812
-"South Coast Fynbos Bioregion (Depression)","South Coast Fynbos Bioregion (Depression)",198.679026594079
-"East Coast Renosterveld Bioregion (Depression)","East Coast Renosterveld Bioregion (Depression)",439.139203606523
-"Nama Karoo Biome (Depression)","Nama Karoo Biome (Depression)",10403.8763824292
-"South Coast Fynbos Bioregion (Floodplain)","South Coast Fynbos Bioregion (Floodplain)",5435.39582698604
-"East Coast Renosterveld Bioregion (Floodplain)","East Coast Renosterveld Bioregion (Floodplain)",11527.8995519486
-"South Strandveld Bioregion (Floodplain)","South Strandveld Bioregion (Floodplain)",1320.16485526406
-"Albany Thicket Biome (Floodplain)","Albany Thicket Biome (Floodplain)",2192.90419309429
-"Eastern Fynbos-Renosterveld Bioregion (Floodplain)","Eastern Fynbos-Renosterveld Bioregion (Floodplain)",3314.87962754307
-"Western Fynbos-Renosterveld Bioregion (Floodplain)","Western Fynbos-Renosterveld Bioregion (Floodplain)",10693.252822861
-"Southern Fynbos Bioregion (Seep)","Southern Fynbos Bioregion (Seep)",7146.58787026023
-"South Strandveld Bioregion (Seep)","South Strandveld Bioregion (Seep)",14677.3278797822
-"Albany Thicket Biome (Seep)","Albany Thicket Biome (Seep)",76810.857826176
-"Eastern Fynbos-Renosterveld Bioregion (Seep)","Eastern Fynbos-Renosterveld Bioregion (Seep)",16773.1471008016
-"Western Fynbos-Renosterveld BioregionWestern Fynbos-Renosterveld Bioregion (Seep)","Western Fynbos-Renosterveld BioregionWestern Fynbos-Renosterveld Bioregion (Seep)",11.6172964773338
-"Southern Fynbos Bioregion (Valley-bottom)","Southern Fynbos Bioregion (Valley-bottom)",6718.85087391236
-"South Strandveld Bioregion (Valley-bottom)","South Strandveld Bioregion (Valley-bottom)",13326.7681702067
-"South Coast Fynbos Bioregion (Valley-bottom)","South Coast Fynbos Bioregion (Valley-bottom)",6215.32446275931
-"Albany Thicket Biome (Valley-bottom)","Albany Thicket Biome (Valley-bottom)",54344.2238505852
-"Southern Fynbos Bioregion (Floodplain)","Southern Fynbos Bioregion (Floodplain)",904.05237877935
-"Western Fynbos-Renosterveld BioregionWestern Fynbos-Renosterveld Bioregion (Valley-bottom)","Western Fynbos-Renosterveld BioregionWestern Fynbos-Renosterveld Bioregion (Valley-bottom)",31.5424925254288
-"Albany Thicket Biome (Depression)","Albany Thicket Biome (Depression)",2322.90734205084
-"Eastern Fynbos-Renosterveld Bioregion (Depression)","Eastern Fynbos-Renosterveld Bioregion (Depression)",994.202061970484
-"Sub-escarpment Grassland Bioregion (Depression)","Sub-escarpment Grassland Bioregion (Depression)",0.330616153646714
+"","type","eoo_km2"
+"Maputaland Coastal Belt_Depression","Maputaland Coastal Belt_Depression",35296.8280175311
+"Central Bushveld_Depression","Central Bushveld_Depression",153118.504257883
+"Dry Highveld Grassland_Depression","Dry Highveld Grassland_Depression",222295.37275812
+"Lowveld_Depression","Lowveld_Depression",503501.634800793
+"Mesic Highveld Grassland_Depression","Mesic Highveld Grassland_Depression",215528.32079583
+"Bushmanland_Depression","Bushmanland_Depression",149852.387264663
+"Karoo Interior_Depression","Karoo Interior_Depression",405700.26043991
+"Namaqualand_Depression","Namaqualand_Depression",35047.1433363071
+"Eastern Kalahari Bushveld_Depression","Eastern Kalahari Bushveld_Depression",220927.507042465
+"Drakensberg Grassland_Depression","Drakensberg Grassland_Depression",87652.7743777129
+"Eastern Fynbos-Renosterveld_Depression","Eastern Fynbos-Renosterveld_Depression",16108.1541280424
+"Albany Thicket_Depression","Albany Thicket_Depression",338259.869481617
+"Sub-escarpment Savanna_Depression","Sub-escarpment Savanna_Depression",118572.821282924
+"Sub-Escarpment Grassland_Depression","Sub-Escarpment Grassland_Depression",157367.152334474
+"Mopane_Depression","Mopane_Depression",39936.4986743864
+"Northwest Fynbos_Depression","Northwest Fynbos_Depression",28828.4577976359
+"Kalahari Duneveld_Depression","Kalahari Duneveld_Depression",95960.882598125
+"Knersvlakte_Depression","Knersvlakte_Depression",3661.97014982536
+"Southern Fynbos_Depression","Southern Fynbos_Depression",26966.1231590802
+"West Coast_Depression","West Coast_Depression",2474.31977502177
+"East Coast Renosterveld_Depression","East Coast Renosterveld_Depression",5515.56025850975
+"Southwest Fynbos_Depression","Southwest Fynbos_Depression",3560.17910454607
+"Dry Highveld Grassland_Seep","Dry Highveld Grassland_Seep",268321.779753587
+"Dry Highveld Grassland_Floodplain","Dry Highveld Grassland_Floodplain",196743.160176541
+"Drakensberg Grassland_Floodplain","Drakensberg Grassland_Floodplain",77851.1761210584
+"Drakensberg Grassland_Seep","Drakensberg Grassland_Seep",82462.8627055616
+"Dry Highveld Grassland_Unchannelled valley-bottom","Dry Highveld Grassland_Unchannelled valley-bottom",238257.527446115
+"Drakensberg Grassland_Unchannelled valley-bottom","Drakensberg Grassland_Unchannelled valley-bottom",56270.5351465627
+"Karoo Interior_Floodplain","Karoo Interior_Floodplain",294679.015364618
+"Mesic Highveld Grassland_Unchannelled valley-bottom","Mesic Highveld Grassland_Unchannelled valley-bottom",227037.398511254
+"Mesic Highveld Grassland_Seep","Mesic Highveld Grassland_Seep",242807.256316579
+"Mesic Highveld Grassland_Floodplain","Mesic Highveld Grassland_Floodplain",188195.031628107
+"Karoo Interior_Seep","Karoo Interior_Seep",363773.306799403
+"Karoo Interior_Unchannelled valley-bottom","Karoo Interior_Unchannelled valley-bottom",233706.030885488
+"Central Bushveld_Floodplain","Central Bushveld_Floodplain",165517.085712354
+"Central Bushveld_Seep","Central Bushveld_Seep",153740.49428176
+"Central Bushveld_Unchannelled valley-bottom","Central Bushveld_Unchannelled valley-bottom",146689.172418652
+"Sub-escarpment Grassland_Floodplain","Sub-escarpment Grassland_Floodplain",134789.44044241
+"Sub-escarpment Grassland_Seep","Sub-escarpment Grassland_Seep",131741.627810133
+"Eastern Kalahari Bushveld_Seep","Eastern Kalahari Bushveld_Seep",71282.8928434144
+"Eastern Kalahari Bushveld_Unchannelled valley-bottom","Eastern Kalahari Bushveld_Unchannelled valley-bottom",104831.188963974
+"Lowveld_Floodplain","Lowveld_Floodplain",93456.8145638137
+"Lowveld_Seep","Lowveld_Seep",101274.830671409
+"Lowveld_Unchannelled valley-bottom","Lowveld_Unchannelled valley-bottom",93756.6184411096
+"Mopane_Floodplain","Mopane_Floodplain",35300.6009900938
+"Mopane_Seep","Mopane_Seep",12961.1275841661
+"Mopane_Unchannelled valley-bottom","Mopane_Unchannelled valley-bottom",4051.28800518619
+"Sub-escarpment Grassland_Unchannelled valley-bottom","Sub-escarpment Grassland_Unchannelled valley-bottom",117316.238930692
+"Sub-escarpment Savanna_Seep","Sub-escarpment Savanna_Seep",87480.1094811416
+"Sub-escarpment Savanna_Floodplain","Sub-escarpment Savanna_Floodplain",83434.905559922
+"Sub-escarpment Savanna_Unchannelled valley-bottom","Sub-escarpment Savanna_Unchannelled valley-bottom",66041.9501205251
+"Pondoland Coastal Belt_Seep","Pondoland Coastal Belt_Seep",4511.93713816423
+"Kwa-Zulu Natal Coastal Belt_Seep","Kwa-Zulu Natal Coastal Belt_Seep",8814.8168589907
+"Kwa-Zulu Natal Coastal Belt_Floodplain","Kwa-Zulu Natal Coastal Belt_Floodplain",3886.41516609829
+"Pondoland Coastal Belt_Floodplain","Pondoland Coastal Belt_Floodplain",2978.64547019969
+"Kwa-Zulu Natal Coastal Belt_Unchannelled valley-bottom","Kwa-Zulu Natal Coastal Belt_Unchannelled valley-bottom",6929.9098919859
+"Pondoland Coastal Belt_Unchannelled valley-bottom","Pondoland Coastal Belt_Unchannelled valley-bottom",2092.69990566993
+"Maputaland Coastal Belt_Floodplain","Maputaland Coastal Belt_Floodplain",10711.3982441556
+"Maputaland Coastal Belt_Seep","Maputaland Coastal Belt_Seep",10920.0014947479
+"Maputaland Coastal Belt_Unchannelled valley-bottom","Maputaland Coastal Belt_Unchannelled valley-bottom",8876.36765746155
+"Northwest Fynbos_Floodplain","Northwest Fynbos_Floodplain",20095.1813453441
+"Northwest Fynbos_Seep","Northwest Fynbos_Seep",17409.7770078508
+"Bushmanland_Seep","Bushmanland_Seep",51938.6381813654
+"Bushmanland_Unchannelled valley-bottom","Bushmanland_Unchannelled valley-bottom",14806.8910266868
+"Bushmanland_Floodplain","Bushmanland_Floodplain",88930.0760392542
+"Southern Fynbos_Seep","Southern Fynbos_Seep",68268.8445284887
+"Southwest Fynbos_Seep","Southwest Fynbos_Seep",29174.4190951894
+"West Coast_Seep","West Coast_Seep",14671.0481774388
+"Southern Fynbos_Floodplain","Southern Fynbos_Floodplain",62791.0091245047
+"West Coast_Floodplain","West Coast_Floodplain",14642.2971850752
+"Northwest Fynbos_Unchannelled valley-bottom","Northwest Fynbos_Unchannelled valley-bottom",6268.46654446986
+"West Coast_Unchannelled valley-bottom","West Coast_Unchannelled valley-bottom",4894.9431015017
+"Southwest Fynbos_Floodplain","Southwest Fynbos_Floodplain",28886.161353926
+"Southwest Fynbos_Unchannelled valley-bottom","Southwest Fynbos_Unchannelled valley-bottom",16255.5640640855
+"East Coast Renosterveld_Floodplain","East Coast Renosterveld_Floodplain",24251.4717285399
+"East Coast Renosterveld_Seep","East Coast Renosterveld_Seep",24463.4230315263
+"East Coast Renosterveld_Unchannelled valley-bottom","East Coast Renosterveld_Unchannelled valley-bottom",14167.3016421708
+"Southern Fynbos_Unchannelled valley-bottom","Southern Fynbos_Unchannelled valley-bottom",49431.6923027938
+"Albany Thicket_Floodplain","Albany Thicket_Floodplain",51423.9875250062
+"Albany Thicket_Seep","Albany Thicket_Seep",76839.0004101364
+"Albany Thicket_Unchannelled valley-bottom","Albany Thicket_Unchannelled valley-bottom",7860.95868006011
