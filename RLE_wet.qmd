@@ -67,9 +67,9 @@ wet <- wetlands %>%
   # make a new "bioregion" col by getting the text before the _ in New_name
   mutate(bioregion = str_extract(New_name, "^[^_]+")) %>%
   # make PES data usable but this will change when Nancy supplies real PES data for depressions and 2018
-  mutate(EC22ALL = ifelse(is.na(NBAPES2025)|NBAPES2025 == "not assessed", "DD", NBAPES2025)) %>%
-  mutate(EC18ALL = ifelse(is.na(EC18ALL), EC22ALL, EC18ALL)) %>% # fill NAs for PES2018 with 2022 values
-  select(-NBAPES2025) %>%
+  mutate(pes24 = ifelse(is.na(NBAPES2025)|NBAPES2025 == "not assessed", "DD", NBAPES2025)) %>%
+  mutate(pes18 = ifelse(is.na(EC18ALL), pes24, EC18ALL)) %>% # fill NAs for PES2018 with 2022 values
+  select(-NBAPES2025, -EC18ALL) %>%
   rename(type = New_name)
 
 # remove geometry for quicker summaries
@@ -83,14 +83,13 @@ wet_tb <- st_drop_geometry(wet)
  
 # write new spatial output for Nancy using terra as sf outputs a gpkg that cant be read by ARCGIS due to WKT # 
 # BUT NOTE YOU CANT DO THIS IN CUSTOM CRS SO USED UNPROJECTED WGS84 
-wet_v <- wet %>%
-   rename(pes18 = EC18ALL, pes25 = EC22ALL ) %>%
-   left_join(st_drop_geometry(wetlands), by = "fid") %>%
-   relocate(pes25, .after = pes18) %>%
-   mutate(as.numeric(area_m2))
+wet_v <- wetlands %>%
+      left_join(st_drop_geometry(wet_tb), by = "fid") %>%
+      relocate(pes24, .after = pes18) %>%
+      mutate(area_m2 = as.numeric(area_m2))
 
-wt_v_dd <- st_transform(wet_v, 4326)
-st_write(wt_v_dd, "C:/Users/skownoa/Dropbox/NBAwork/Wetlands/wetlands_20250730.gpkg", delete_dsn = TRUE) 
+wet_v_dd <- st_transform(wet_v, 4326)
+st_write(wet_v_dd, "C:/Users/skownoa/Dropbox/NBAwork/Wetlands/wetlands_20250731.gpkg", delete_dsn = TRUE) 
 
 
 ```
@@ -119,7 +118,7 @@ eoo_df <- data.frame(
   select(!AREA_EOO)
 
 write.csv(eoo_df, "outputs/EOO_all.csv")
-
+eoo_df <- read.csv("C:/Rdata/RLE_wet/outputs/EOO_all.csv")
 
 ```
 
@@ -229,6 +228,7 @@ type_lc_metrics <- type_ras_ext %>%
 
 # Export a csv of results - Condition and EPL per river type 2018 and 2024
    write_csv(type_lc_metrics, file = "outputs/type_lc_metrics.csv")
+   
 ```
 
 RLE and ETS assessment of wetland ecosystem types
@@ -239,17 +239,17 @@ RLE and ETS assessment of wetland ecosystem types
 
 #overall summary
 wet_type_24 <- wet_tb %>%
-    group_by(type, EC22ALL) %>%
+    group_by(type, pes24) %>%
   summarise(area_sum = sum(as.numeric(area_m2), na.rm = TRUE)) %>%
   ungroup() %>%
-  pivot_wider(names_from = EC22ALL, values_from = area_sum, values_fill = list(area_sum = 0))  %>%
+  pivot_wider(names_from = pes24, values_from = area_sum, values_fill = list(area_sum = 0))  %>%
   mutate(type_m2 = rowSums(across(c(A, B, C, D, E, F, DD))))
 
 wet_type_18 <- wet_tb %>%
-    group_by(type, EC18ALL) %>%
+    group_by(type, pes18) %>%
   summarise(area_sum = sum(as.numeric(area_m2), na.rm = TRUE)) %>%
   ungroup() %>%
-  pivot_wider(names_from = EC18ALL, values_from = area_sum, values_fill = list(area_sum = 0)) %>%
+  pivot_wider(names_from = pes18, values_from = area_sum, values_fill = list(area_sum = 0)) %>%
   rename(A18=A, B18=B, C18=C, D18=D, E18=E, F18=F, DD18 = DD)
  
 # Join the tables above - this makes a single table in which all the required metrics can be found to compute EPL and RLE
