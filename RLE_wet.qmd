@@ -158,6 +158,11 @@ lc7_list = list(tb1990,tb2018,tb2022)
 lc7_rall <- lc7_list %>%  bind_rows() %>%   
   as_tibble()
 
+# save to avoid rerunning extracts
+write_csv(lc7_rall, file = "outputs/lc7_rall.csv")
+
+lc7_rall <- read_csv("outputs/lc7_rall.csv") 
+
 type_ras_ext <- lc7_rall %>%   
   filter(YEAR == 2022) %>%
   group_by(YEAR, type) %>% 
@@ -180,25 +185,29 @@ type_lc_metrics <- type_ras_ext %>%
   mutate(ard9022 = (nat1990-nat2022)/(2022-1990)) %>%
   mutate(nat40_9022 = nat1990 - (ard9022*50))  %>%
   mutate(prplost9040_9022 = (nat1990-nat40_9022)/nat1990) %>%
+  mutate(ard1822 = (nat2018-nat2022)/(2022-2018)) %>%
+  mutate(nat40_1822 = nat2018 - (ard1822*50))  %>%
+  mutate(prplost9040_1822 = (nat1990-nat40_1822)/nat1990) %>%
   mutate(ard9018 = (nat1990-nat2018)/(2018-1990)) %>%
   mutate(nat40_9018 = nat1990 - (ard9018*50))  %>%
   mutate(prplost9040_9018 = (nat1990-nat40_9018)/nat1990) %>%
   mutate(rod9022 = prplost9040_9022/50*100) %>%
+  mutate(rod1822 = prplost9040_1822/50*100) %>%
   mutate(rod9018 = prplost9040_9018/50*100) %>%
-    # assessments 2024
+      # assessments 2024
   mutate(A3_24 = case_when(prpnat2022 < 0.1 ~ "CR",
                         prpnat2022 < 0.3 ~ "EN", 
                         prpnat2022 < 0.5 ~ "VU", 
                         TRUE ~"LC")) %>%
   mutate(A3_24 = factor(A3_24, levels = c("LC","VU", "EN", "CR"), ordered = TRUE)) %>%
-  mutate(A2b_24 = case_when(prplost9040_9022 >= 0.8 ~ "CR",
-                         prplost9040_9022 >= 0.5 ~ "EN",
-                         prplost9040_9022 >= 0.3 ~ "VU", 
+  mutate(A2b_24 = case_when(prplost9040_1822 >= 0.8 ~ "CR",
+                         prplost9040_1822 >= 0.5 ~ "EN",
+                         prplost9040_1822 >= 0.3 ~ "VU", 
                          TRUE ~ "LC")) %>%
   mutate(A2b_24 = factor(A2b_24, levels = c("LC","VU", "EN", "CR" ), ordered = TRUE)) %>%
-  mutate(B1ai_24 = case_when( rod9022 >= 0.4  & eoo_km2  <= 2000 ~ "CR",
-                              rod9022 >= 0.4  & eoo_km2   <= 20000 ~ "EN",
-                             rod9022 >= 0.4  & eoo_km2   <= 50000 ~ "VU",
+  mutate(B1ai_24 = case_when( rod1822 >= 0.3  & eoo_km2  <= 2000 ~ "CR",
+                              rod1822 >= 0.3  & eoo_km2   <= 20000 ~ "EN",
+                              rod1822 >= 0.3  & eoo_km2   <= 50000 ~ "VU",
                                  TRUE ~ "LC")) %>%
   mutate(B1ai_24 = factor(B1ai_24, levels = c("LC","VU", "EN", "CR"), ordered = TRUE)) %>%
 # assessments 2018
@@ -212,11 +221,14 @@ type_lc_metrics <- type_ras_ext %>%
                          prplost9040_9018 >= 0.3 ~ "VU", 
                          TRUE ~ "LC")) %>%
   mutate(A2b_18 = factor(A2b_18, levels = c("LC","VU", "EN", "CR" ), ordered = TRUE)) %>%
-  mutate(B1ai_18 = case_when( rod9018 >= 0.4  & eoo_km2  <= 2000 ~ "CR",
-                              rod9018 >= 0.4  & eoo_km2   <= 20000 ~ "EN",
-                             rod9018 >= 0.4  & eoo_km2   <= 50000 ~ "VU",
+  mutate(B1ai_18 = case_when( rod9018 >= 0.3  & eoo_km2  <= 2000 ~ "CR",
+                              rod9018 >= 0.3  & eoo_km2   <= 20000 ~ "EN",
+                              rod9018 >= 0.3  & eoo_km2   <= 50000 ~ "VU",
                                  TRUE ~ "LC")) %>%
   mutate(B1ai_18 = factor(B1ai_18, levels = c("LC","VU", "EN", "CR"), ordered = TRUE))
+
+# Export a csv of results - Condition and EPL per river type 2018 and 2024
+   write_csv(type_lc_metrics, file = "outputs/type_lc_metrics.csv")
 ```
 
 RLE and ETS assessment of wetland ecosystem types
@@ -245,26 +257,26 @@ wet_type_18 <- wet_tb %>%
  wet_type_metrics <- wet_type_24 %>%
   left_join(wet_type_18, by = "type") %>%
    left_join(type_lc_metrics, by = "type") %>%
-    mutate(prp18_cdef = (DD18 + C18 + D18 + E18 + F18)/type_m2) %>%
-    mutate(prp18_def = (D18 + E18 + F18 )/type_m2) %>%
+    mutate(prp18_cdef = (DD18 + C18 + D18 + E18 + F18)/type_m2) %>% # DD allocated to D!!!!!!!!!
+    mutate(prp18_def = (DD18 + D18 + E18 + F18 )/type_m2) %>%   # DD allocated to D!!!!!!!!!
     mutate(prp18_ef= (E18 + F18)/type_m2) %>%
     mutate(prp18_f= F18/type_m2) %>%
-    mutate(prp24_cdef = (DD + C + D + E + F)/type_m2) %>%
-    mutate(prp24_def = (D + E + F )/type_m2) %>%
+    mutate(prp24_cdef = (DD + C + D + E + F)/type_m2) %>%    # DD allocated to D!!!!!!!!!
+    mutate(prp24_def = (DD + D + E + F )/type_m2) %>%    # DD allocated to D!!!!!!!!!
     mutate(prp24_ef= (E + F)/type_m2) %>%
     mutate(prp24_f= F/type_m2) %>%
 # add change in PES for B1i ongoing decline evidence (PES ABC & DD extent decline > 1%)  
    # extent of good-fair wetland (ABC&DDef) declined by >1% from t1 to t2
    mutate(pes_decline1824 = ifelse(
-      (((A18 + B18 + C18 + DD18) - (A + B + C + DD))
-      / (A18 + B18 + C18 + DD18)) 
-      > 0.01, "decline1824", "nodecline1824"))  %>%  
-   # note for RLEindex the we recompute 2018 RLE but no earlier period of PES is available, so decline in PES observed in          2018-2024 is assumed to be ongoing and applicable to 2014-2018 period for the B1i assessment
+      (((A18 + B18 + C18) - (A + B + C))
+      / (A18 + B18 + C18)) 
+      > 0.01, "decline1824", "nodecline1824"))  %>%     # DD allocated to D!!!!!!!!!
+   # note for RLEindex the we recompute 2018 RLE but no earlier period of PES is available, so decline in PES observed in 2018-2024 is assumed to be ongoing and applicable to 2014-2018 period for the B1aii assessment
 # add D3 using PES scores for severity estimates: EF >=90% severity, DEF >=70-% severity, CDEF>=50% severity
     mutate(D3_18 = case_when( prp18_ef >= 0.9 ~ "CR", 
                                  prp18_ef >= 0.7 | prp18_def >=0.9 ~ "EN",
                                  prp18_ef >= 0.5 | prp18_def >=0.7 | 
-                                                  prp18_cdef >= 0.9 ~ "VU", 
+                                                   prp18_cdef >= 0.9 ~ "VU", 
                                  TRUE ~ "LC")) %>% 
             mutate(D3_18 = factor(D3_18, levels = c("LC","VU", "EN", "CR"), ordered = TRUE)) %>%
     mutate(D3_24 = case_when( prp24_ef >= 0.9 ~ "CR", 
@@ -278,12 +290,12 @@ wet_type_18 <- wet_tb %>%
                               pes_decline1824 == "decline1824" & eoo_km2  <= 20000 ~ "EN",
                               pes_decline1824 == "decline1824" & eoo_km2  <= 50000 ~ "VU",
                                  TRUE ~ "LC")) %>%
-            mutate(B1aii_24 = factor(D3_24, levels = c("LC","VU", "EN", "CR"), ordered = TRUE)) %>%
+            mutate(B1aii_24 = factor(B1aii_24, levels = c("LC","VU", "EN", "CR"), ordered = TRUE)) %>%
    mutate(B1aii_18 = case_when( pes_decline1824 == "decline1824" & eoo_km2  <= 2000 ~ "CR",
                               pes_decline1824 == "decline1824" & eoo_km2  <= 20000 ~ "EN",
                               pes_decline1824 == "decline1824" & eoo_km2  <= 50000 ~ "VU",
                                  TRUE ~ "LC")) %>%
-            mutate(B1aii_18 = factor(D3_18, levels = c("LC","VU", "EN", "CR"), ordered = TRUE)) %>%
+            mutate(B1aii_18 = factor(B1aii_18, levels = c("LC","VU", "EN", "CR"), ordered = TRUE)) %>%
    # re order cols 
     relocate(A2b_18, A3_18, B1ai_18, B1aii_18, D3_18, A2b_24, A3_24, B1ai_24, B1aii_24, D3_24,  .after = pes_decline1824) %>%
   # overall RLE outcome
@@ -304,10 +316,8 @@ wet_type_18 <- wet_tb %>%
                                  TRUE ~ "LC")) %>%
      # add in HGM type
    left_join(type_hgm_tb, by = "type") %>%
-   relocate(hgm, .after = type) %>%
-   # MANUAL ADJUSTMENT OF Albany Thicket_Depression RLE24 to CR from EN to match RLE18 - makes plots work as no CRs 
-  mutate(RLE24 = case_when( type == "Albany Thicket_Floodplain" ~ "CR",
-      TRUE ~ as.character(RLE24)), RLE24 = factor(RLE24, levels = c("LC","VU", "EN", "CR"), ordered = TRUE))
+   relocate(hgm, .after = type)
+   
    
    # export a csv of results - Condition and EPL per river type 2018 and 2024
    write_csv(wet_type_metrics, file = "outputs/rle_wet_metrics_per_type.csv")
