@@ -1,0 +1,63 @@
+---
+title: "RLE_EPL_results"
+format: html
+---
+
+```{r}
+library(sf)
+library(tidyverse)
+```
+
+```{r}
+# Load the RLE and EPL results for Estuaries and then combine them and join to estuaries patial data
+RLE <- read.csv("C:/Rdata/RLE_wet/outputs/rle_wet_metrics_per_type.csv")
+EPL <- read.csv("C:/Rdata/EPL_wet/outputs/epl_wet_metrics_per_type.csv")
+
+# select only cols required and then join
+RLE <- RLE %>%
+  select(type, hgm, RLE18, RLE24, A3sa_18, A3sa_24, type_m2) %>%
+  rename(RLEsa18 = A3sa_18, RLEsa24 = A3sa_24, zone = hgm) %>%
+  mutate(extent = type_m2/1e6)
+EPL <- EPL %>%
+  select(type, EPL18_wp_ab_model, EPL24_wp_ab_model) %>% 
+  rename(EPL18 = EPL18_wp_ab_model, EPL24 = EPL24_wp_ab_model)
+  
+wet_results_type <- RLE %>%
+  left_join(EPL, by = "type") %>%
+  # combine RLE and EPL into a new col
+  unite("RLE_EPL24", RLE24, EPL24, sep = "_", remove = FALSE) %>%
+  # order the cols to show unluckies in right sequence
+  mutate(RLE24 = factor(RLE24, levels = c("LC", "VU", "EN", "CR"), ordered = TRUE)) %>%
+  mutate(EPL24 = factor(EPL24, levels = c("NP", "PP", "MP", "WP"), ordered = TRUE)) %>%
+    mutate(RLE_EPL24 = factor(RLE_EPL24, levels = c("LC_WP", "LC_MP", "VU_WP", "VU_MP", "LC_PP",  "LC_NP",  "VU_PP", "VU_NP", "EN_WP", "EN_MP",  "CR_WP", "CR_MP","EN_PP" , "EN_NP","CR_PP", "CR_NP"), ordered = TRUE)) %>%
+  relocate(zone, .after = type) %>%
+  relocate(RLE_EPL24, .after = EPL24)
+
+# MAKE simple output for coastal and overal integrated results and plots 
+wet_results_for_integration <- wet_results_type %>%
+  select(type, zone, extent, RLE24, EPL24, RLE_EPL24) %>%
+  mutate(realm = "wet") %>%
+  rename(RLE = RLE24, EPL = EPL24, RLE_EPL = RLE_EPL24)
+
+# summarise unluckies 
+wet_unluckies <- wet_results_type %>% 
+  group_by(RLE_EPL24, zone) %>% 
+  summarise(count = n(), .groups = "drop") %>%
+  pivot_wider(names_from = zone, values_from = count, values_fill = 0) %>%# Step 2: 
+  rowwise() %>%
+  mutate(Total = sum(c_across(-RLE_EPL24))) %>%
+  ungroup() %>%
+  bind_rows(
+    summarise(., 
+              RLE_EPL24 = "Total", 
+              across(where(is.numeric), ~sum(.x, na.rm = TRUE)))
+  )
+
+
+
+# write results
+write.csv(wet_results_type, file = "outputs/wet_results_type.csv")
+write.csv(wet_results_for_integration, file = "outputs/wet_results_for_integration.csv")
+write.csv(wet_unluckies, file = "outputs/wet_unluckies.csv")
+
+```

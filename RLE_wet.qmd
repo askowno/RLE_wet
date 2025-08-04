@@ -19,14 +19,14 @@ library(PROJ)
 wetlands <- st_read("C:/Users/skownoa/Dropbox/NBAwork/Wetlands/NBA2025_wetl.gpkg")
 wetlands <- wetlands %>% mutate(fid = row_number())
 #ensure it uses proj =  wgs84 aea cm 25 -24 -33
-st_crs(wetlands)
+# st_crs(wetlands)
 
 ```
 
 ### Clean up input data
 
 ```{r}
-## Clean up this version : there are 215 NA in New_name (type) filter thee out (future version will name them), make NAs in NBAPES25 into "DD", add zone column  by finding text after _ in the New_name. 
+## Clean up this version : there are 215 NA in New_name (type) filter these out (future version will name them), make NAs in NBAPES25 into "DD", add zone column  by finding text after _ in the New_name. 
 
 options(scipen = 999)
 
