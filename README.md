@@ -36,6 +36,39 @@ Summary table - count of wetland ecosystem types per HGM zone per IUCN RLE categ
 
 Summary table - count of wetland ecosystem types per HGM zone per South African ETS category [rle24sa_wet_count.csv](outputs/rle24sa_wet_count.csv)
 
-| RLE 2024 - Wetlands | ETS 2024 - Wetlands |
-|----|----|
-| ![](outputs/rle24_wet_barplot_count.jpeg) | ![](outputs/rle24sa_wet_barplot_count.jpeg) |
+| RLE 2024 - count of types | RLE 2024 - extent of types |
+|------------------------------------|------------------------------------|
+| ![](outputs/rle24_wet_barplot_count.jpeg) | ![](outputs/rle24_wet_barplot_ext.jpeg) |
+| ![](outputs/rle24sa_wet_barplot_count.jpeg) | ![](outputs/rle24sa_wet_barplot_ext.jpeg) |
+
+**RLE Index**
+
+Reflecting changes in RLE between 2018 and 2024
+
+| Col1                        | Col2                          |
+|-----------------------------|-------------------------------|
+| ![](outputs/rlie_plot.jpeg) | ![](outputs/rliesa_plot.jpeg) |
+
+**Combined RLE and EPL results**
+
+The Quarto document [RLE_EPL_results.qmd](RLE_EPL_results.qmd) describes the combination of the RLE and EPL results
+
+IUCN RLE v2 and EPL results:
+
+Full results per type : [outputs/wet_results_type.csv](outputs/wet_results_type.csv)
+
+Simplified results for integration : [outputs/wet_results_for_integration.csv](outputs/wet_results_for_integration.csv)
+
+Highly threatened and under protected : [outputs/riv_unluckies.csv](outputs/wet_unluckies.csv)
+
+Highly threatened and under-protected ecosystems: xx% of wetlands types (xx) are highly threatened (EN/CR) and under protected (NP/ PP), but xx% of xx wetlands fall into this category.
+
+SA ETS (van Deventer et al., 2019) and EPL results:
+
+Full results per type : [outputs/wet_results_type_sa.csv](outputs/wet_results_type_sa.csv)
+
+Simplified results for integration : [outputs/wet_results_sa_for_integration.csv](outputs/wet_results_sa_for_integration.csv)
+
+Highly threatened and under protected : [outputs/riv_unluckies_sa.csv](outputs/riv_unluckies_sa.csv)
+
+Highly threatened and under-protected ecosystems: xx% of wetlands types (xx) are highly threatened (EN/CR) and under protected (NP/ PP), but xx% of xx wetlands fall into this category.
