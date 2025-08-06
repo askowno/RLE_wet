@@ -225,7 +225,7 @@ type_lc_metrics <- type_ras_ext %>%
    
 ```
 
-Extra step to load data from above processes to avoid rerunning slow processes
+**Extra step to load data from above processes to avoid rerunning slow processes**
 
 ```{r}
 #load land cover results (which includes eoo) to avoid rerunning slow terra commands
@@ -255,7 +255,12 @@ wet_type_18 <- wet_tb %>%
   pivot_wider(names_from = pes18, values_from = area_sum, values_fill = list(area_sum = 0)) %>%
   rename(A18=A, B18=B, C18=C, D18=D, E18=E, F18=F, DD18 = DD)
  
+# PES results 24 for booklet narratives
+pes24_stats <- wet_type_24 %>%
+    bind_rows(summarise(., type = "Total", across(where(is.numeric), ~sum(., na.rm = TRUE)) ) ) %>%
+  mutate(prp24_ab = (A+B)/type_m2)
 
+  write.csv(pes24_stats, file = "outputs/wet_pes24_per_type.csv")
 
 ```
 

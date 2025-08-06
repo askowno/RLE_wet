@@ -37,7 +37,7 @@ Summary table - count of wetland ecosystem types per HGM zone per IUCN RLE categ
 Summary table - count of wetland ecosystem types per HGM zone per South African ETS category [rle24sa_wet_count.csv](outputs/rle24sa_wet_count.csv)
 
 | RLE 2024 - count of types | RLE 2024 - extent of types |
-|----|----|
+|------------------------------------|------------------------------------|
 | ![](outputs/rle24_wet_barplot_count.jpeg) | ![](outputs/rle24_wet_barplot_ext.jpeg) |
 | ![](outputs/rle24sa_wet_barplot_count.jpeg) | ![](outputs/rle24sa_wet_barplot_ext.jpeg) |
 
@@ -72,3 +72,9 @@ Simplified results for integration : [outputs/wet_results_sa_for_integration.csv
 Highly threatened and under protected : [outputs/riv_unluckies_sa.csv](outputs/riv_unluckies_sa.csv)
 
 Highly threatened and under-protected ecosystems: xx% of wetlands types (xx) are highly threatened (EN/CR) and under protected (NP/ PP), but xx% of xx wetlands fall into this category.
+
+**River PES stats for 2024**
+
+42% of Wetland area in South Africa is in A or B condition
+
+[outputs/wet_pes24_per_type.csv](outputs/wet_pes24_per_type.csv)
