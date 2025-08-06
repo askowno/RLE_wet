@@ -198,33 +198,27 @@ type_lc_metrics <- type_ras_ext %>%
                         prpnat2022 < 0.3 ~ "EN", 
                         prpnat2022 < 0.5 ~ "VU", 
                         TRUE ~"LC")) %>%
-  mutate(A3_24 = factor(A3_24, levels = c("LC","VU", "EN", "CR"), ordered = TRUE)) %>%
   mutate(A2b_24 = case_when(prplost9040_1822 >= 0.8 ~ "CR",
                          prplost9040_1822 >= 0.5 ~ "EN",
                          prplost9040_1822 >= 0.3 ~ "VU", 
                          TRUE ~ "LC")) %>%
-  mutate(A2b_24 = factor(A2b_24, levels = c("LC","VU", "EN", "CR" ), ordered = TRUE)) %>%
   mutate(B1ai_24 = case_when( rod1822 >= 0.3  & eoo_km2  <= 2000 ~ "CR",
                               rod1822 >= 0.3  & eoo_km2   <= 20000 ~ "EN",
                               rod1822 >= 0.3  & eoo_km2   <= 50000 ~ "VU",
                                  TRUE ~ "LC")) %>%
-  mutate(B1ai_24 = factor(B1ai_24, levels = c("LC","VU", "EN", "CR"), ordered = TRUE)) %>%
 # assessments 2018
   mutate(A3_18 = case_when(prpnat2018 < 0.1 ~ "CR",
                         prpnat2018 < 0.3 ~ "EN", 
                         prpnat2018 < 0.5 ~ "VU", 
                         TRUE ~"LC")) %>%
-  mutate(A3_18 = factor(A3_18, levels = c("LC","VU", "EN", "CR"), ordered = TRUE)) %>%
   mutate(A2b_18 = case_when(prplost9040_9018 >= 0.8 ~ "CR",
                          prplost9040_9018 >= 0.5 ~ "EN",
                          prplost9040_9018 >= 0.3 ~ "VU", 
                          TRUE ~ "LC")) %>%
-  mutate(A2b_18 = factor(A2b_18, levels = c("LC","VU", "EN", "CR" ), ordered = TRUE)) %>%
   mutate(B1ai_18 = case_when( rod9018 >= 0.3  & eoo_km2  <= 2000 ~ "CR",
                               rod9018 >= 0.3  & eoo_km2   <= 20000 ~ "EN",
                               rod9018 >= 0.3  & eoo_km2   <= 50000 ~ "VU",
-                                 TRUE ~ "LC")) %>%
-  mutate(B1ai_18 = factor(B1ai_18, levels = c("LC","VU", "EN", "CR"), ordered = TRUE))
+                                 TRUE ~ "LC"))
 
 # Export a csv of results - Condition and EPL per river type 2018 and 2024
    write_csv(type_lc_metrics, file = "outputs/type_lc_metrics.csv")
@@ -236,10 +230,7 @@ Extra step to load data from above processes to avoid rerunning slow processes
 ```{r}
 #load land cover results (which includes eoo) to avoid rerunning slow terra commands
 type_lc_metrics <- read.csv("outputs/type_lc_metrics.csv") 
-type_lc_metrics <- type_lc_metrics %>%
-  mutate(across(c(A3_24, A3_18, A2b_24, A2b_18, B1ai_24, B1ai_18),
-    ~ factor(.x, levels = c("LC", "VU", "EN", "CR"), ordered = TRUE)
-  ))
+
 
 ```
 
@@ -303,29 +294,40 @@ wet_type_metrics <- wet_type_24 %>%
                               prp24_ef >= 0.7 | prp24_def >=0.9 ~ "EN",
                               prp24_ef >= 0.5 | prp24_def >=0.7 | 
                                                prp24_cdef >= 0.9 ~ "VU", 
+                               TRUE ~ "LC")) %>%
+  # D1 assessment 
+   mutate(D1_18 = case_when( prp18_ef >= 0.8 ~ "CR", 
+                              prp18_ef >= 0.5 | prp18_def >=0.8 ~ "EN",
+                              prp18_ef >= 0.3 | prp18_def >=0.5 | 
+                                                prp18_cdef >= 0.8 ~ "VU", 
+                                 TRUE ~ "LC")) %>% 
+                mutate(D1_24 = case_when( prp24_ef >= 0.8 ~ "CR", 
+                              prp24_ef >= 0.5 | prp24_def >=0.8 ~ "EN",
+                              prp24_ef >= 0.3 | prp24_def >=0.5 | 
+                                               prp24_cdef >= 0.8 ~ "VU", 
                                  TRUE ~ "LC")) %>%
-            mutate(D3_24 = factor(D3_24, levels = c("LC","VU", "EN", "CR"), ordered = TRUE)) %>%
-# add B1i using ongoing decline calculated above add 2018 when PES data is available
+  #  B1aii using ongoing decline calculated above add 2018 when PES data is available
    mutate(B1aii_24 = case_when( pes_decline1824 == "decline1824" & eoo_km2  <= 2000 ~ "CR",
                                 pes_decline1824 == "decline1824" & eoo_km2  <= 20000 ~ "EN",
                                 pes_decline1824 == "decline1824" & eoo_km2  <= 50000 ~ "VU",
                                  TRUE ~ "LC")) %>%
-            mutate(B1aii_24 = factor(B1aii_24, levels = c("LC","VU", "EN", "CR"), ordered = TRUE)) %>%
    mutate(B1aii_18 = case_when( pes_decline1824 == "decline1824" & eoo_km2  <= 2000 ~ "CR",
                                 pes_decline1824 == "decline1824" & eoo_km2  <= 20000 ~ "EN",
                                 pes_decline1824 == "decline1824" & eoo_km2  <= 50000 ~ "VU",
                                  TRUE ~ "LC")) %>%
-            mutate(B1aii_18 = factor(B1aii_18, levels = c("LC","VU", "EN", "CR"), ordered = TRUE)) %>%
    # re order cols 
-    relocate(A2b_18, A3_18, B1ai_18, B1aii_18, D3_18, A2b_24, A3_24, B1ai_24, B1aii_24, D3_24,  .after = pes_decline1824) %>%
+    relocate(A2b_18, A3_18, B1ai_18, B1aii_18, D1_18,D3_18, A2b_24, A3_24, 
+             B1ai_24, B1aii_24, D1_24, D3_24,  .after = pes_decline1824) %>%
   # overall RLE outcome
-     rowwise() %>%
-   mutate(RLE24 = max(c_across(all_of(c("A2b_24", "A3_24", "B1aii_24","B1ai_24", "D3_24" ))), na.rm = TRUE)) %>%
-     ungroup() %>%
-    rowwise() %>%
-   mutate(RLE18 = max(c_across(all_of(c("A2b_18", "A3_18", "B1aii_18","B1ai_18", "D3_18"))), na.rm = TRUE)) %>%
-     ungroup() %>%
-  # Add van Deventer 2018 ETS method: assuming A and B are intact rest is lost but also counting C towards VU (use DDfec as PES C)
+  # make all assessments factors to get MAX 
+    mutate(across( c(A2b_18, A3_18, B1ai_18, B1aii_18, D1_18,D3_18, A2b_24, A3_24, B1ai_24, B1aii_24, D1_24, D3_24), 
+                   ~ factor(., levels = c("LC", "VU", "EN", "CR"), ordered = TRUE)  ))  %>%
+ # Ensure highest risk cateroy is assiged 
+   rowwise() %>%
+     mutate(RLE18 = max(c_across(c(A2b_18, A3_18, B1ai_18, B1aii_18, D1_18,D3_18)), na.rm = TRUE), 
+            RLE24 = max(c_across(c(A2b_24, A3_24, B1ai_24, B1aii_24, D1_24, D3_24)), na.rm = TRUE)) %>%
+   ungroup() %>%
+ # Add van Deventer 2018 ETS method: assuming A and B are intact rest is lost but also counting C towards VU (use DDfec as PES C)
     mutate(A3sa_24 = case_when( prp24_ab < 0.2 ~ "CR", 
                                 prp24_ab < 0.35 ~ "EN",
                                 prp24_abc < 0.6 ~ "VU", 
