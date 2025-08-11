@@ -4,13 +4,23 @@
 
 *South African National Biodiversity Institute (SANBI)*
 
-June 2025
+August 2025
 
 #### **Summary**
 
-This repository contains a workflow that results in the NBA 2025 Red List of Ecosystems indicators for (inland) Wetland Ecosystems of South Africa.
+This repository contains a workflow that results in the NBA 2025 Red List of Ecosystems indicators for (inland) wetland ecosystems of South Africa.
 
-The Quarto document [RLE_wet.qmd](RLE_wet.qmd) describes the import of the South African wetland database (version x ) prepared by SANBI. The data were imported using the sf package in R and summarised using the tidyverse. The dataset covers XX inland wetland ecosystem types in South Africa and includes per-feature Present Ecological Stats (PES) scores (A-F; good - very poor) developed using the WET-Health framework ([Macfarlane et. al., 2020](https://frcsa.org.za/wp-content/uploads/2020/10/TT-820_Final-web.pdf)).
+The Quarto document [RLE_wet.qmd](RLE_wet.qmd) describes the import of the South African wetland database (version 20250811 ) prepared by SANBI. The data were imported using the sf package in R and summarised using the tidyverse. The data set covers 81 inland wetland ecosystem types in South Africa and includes per-feature ecosystem condition data and Present Ecological Stats (PES) scores developed using an implementation of the WET-Health 2.0 framework ([Macfarlane et. al., 2020](https://frcsa.org.za/wp-content/uploads/2020/10/TT-820_Final-web.pdf)) by Nacelle Collins (Collins et al., in prep).
+
+-   A is natural, condition score \>= 80%
+
+-   B is near natural, condition score \< 80% & \>= 50%
+
+-   C is moderately modified, condition score \< 50% & \>= 30%
+
+-   D is Heavily modified, condition score \< 30% & \>= 10%
+
+-   E and F is severely/critically modified, condition score \< 10%
 
 The Red List of Ecosystems (also known as Ecosystem Threat Status in South Africa) assesses the risk of collapse of each ecosystem type based on a range of criteria on extent, condition and pressures faced by each ecosystem type.
 
@@ -23,6 +33,8 @@ The IUCN RLE (v2) framework was applied and following criterion were assessed:
 -   Criterion B1ai was applied using EOO calculations with ongoing decline defined as a decline rate of habitat loss rod of \>= 0.4% per year calculated form land cover change data
 
 -   Criterion B1aii was applied using EOO calculations with ongoing decline defined as a decline in the extent of good/moderate condition estuarine extent (PES Classes A, B, C) from the previous PES assessment period.
+
+-   Criterion D2b was applied using the rate of change in condition between 2018 and 2024, projected forward to 2068 (a 50 year period)
 
 -   Criterion D3 was applied to the Wetland Ecological State Class (PES) data such that severity of biotic disruption of \>= 90% was assumed for PES classes E-F; Severity \>=70% was assigned to PES classes D-F; Severity \>=50% was assigned to PES classes C-F. Each of the 22 estuary ecosystem types were assigned to one of the four risk categories: Critically Endangered, Endangered, Vulnerable and Least Concern. The highest risk category for these two criteria is selected as the threat / risk status for each river type.
 
@@ -39,11 +51,12 @@ Summary table - count of wetland ecosystem types per HGM zone per South African 
 | RLE 2024 - count of types | RLE 2024 - extent of types |
 |------------------------------------|------------------------------------|
 | ![](outputs/rle24_wet_barplot_count.jpeg) | ![](outputs/rle24_wet_barplot_ext.jpeg) |
+| South African ETS 2024 (count) | South African ETS 2024 (extent) |
 | ![](outputs/rle24sa_wet_barplot_count.jpeg) | ![](outputs/rle24sa_wet_barplot_ext.jpeg) |
 
 **RLE Index**
 
-Reflecting changes in RLE between 2018 and 2024
+Reflecting changes in RLE between 2018 and 2024 - This shows PES scores increased between 2018 and 2024
 
 | Col1                        | Col2                          |
 |-----------------------------|-------------------------------|

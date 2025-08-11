@@ -1,0 +1,82 @@
+---
+title: "data_wrangling"
+format: html
+---
+
+```{r}
+{r}
+# Add packages: 
+
+library(sf)
+library(tidyverse)
+library(stringr)
+library(terra)
+library(PROJ)
+
+# Add data
+# Replace with your actual file path and layer name if needed
+wetlands <- st_read("C:/Users/skownoa/Dropbox/NBAwork/Wetlands/wetl_NBA_20250811.gpkg")
+wetlands <- wetlands %>% mutate(fid = row_number())
+#ensure it uses proj =  wgs84 aea cm 25 -24 -33
+ st_crs(wetlands)
+
+```
+
+```{r}
+## Clean up this version : there are 215 NA in New_name (type) filter these out (future version will name them), make NAs in NBAPES25 into "DD", add zone column  by finding text after _ in the New_name. 
+
+options(scipen = 999)
+
+wet <- wetlands %>%
+  # add area column 
+  mutate(area_m2 = as.numeric(st_area(geom))) %>%
+  # remove rows with NA in New_name (do  sum(is.na(wetlands$type)) to check numer there are 215)
+  filter(!is.na(type)) %>% 
+  # clean up PES (NA) and EC (/by zero issues)
+  mutate(pes24 = ifelse(EC22ALL == "#DIV/0!" | EC22ALL == "0" , NA , EC22ALL) ) %>%
+  mutate(pes18 = ifelse(EC18ALL == "#DIV/0!" | EC18ALL == "0" | EC18ALL == "fix", NA, EC18ALL) ) %>%
+  mutate(cond24 = ifelse(PES22ALL < 0 , NA, PES22ALL), 
+         cond18 = ifelse(PES18ALL < 0 , NA, PES18ALL)) %>%
+  # if pes2018 is missing use 2024  if 2024 missing use 2018 ? 
+  mutate(pes24 = ifelse(is.na(pes24) & !is.na(pes18), pes18, pes24)) %>%
+  mutate(pes18 = ifelse(is.na(pes18) & !is.na(pes24), pes24, pes18)) %>%  
+  mutate(cond24 = ifelse(is.na(pes24) & cond24 == 0, NA, cond24)) %>% 
+  # now deal with some pes but missing cond (D2)
+    mutate(cond24 = case_when((cond24 == 0 | is.na(cond24)) & pes24 == "A" ~ 95, 
+                            (cond24 == 0 | is.na(cond24)) & pes24 == "B" ~ 65,
+                            (cond24 == 0 | is.na(cond24)) & pes24 == "C" ~ 40,
+                            (cond24 == 0 | is.na(cond24)) & pes24 == "D" ~ 20,
+                            (cond24 == 0 | is.na(cond24)) & pes24 == "E" ~ 8,
+                            (cond24 == 0 | is.na(cond24)) & pes24 == "F" ~ 4, 
+                            TRUE ~ cond24)) %>%
+    mutate(cond18 = case_when((cond18 == 0 | is.na(cond18)) & pes18 == "A" ~ 95, 
+                              (cond18 == 0 | is.na(cond18)) & pes18 == "B" ~ 65,
+                              (cond18 == 0 | is.na(cond18)) & pes18 == "C" ~ 40,
+                              (cond18 == 0 | is.na(cond18)) & pes18 == "D" ~ 20,
+                              (cond18 == 0 | is.na(cond18)) & pes18 == "E" ~ 8,
+                              (cond18 == 0 | is.na(cond18)) & pes18 == "F" ~ 4, 
+                              TRUE ~ cond18)) %>%
+  # if pes2024  is still missing after all possible fixes  remove from dataset 
+ filter(!is.na(pes24))
+
+# remove geometry for quicker summaries
+wet_tb <- st_drop_geometry(wet)
+  
+# make a simple table of TYPE and HGM to join with results later 
+  type_hgm_tb <- wet %>% select(type, hgm) %>% distinct(type, .keep_all = TRUE) %>%  st_drop_geometry()
+
+#   # check cols
+  sort(unique(wet$bioregion)) 
+#  
+# # write new spatial output for Nancy using terra as sf outputs a gpkg that cant be read by ARCGIS due to WKT # 
+# # BUT NOTE YOU CANT DO THIS IN CUSTOM CRS SO USED UNPROJECTED WGS84 
+# wet_v <- wetlands %>%
+#       left_join(st_drop_geometry(wet_tb), by = "fid") %>%
+#       relocate(pes24, .after = pes18) %>%
+#       mutate(area_m2 = as.numeric(area_m2))
+# 
+# wet_v_dd <- st_transform(wet_v, 4326)
+# st_write(wet_v_dd, "C:/Users/skownoa/Dropbox/NBAwork/Wetlands/wetlands_20250731.gpkg", delete_dsn = TRUE) 
+
+
+```
