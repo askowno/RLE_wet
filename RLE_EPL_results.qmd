@@ -15,9 +15,9 @@ EPL <- read.csv("C:/Rdata/EPL_wet/outputs/epl_wet_metrics_per_type.csv")
 
 # select only cols required and then join
 RLE <- RLE %>%
-  select(type, hgm, RLE18, RLE24, A3sa_18, A3sa_24, type_m2) %>%
+  select(type, hgm, RLE18, RLE24, A3sa_18, A3sa_24, type24_m2) %>%
   rename(RLEsa18 = A3sa_18, RLEsa24 = A3sa_24, zone = hgm) %>%
-  mutate(extent = type_m2/1e6)
+  mutate(extent = type24_m2/1e6)
 EPL <- EPL %>%
   select(type, EPL18_wp_ab_model, EPL24_wp_ab_model) %>% 
   rename(EPL18 = EPL18_wp_ab_model, EPL24 = EPL24_wp_ab_model)
