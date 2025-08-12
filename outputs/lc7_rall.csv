@@ -41,7 +41,7 @@ Bushmanland_Floodplain,5,15546,1990
 Bushmanland_Floodplain,6,273,1990
 Bushmanland_Floodplain,7,62,1990
 Bushmanland_Floodplain,NA,449,1990
-Bushmanland_Seep,1,41879,1990
+Bushmanland_Seep,1,41343,1990
 Bushmanland_Seep,2,1,1990
 Bushmanland_Seep,3,12,1990
 Bushmanland_Seep,4,1,1990
@@ -58,21 +58,21 @@ Central Bushveld_Depression,4,2043,1990
 Central Bushveld_Depression,5,4792,1990
 Central Bushveld_Depression,6,5006,1990
 Central Bushveld_Depression,7,619,1990
-Central Bushveld_Floodplain,1,2820527,1990
+Central Bushveld_Floodplain,1,2819919,1990
 Central Bushveld_Floodplain,2,297567,1990
-Central Bushveld_Floodplain,3,115586,1990
+Central Bushveld_Floodplain,3,115451,1990
 Central Bushveld_Floodplain,4,43039,1990
-Central Bushveld_Floodplain,5,594088,1990
+Central Bushveld_Floodplain,5,593951,1990
 Central Bushveld_Floodplain,6,3944,1990
 Central Bushveld_Floodplain,7,6601,1990
 Central Bushveld_Floodplain,NA,30658,1990
-Central Bushveld_Seep,1,314854,1990
+Central Bushveld_Seep,1,314847,1990
 Central Bushveld_Seep,2,53725,1990
 Central Bushveld_Seep,3,7504,1990
 Central Bushveld_Seep,4,20222,1990
 Central Bushveld_Seep,5,43069,1990
 Central Bushveld_Seep,6,1232,1990
-Central Bushveld_Seep,7,4608,1990
+Central Bushveld_Seep,7,4577,1990
 Central Bushveld_Unchannelled valley-bottom,1,766679,1990
 Central Bushveld_Unchannelled valley-bottom,2,93082,1990
 Central Bushveld_Unchannelled valley-bottom,3,20679,1990
@@ -80,7 +80,7 @@ Central Bushveld_Unchannelled valley-bottom,4,15921,1990
 Central Bushveld_Unchannelled valley-bottom,5,80953,1990
 Central Bushveld_Unchannelled valley-bottom,6,2012,1990
 Central Bushveld_Unchannelled valley-bottom,7,1185,1990
-Drakensberg Grassland_Depression,1,26006,1990
+Drakensberg Grassland_Depression,1,25998,1990
 Drakensberg Grassland_Depression,2,564,1990
 Drakensberg Grassland_Depression,3,57,1990
 Drakensberg Grassland_Depression,4,33,1990
@@ -115,14 +115,14 @@ Dry Highveld Grassland_Depression,4,2279,1990
 Dry Highveld Grassland_Depression,5,259192,1990
 Dry Highveld Grassland_Depression,6,33096,1990
 Dry Highveld Grassland_Depression,7,3460,1990
-Dry Highveld Grassland_Floodplain,1,3111823,1990
+Dry Highveld Grassland_Floodplain,1,3111821,1990
 Dry Highveld Grassland_Floodplain,2,53307,1990
-Dry Highveld Grassland_Floodplain,3,136410,1990
+Dry Highveld Grassland_Floodplain,3,136405,1990
 Dry Highveld Grassland_Floodplain,4,11370,1990
 Dry Highveld Grassland_Floodplain,5,320858,1990
 Dry Highveld Grassland_Floodplain,6,2530,1990
 Dry Highveld Grassland_Floodplain,7,14319,1990
-Dry Highveld Grassland_Seep,1,453145,1990
+Dry Highveld Grassland_Seep,1,453116,1990
 Dry Highveld Grassland_Seep,2,23672,1990
 Dry Highveld Grassland_Seep,3,16575,1990
 Dry Highveld Grassland_Seep,4,10880,1990
@@ -182,7 +182,7 @@ Eastern Kalahari Bushveld_Seep,5,52868,1990
 Eastern Kalahari Bushveld_Seep,6,3523,1990
 Eastern Kalahari Bushveld_Seep,7,465,1990
 Eastern Kalahari Bushveld_Seep,NA,141,1990
-Eastern Kalahari Bushveld_Unchannelled valley-bottom,1,871176,1990
+Eastern Kalahari Bushveld_Unchannelled valley-bottom,1,870453,1990
 Eastern Kalahari Bushveld_Unchannelled valley-bottom,2,24320,1990
 Eastern Kalahari Bushveld_Unchannelled valley-bottom,3,17968,1990
 Eastern Kalahari Bushveld_Unchannelled valley-bottom,4,5825,1990
@@ -202,7 +202,7 @@ Karoo Interior_Depression,4,100,1990
 Karoo Interior_Depression,5,11313,1990
 Karoo Interior_Depression,6,24222,1990
 Karoo Interior_Depression,7,214,1990
-Karoo Interior_Floodplain,1,2540890,1990
+Karoo Interior_Floodplain,1,2540880,1990
 Karoo Interior_Floodplain,2,39520,1990
 Karoo Interior_Floodplain,3,36794,1990
 Karoo Interior_Floodplain,4,8740,1990
@@ -216,11 +216,11 @@ Karoo Interior_Seep,4,124,1990
 Karoo Interior_Seep,5,6072,1990
 Karoo Interior_Seep,6,358,1990
 Karoo Interior_Seep,7,137,1990
-Karoo Interior_Unchannelled valley-bottom,1,488888,1990
+Karoo Interior_Unchannelled valley-bottom,1,488283,1990
 Karoo Interior_Unchannelled valley-bottom,2,23443,1990
 Karoo Interior_Unchannelled valley-bottom,3,3328,1990
 Karoo Interior_Unchannelled valley-bottom,4,15,1990
-Karoo Interior_Unchannelled valley-bottom,5,16598,1990
+Karoo Interior_Unchannelled valley-bottom,5,16597,1990
 Karoo Interior_Unchannelled valley-bottom,6,84,1990
 Karoo Interior_Unchannelled valley-bottom,7,102,1990
 Knersvlakte_Depression,1,3416,1990
@@ -247,7 +247,7 @@ Kwa-Zulu Natal Coastal Belt_Unchannelled valley-bottom,4,16844,1990
 Kwa-Zulu Natal Coastal Belt_Unchannelled valley-bottom,5,18536,1990
 Kwa-Zulu Natal Coastal Belt_Unchannelled valley-bottom,6,22,1990
 Kwa-Zulu Natal Coastal Belt_Unchannelled valley-bottom,7,815,1990
-Lowveld_Depression,1,193912,1990
+Lowveld_Depression,1,193434,1990
 Lowveld_Depression,2,10309,1990
 Lowveld_Depression,3,2510,1990
 Lowveld_Depression,4,5830,1990
@@ -255,28 +255,28 @@ Lowveld_Depression,5,11955,1990
 Lowveld_Depression,6,340,1990
 Lowveld_Depression,7,953,1990
 Lowveld_Depression,NA,73,1990
-Lowveld_Floodplain,1,1222362,1990
+Lowveld_Floodplain,1,1222361,1990
 Lowveld_Floodplain,2,78399,1990
 Lowveld_Floodplain,3,29184,1990
 Lowveld_Floodplain,4,32515,1990
 Lowveld_Floodplain,5,176657,1990
 Lowveld_Floodplain,6,625,1990
-Lowveld_Floodplain,7,24533,1990
+Lowveld_Floodplain,7,24529,1990
 Lowveld_Floodplain,NA,22,1990
 Lowveld_Seep,1,373389,1990
-Lowveld_Seep,2,68798,1990
+Lowveld_Seep,2,68796,1990
 Lowveld_Seep,3,6297,1990
 Lowveld_Seep,4,19998,1990
 Lowveld_Seep,5,91602,1990
 Lowveld_Seep,6,107,1990
-Lowveld_Seep,7,36565,1990
-Lowveld_Unchannelled valley-bottom,1,105262,1990
+Lowveld_Seep,7,36543,1990
+Lowveld_Unchannelled valley-bottom,1,105259,1990
 Lowveld_Unchannelled valley-bottom,2,18367,1990
 Lowveld_Unchannelled valley-bottom,3,5459,1990
 Lowveld_Unchannelled valley-bottom,4,4394,1990
 Lowveld_Unchannelled valley-bottom,5,22851,1990
 Lowveld_Unchannelled valley-bottom,6,27,1990
-Lowveld_Unchannelled valley-bottom,7,12078,1990
+Lowveld_Unchannelled valley-bottom,7,12076,1990
 Lowveld_Unchannelled valley-bottom,NA,2,1990
 Maputaland Coastal Belt_Depression,1,502560,1990
 Maputaland Coastal Belt_Depression,2,2594,1990
@@ -315,21 +315,21 @@ Mesic Highveld Grassland_Depression,4,5616,1990
 Mesic Highveld Grassland_Depression,5,71599,1990
 Mesic Highveld Grassland_Depression,6,16898,1990
 Mesic Highveld Grassland_Depression,7,10520,1990
-Mesic Highveld Grassland_Floodplain,1,8893877,1990
+Mesic Highveld Grassland_Floodplain,1,8893846,1990
 Mesic Highveld Grassland_Floodplain,2,1169509,1990
 Mesic Highveld Grassland_Floodplain,3,326349,1990
 Mesic Highveld Grassland_Floodplain,4,62683,1990
 Mesic Highveld Grassland_Floodplain,5,1148490,1990
 Mesic Highveld Grassland_Floodplain,6,37871,1990
 Mesic Highveld Grassland_Floodplain,7,132335,1990
-Mesic Highveld Grassland_Seep,1,2885136,1990
+Mesic Highveld Grassland_Seep,1,2885124,1990
 Mesic Highveld Grassland_Seep,2,562431,1990
 Mesic Highveld Grassland_Seep,3,90237,1990
 Mesic Highveld Grassland_Seep,4,34296,1990
 Mesic Highveld Grassland_Seep,5,288653,1990
 Mesic Highveld Grassland_Seep,6,19976,1990
 Mesic Highveld Grassland_Seep,7,80925,1990
-Mesic Highveld Grassland_Unchannelled valley-bottom,1,663727,1990
+Mesic Highveld Grassland_Unchannelled valley-bottom,1,663702,1990
 Mesic Highveld Grassland_Unchannelled valley-bottom,2,84454,1990
 Mesic Highveld Grassland_Unchannelled valley-bottom,3,38748,1990
 Mesic Highveld Grassland_Unchannelled valley-bottom,4,5313,1990
@@ -366,17 +366,17 @@ Northwest Fynbos_Depression,2,2433,1990
 Northwest Fynbos_Depression,3,35,1990
 Northwest Fynbos_Depression,5,483,1990
 Northwest Fynbos_Depression,6,86,1990
-Northwest Fynbos_Floodplain,1,272061,1990
-Northwest Fynbos_Floodplain,2,25842,1990
-Northwest Fynbos_Floodplain,3,39997,1990
+Northwest Fynbos_Floodplain,1,246368,1990
+Northwest Fynbos_Floodplain,2,24018,1990
+Northwest Fynbos_Floodplain,3,39851,1990
 Northwest Fynbos_Floodplain,4,326,1990
-Northwest Fynbos_Floodplain,5,49374,1990
+Northwest Fynbos_Floodplain,5,39566,1990
 Northwest Fynbos_Floodplain,6,106,1990
 Northwest Fynbos_Floodplain,7,2990,1990
-Northwest Fynbos_Seep,1,64325,1990
-Northwest Fynbos_Seep,2,4800,1990
+Northwest Fynbos_Seep,1,58742,1990
+Northwest Fynbos_Seep,2,4635,1990
 Northwest Fynbos_Seep,3,1605,1990
-Northwest Fynbos_Seep,5,19210,1990
+Northwest Fynbos_Seep,5,16675,1990
 Northwest Fynbos_Seep,6,5,1990
 Northwest Fynbos_Seep,7,1146,1990
 Northwest Fynbos_Unchannelled valley-bottom,1,8913,1990
@@ -574,7 +574,7 @@ Bushmanland_Floodplain,5,9928,2018
 Bushmanland_Floodplain,6,388,2018
 Bushmanland_Floodplain,7,87,2018
 Bushmanland_Floodplain,NA,2,2018
-Bushmanland_Seep,1,41801,2018
+Bushmanland_Seep,1,41265,2018
 Bushmanland_Seep,2,42,2018
 Bushmanland_Seep,3,1,2018
 Bushmanland_Seep,4,60,2018
@@ -593,21 +593,21 @@ Central Bushveld_Depression,4,2699,2018
 Central Bushveld_Depression,5,2846,2018
 Central Bushveld_Depression,6,1567,2018
 Central Bushveld_Depression,7,417,2018
-Central Bushveld_Floodplain,1,2619853,2018
-Central Bushveld_Floodplain,2,577312,2018
-Central Bushveld_Floodplain,3,76114,2018
-Central Bushveld_Floodplain,4,64909,2018
-Central Bushveld_Floodplain,5,551794,2018
-Central Bushveld_Floodplain,6,2951,2018
+Central Bushveld_Floodplain,1,2619320,2018
+Central Bushveld_Floodplain,2,577051,2018
+Central Bushveld_Floodplain,3,76044,2018
+Central Bushveld_Floodplain,4,64906,2018
+Central Bushveld_Floodplain,5,551779,2018
+Central Bushveld_Floodplain,6,2950,2018
 Central Bushveld_Floodplain,7,8908,2018
 Central Bushveld_Floodplain,NA,10169,2018
 Central Bushveld_Seep,1,279970,2018
-Central Bushveld_Seep,2,81876,2018
+Central Bushveld_Seep,2,81875,2018
 Central Bushveld_Seep,3,2176,2018
 Central Bushveld_Seep,4,27375,2018
 Central Bushveld_Seep,5,44210,2018
 Central Bushveld_Seep,6,476,2018
-Central Bushveld_Seep,7,9131,2018
+Central Bushveld_Seep,7,9094,2018
 Central Bushveld_Unchannelled valley-bottom,1,718152,2018
 Central Bushveld_Unchannelled valley-bottom,2,168772,2018
 Central Bushveld_Unchannelled valley-bottom,3,9260,2018
@@ -615,7 +615,7 @@ Central Bushveld_Unchannelled valley-bottom,4,18322,2018
 Central Bushveld_Unchannelled valley-bottom,5,61251,2018
 Central Bushveld_Unchannelled valley-bottom,6,1615,2018
 Central Bushveld_Unchannelled valley-bottom,7,3139,2018
-Drakensberg Grassland_Depression,1,25798,2018
+Drakensberg Grassland_Depression,1,25790,2018
 Drakensberg Grassland_Depression,2,718,2018
 Drakensberg Grassland_Depression,3,6,2018
 Drakensberg Grassland_Depression,4,45,2018
@@ -648,17 +648,17 @@ Dry Highveld Grassland_Depression,4,4837,2018
 Dry Highveld Grassland_Depression,5,225994,2018
 Dry Highveld Grassland_Depression,6,19223,2018
 Dry Highveld Grassland_Depression,7,9710,2018
-Dry Highveld Grassland_Floodplain,1,2937454,2018
-Dry Highveld Grassland_Floodplain,2,253451,2018
+Dry Highveld Grassland_Floodplain,1,2937452,2018
+Dry Highveld Grassland_Floodplain,2,253446,2018
 Dry Highveld Grassland_Floodplain,3,81451,2018
 Dry Highveld Grassland_Floodplain,4,23579,2018
 Dry Highveld Grassland_Floodplain,5,309918,2018
 Dry Highveld Grassland_Floodplain,6,3035,2018
 Dry Highveld Grassland_Floodplain,7,41729,2018
-Dry Highveld Grassland_Seep,1,427585,2018
-Dry Highveld Grassland_Seep,2,65708,2018
+Dry Highveld Grassland_Seep,1,427574,2018
+Dry Highveld Grassland_Seep,2,65706,2018
 Dry Highveld Grassland_Seep,3,5082,2018
-Dry Highveld Grassland_Seep,4,12080,2018
+Dry Highveld Grassland_Seep,4,12064,2018
 Dry Highveld Grassland_Seep,5,66698,2018
 Dry Highveld Grassland_Seep,6,146,2018
 Dry Highveld Grassland_Seep,7,6578,2018
@@ -715,7 +715,7 @@ Eastern Kalahari Bushveld_Seep,4,3942,2018
 Eastern Kalahari Bushveld_Seep,5,49147,2018
 Eastern Kalahari Bushveld_Seep,6,6282,2018
 Eastern Kalahari Bushveld_Seep,7,1061,2018
-Eastern Kalahari Bushveld_Unchannelled valley-bottom,1,854546,2018
+Eastern Kalahari Bushveld_Unchannelled valley-bottom,1,853823,2018
 Eastern Kalahari Bushveld_Unchannelled valley-bottom,2,58589,2018
 Eastern Kalahari Bushveld_Unchannelled valley-bottom,3,4503,2018
 Eastern Kalahari Bushveld_Unchannelled valley-bottom,4,7601,2018
@@ -734,7 +734,7 @@ Karoo Interior_Depression,4,750,2018
 Karoo Interior_Depression,5,10529,2018
 Karoo Interior_Depression,6,16864,2018
 Karoo Interior_Depression,7,378,2018
-Karoo Interior_Floodplain,1,2429724,2018
+Karoo Interior_Floodplain,1,2429714,2018
 Karoo Interior_Floodplain,2,161454,2018
 Karoo Interior_Floodplain,3,12860,2018
 Karoo Interior_Floodplain,4,27214,2018
@@ -748,11 +748,11 @@ Karoo Interior_Seep,4,940,2018
 Karoo Interior_Seep,5,5208,2018
 Karoo Interior_Seep,6,68,2018
 Karoo Interior_Seep,7,178,2018
-Karoo Interior_Unchannelled valley-bottom,1,483023,2018
+Karoo Interior_Unchannelled valley-bottom,1,482431,2018
 Karoo Interior_Unchannelled valley-bottom,2,28755,2018
-Karoo Interior_Unchannelled valley-bottom,3,1981,2018
+Karoo Interior_Unchannelled valley-bottom,3,1970,2018
 Karoo Interior_Unchannelled valley-bottom,4,676,2018
-Karoo Interior_Unchannelled valley-bottom,5,17698,2018
+Karoo Interior_Unchannelled valley-bottom,5,17695,2018
 Karoo Interior_Unchannelled valley-bottom,6,173,2018
 Karoo Interior_Unchannelled valley-bottom,7,152,2018
 Knersvlakte_Depression,1,3409,2018
@@ -779,34 +779,34 @@ Kwa-Zulu Natal Coastal Belt_Unchannelled valley-bottom,4,18173,2018
 Kwa-Zulu Natal Coastal Belt_Unchannelled valley-bottom,5,19653,2018
 Kwa-Zulu Natal Coastal Belt_Unchannelled valley-bottom,6,48,2018
 Kwa-Zulu Natal Coastal Belt_Unchannelled valley-bottom,7,393,2018
-Lowveld_Depression,1,176993,2018
-Lowveld_Depression,2,21529,2018
+Lowveld_Depression,1,176518,2018
+Lowveld_Depression,2,21526,2018
 Lowveld_Depression,3,68,2018
 Lowveld_Depression,4,6263,2018
 Lowveld_Depression,5,16092,2018
 Lowveld_Depression,6,145,2018
 Lowveld_Depression,7,4792,2018
-Lowveld_Floodplain,1,1042470,2018
+Lowveld_Floodplain,1,1042469,2018
 Lowveld_Floodplain,2,237138,2018
 Lowveld_Floodplain,3,27418,2018
 Lowveld_Floodplain,4,45603,2018
 Lowveld_Floodplain,5,196154,2018
 Lowveld_Floodplain,6,892,2018
-Lowveld_Floodplain,7,14622,2018
+Lowveld_Floodplain,7,14618,2018
 Lowveld_Seep,1,327431,2018
-Lowveld_Seep,2,147741,2018
+Lowveld_Seep,2,147727,2018
 Lowveld_Seep,3,4029,2018
-Lowveld_Seep,4,22809,2018
+Lowveld_Seep,4,22808,2018
 Lowveld_Seep,5,68959,2018
 Lowveld_Seep,6,169,2018
-Lowveld_Seep,7,25618,2018
+Lowveld_Seep,7,25609,2018
 Lowveld_Unchannelled valley-bottom,1,91004,2018
-Lowveld_Unchannelled valley-bottom,2,36831,2018
+Lowveld_Unchannelled valley-bottom,2,36827,2018
 Lowveld_Unchannelled valley-bottom,3,3457,2018
 Lowveld_Unchannelled valley-bottom,4,6347,2018
 Lowveld_Unchannelled valley-bottom,5,24073,2018
 Lowveld_Unchannelled valley-bottom,6,30,2018
-Lowveld_Unchannelled valley-bottom,7,6698,2018
+Lowveld_Unchannelled valley-bottom,7,6697,2018
 Maputaland Coastal Belt_Depression,1,485595,2018
 Maputaland Coastal Belt_Depression,2,31537,2018
 Maputaland Coastal Belt_Depression,3,14,2018
@@ -842,21 +842,21 @@ Mesic Highveld Grassland_Depression,4,7812,2018
 Mesic Highveld Grassland_Depression,5,46381,2018
 Mesic Highveld Grassland_Depression,6,8531,2018
 Mesic Highveld Grassland_Depression,7,12240,2018
-Mesic Highveld Grassland_Floodplain,1,8286472,2018
+Mesic Highveld Grassland_Floodplain,1,8286441,2018
 Mesic Highveld Grassland_Floodplain,2,1937908,2018
 Mesic Highveld Grassland_Floodplain,3,289670,2018
 Mesic Highveld Grassland_Floodplain,4,82789,2018
 Mesic Highveld Grassland_Floodplain,5,999564,2018
 Mesic Highveld Grassland_Floodplain,6,22896,2018
 Mesic Highveld Grassland_Floodplain,7,151815,2018
-Mesic Highveld Grassland_Seep,1,2655606,2018
+Mesic Highveld Grassland_Seep,1,2655596,2018
 Mesic Highveld Grassland_Seep,2,828888,2018
 Mesic Highveld Grassland_Seep,3,58256,2018
 Mesic Highveld Grassland_Seep,4,49733,2018
 Mesic Highveld Grassland_Seep,5,239228,2018
 Mesic Highveld Grassland_Seep,6,20391,2018
-Mesic Highveld Grassland_Seep,7,109552,2018
-Mesic Highveld Grassland_Unchannelled valley-bottom,1,612471,2018
+Mesic Highveld Grassland_Seep,7,109550,2018
+Mesic Highveld Grassland_Unchannelled valley-bottom,1,612446,2018
 Mesic Highveld Grassland_Unchannelled valley-bottom,2,155809,2018
 Mesic Highveld Grassland_Unchannelled valley-bottom,3,22276,2018
 Mesic Highveld Grassland_Unchannelled valley-bottom,4,8410,2018
@@ -898,20 +898,20 @@ Northwest Fynbos_Depression,4,2,2018
 Northwest Fynbos_Depression,5,887,2018
 Northwest Fynbos_Depression,6,46,2018
 Northwest Fynbos_Depression,7,29,2018
-Northwest Fynbos_Floodplain,1,235349,2018
-Northwest Fynbos_Floodplain,2,64855,2018
-Northwest Fynbos_Floodplain,3,30810,2018
-Northwest Fynbos_Floodplain,4,2066,2018
-Northwest Fynbos_Floodplain,5,53837,2018
+Northwest Fynbos_Floodplain,1,213401,2018
+Northwest Fynbos_Floodplain,2,59227,2018
+Northwest Fynbos_Floodplain,3,30635,2018
+Northwest Fynbos_Floodplain,4,1996,2018
+Northwest Fynbos_Floodplain,5,44328,2018
 Northwest Fynbos_Floodplain,6,101,2018
-Northwest Fynbos_Floodplain,7,3678,2018
-Northwest Fynbos_Seep,1,56179,2018
-Northwest Fynbos_Seep,2,13116,2018
-Northwest Fynbos_Seep,3,1095,2018
-Northwest Fynbos_Seep,4,472,2018
-Northwest Fynbos_Seep,5,19433,2018
+Northwest Fynbos_Floodplain,7,3537,2018
+Northwest Fynbos_Seep,1,51524,2018
+Northwest Fynbos_Seep,2,11855,2018
+Northwest Fynbos_Seep,3,1093,2018
+Northwest Fynbos_Seep,4,467,2018
+Northwest Fynbos_Seep,5,17093,2018
 Northwest Fynbos_Seep,6,10,2018
-Northwest Fynbos_Seep,7,786,2018
+Northwest Fynbos_Seep,7,766,2018
 Northwest Fynbos_Unchannelled valley-bottom,1,7890,2018
 Northwest Fynbos_Unchannelled valley-bottom,2,2705,2018
 Northwest Fynbos_Unchannelled valley-bottom,3,58,2018
@@ -1107,7 +1107,7 @@ Bushmanland_Floodplain,5,10135,2022
 Bushmanland_Floodplain,6,203,2022
 Bushmanland_Floodplain,7,137,2022
 Bushmanland_Floodplain,NA,2,2022
-Bushmanland_Seep,1,41797,2022
+Bushmanland_Seep,1,41261,2022
 Bushmanland_Seep,2,49,2022
 Bushmanland_Seep,3,4,2022
 Bushmanland_Seep,4,53,2022
@@ -1126,21 +1126,21 @@ Central Bushveld_Depression,4,2568,2022
 Central Bushveld_Depression,5,4511,2022
 Central Bushveld_Depression,6,1194,2022
 Central Bushveld_Depression,7,454,2022
-Central Bushveld_Floodplain,1,2509838,2022
-Central Bushveld_Floodplain,2,541603,2022
-Central Bushveld_Floodplain,3,116627,2022
+Central Bushveld_Floodplain,1,2509359,2022
+Central Bushveld_Floodplain,2,541461,2022
+Central Bushveld_Floodplain,3,116527,2022
 Central Bushveld_Floodplain,4,63320,2022
-Central Bushveld_Floodplain,5,659325,2022
+Central Bushveld_Floodplain,5,659163,2022
 Central Bushveld_Floodplain,6,1448,2022
 Central Bushveld_Floodplain,7,9680,2022
 Central Bushveld_Floodplain,NA,10169,2022
 Central Bushveld_Seep,1,272656,2022
-Central Bushveld_Seep,2,77198,2022
+Central Bushveld_Seep,2,77190,2022
 Central Bushveld_Seep,3,3569,2022
 Central Bushveld_Seep,4,27650,2022
 Central Bushveld_Seep,5,55163,2022
 Central Bushveld_Seep,6,187,2022
-Central Bushveld_Seep,7,8791,2022
+Central Bushveld_Seep,7,8761,2022
 Central Bushveld_Unchannelled valley-bottom,1,711183,2022
 Central Bushveld_Unchannelled valley-bottom,2,167608,2022
 Central Bushveld_Unchannelled valley-bottom,3,12415,2022
@@ -1148,7 +1148,7 @@ Central Bushveld_Unchannelled valley-bottom,4,18401,2022
 Central Bushveld_Unchannelled valley-bottom,5,66235,2022
 Central Bushveld_Unchannelled valley-bottom,6,1186,2022
 Central Bushveld_Unchannelled valley-bottom,7,3483,2022
-Drakensberg Grassland_Depression,1,25760,2022
+Drakensberg Grassland_Depression,1,25752,2022
 Drakensberg Grassland_Depression,2,819,2022
 Drakensberg Grassland_Depression,3,9,2022
 Drakensberg Grassland_Depression,4,46,2022
@@ -1181,17 +1181,17 @@ Dry Highveld Grassland_Depression,4,4110,2022
 Dry Highveld Grassland_Depression,5,223385,2022
 Dry Highveld Grassland_Depression,6,5479,2022
 Dry Highveld Grassland_Depression,7,11528,2022
-Dry Highveld Grassland_Floodplain,1,2871883,2022
-Dry Highveld Grassland_Floodplain,2,239863,2022
+Dry Highveld Grassland_Floodplain,1,2871881,2022
+Dry Highveld Grassland_Floodplain,2,239858,2022
 Dry Highveld Grassland_Floodplain,3,143611,2022
 Dry Highveld Grassland_Floodplain,4,22223,2022
 Dry Highveld Grassland_Floodplain,5,326364,2022
 Dry Highveld Grassland_Floodplain,6,2681,2022
 Dry Highveld Grassland_Floodplain,7,43992,2022
-Dry Highveld Grassland_Seep,1,422187,2022
-Dry Highveld Grassland_Seep,2,63121,2022
+Dry Highveld Grassland_Seep,1,422176,2022
+Dry Highveld Grassland_Seep,2,63119,2022
 Dry Highveld Grassland_Seep,3,8843,2022
-Dry Highveld Grassland_Seep,4,11681,2022
+Dry Highveld Grassland_Seep,4,11665,2022
 Dry Highveld Grassland_Seep,5,69930,2022
 Dry Highveld Grassland_Seep,6,47,2022
 Dry Highveld Grassland_Seep,7,8068,2022
@@ -1249,9 +1249,9 @@ Eastern Kalahari Bushveld_Seep,4,5435,2022
 Eastern Kalahari Bushveld_Seep,5,50036,2022
 Eastern Kalahari Bushveld_Seep,6,7117,2022
 Eastern Kalahari Bushveld_Seep,7,1320,2022
-Eastern Kalahari Bushveld_Unchannelled valley-bottom,1,845483,2022
+Eastern Kalahari Bushveld_Unchannelled valley-bottom,1,844761,2022
 Eastern Kalahari Bushveld_Unchannelled valley-bottom,2,57490,2022
-Eastern Kalahari Bushveld_Unchannelled valley-bottom,3,14094,2022
+Eastern Kalahari Bushveld_Unchannelled valley-bottom,3,14093,2022
 Eastern Kalahari Bushveld_Unchannelled valley-bottom,4,7043,2022
 Eastern Kalahari Bushveld_Unchannelled valley-bottom,5,30338,2022
 Eastern Kalahari Bushveld_Unchannelled valley-bottom,6,3371,2022
@@ -1268,7 +1268,7 @@ Karoo Interior_Depression,4,636,2022
 Karoo Interior_Depression,5,10819,2022
 Karoo Interior_Depression,6,7746,2022
 Karoo Interior_Depression,7,760,2022
-Karoo Interior_Floodplain,1,2413684,2022
+Karoo Interior_Floodplain,1,2413674,2022
 Karoo Interior_Floodplain,2,147154,2022
 Karoo Interior_Floodplain,3,31441,2022
 Karoo Interior_Floodplain,4,26484,2022
@@ -1282,11 +1282,11 @@ Karoo Interior_Seep,4,824,2022
 Karoo Interior_Seep,5,5482,2022
 Karoo Interior_Seep,6,37,2022
 Karoo Interior_Seep,7,186,2022
-Karoo Interior_Unchannelled valley-bottom,1,480170,2022
-Karoo Interior_Unchannelled valley-bottom,2,28653,2022
-Karoo Interior_Unchannelled valley-bottom,3,5094,2022
+Karoo Interior_Unchannelled valley-bottom,1,479810,2022
+Karoo Interior_Unchannelled valley-bottom,2,28651,2022
+Karoo Interior_Unchannelled valley-bottom,3,4853,2022
 Karoo Interior_Unchannelled valley-bottom,4,439,2022
-Karoo Interior_Unchannelled valley-bottom,5,17853,2022
+Karoo Interior_Unchannelled valley-bottom,5,17850,2022
 Karoo Interior_Unchannelled valley-bottom,6,87,2022
 Karoo Interior_Unchannelled valley-bottom,7,162,2022
 Knersvlakte_Depression,1,3409,2022
@@ -1313,34 +1313,34 @@ Kwa-Zulu Natal Coastal Belt_Unchannelled valley-bottom,4,18489,2022
 Kwa-Zulu Natal Coastal Belt_Unchannelled valley-bottom,5,19553,2022
 Kwa-Zulu Natal Coastal Belt_Unchannelled valley-bottom,6,12,2022
 Kwa-Zulu Natal Coastal Belt_Unchannelled valley-bottom,7,392,2022
-Lowveld_Depression,1,175390,2022
-Lowveld_Depression,2,21283,2022
+Lowveld_Depression,1,174915,2022
+Lowveld_Depression,2,21280,2022
 Lowveld_Depression,3,238,2022
 Lowveld_Depression,4,6423,2022
 Lowveld_Depression,5,16719,2022
 Lowveld_Depression,6,76,2022
 Lowveld_Depression,7,5753,2022
-Lowveld_Floodplain,1,1022346,2022
+Lowveld_Floodplain,1,1022345,2022
 Lowveld_Floodplain,2,243373,2022
 Lowveld_Floodplain,3,49599,2022
 Lowveld_Floodplain,4,46778,2022
 Lowveld_Floodplain,5,186244,2022
 Lowveld_Floodplain,6,983,2022
-Lowveld_Floodplain,7,14974,2022
+Lowveld_Floodplain,7,14970,2022
 Lowveld_Seep,1,323816,2022
-Lowveld_Seep,2,160423,2022
+Lowveld_Seep,2,160409,2022
 Lowveld_Seep,3,7204,2022
-Lowveld_Seep,4,23922,2022
+Lowveld_Seep,4,23921,2022
 Lowveld_Seep,5,55257,2022
 Lowveld_Seep,6,241,2022
-Lowveld_Seep,7,25893,2022
+Lowveld_Seep,7,25884,2022
 Lowveld_Unchannelled valley-bottom,1,89879,2022
-Lowveld_Unchannelled valley-bottom,2,37296,2022
+Lowveld_Unchannelled valley-bottom,2,37292,2022
 Lowveld_Unchannelled valley-bottom,3,4678,2022
 Lowveld_Unchannelled valley-bottom,4,6457,2022
 Lowveld_Unchannelled valley-bottom,5,23362,2022
 Lowveld_Unchannelled valley-bottom,6,30,2022
-Lowveld_Unchannelled valley-bottom,7,6738,2022
+Lowveld_Unchannelled valley-bottom,7,6737,2022
 Maputaland Coastal Belt_Depression,1,477177,2022
 Maputaland Coastal Belt_Depression,2,28550,2022
 Maputaland Coastal Belt_Depression,3,2538,2022
@@ -1376,21 +1376,21 @@ Mesic Highveld Grassland_Depression,4,7174,2022
 Mesic Highveld Grassland_Depression,5,50140,2022
 Mesic Highveld Grassland_Depression,6,7851,2022
 Mesic Highveld Grassland_Depression,7,14174,2022
-Mesic Highveld Grassland_Floodplain,1,8161056,2022
+Mesic Highveld Grassland_Floodplain,1,8161025,2022
 Mesic Highveld Grassland_Floodplain,2,1892377,2022
 Mesic Highveld Grassland_Floodplain,3,375966,2022
 Mesic Highveld Grassland_Floodplain,4,84339,2022
 Mesic Highveld Grassland_Floodplain,5,1062269,2022
 Mesic Highveld Grassland_Floodplain,6,19160,2022
 Mesic Highveld Grassland_Floodplain,7,175947,2022
-Mesic Highveld Grassland_Seep,1,2609981,2022
+Mesic Highveld Grassland_Seep,1,2609971,2022
 Mesic Highveld Grassland_Seep,2,815835,2022
 Mesic Highveld Grassland_Seep,3,71170,2022
 Mesic Highveld Grassland_Seep,4,47749,2022
 Mesic Highveld Grassland_Seep,5,271031,2022
 Mesic Highveld Grassland_Seep,6,18728,2022
-Mesic Highveld Grassland_Seep,7,127160,2022
-Mesic Highveld Grassland_Unchannelled valley-bottom,1,600731,2022
+Mesic Highveld Grassland_Seep,7,127158,2022
+Mesic Highveld Grassland_Unchannelled valley-bottom,1,600706,2022
 Mesic Highveld Grassland_Unchannelled valley-bottom,2,149786,2022
 Mesic Highveld Grassland_Unchannelled valley-bottom,3,30844,2022
 Mesic Highveld Grassland_Unchannelled valley-bottom,4,7942,2022
@@ -1432,20 +1432,20 @@ Northwest Fynbos_Depression,4,5,2022
 Northwest Fynbos_Depression,5,942,2022
 Northwest Fynbos_Depression,6,34,2022
 Northwest Fynbos_Depression,7,28,2022
-Northwest Fynbos_Floodplain,1,231728,2022
-Northwest Fynbos_Floodplain,2,68358,2022
-Northwest Fynbos_Floodplain,3,28286,2022
-Northwest Fynbos_Floodplain,4,4421,2022
-Northwest Fynbos_Floodplain,5,54455,2022
+Northwest Fynbos_Floodplain,1,209984,2022
+Northwest Fynbos_Floodplain,2,62800,2022
+Northwest Fynbos_Floodplain,3,28219,2022
+Northwest Fynbos_Floodplain,4,4353,2022
+Northwest Fynbos_Floodplain,5,44596,2022
 Northwest Fynbos_Floodplain,6,140,2022
-Northwest Fynbos_Floodplain,7,3308,2022
-Northwest Fynbos_Seep,1,55587,2022
-Northwest Fynbos_Seep,2,12809,2022
-Northwest Fynbos_Seep,3,991,2022
-Northwest Fynbos_Seep,4,601,2022
-Northwest Fynbos_Seep,5,20151,2022
+Northwest Fynbos_Floodplain,7,3133,2022
+Northwest Fynbos_Seep,1,50943,2022
+Northwest Fynbos_Seep,2,11569,2022
+Northwest Fynbos_Seep,3,990,2022
+Northwest Fynbos_Seep,4,596,2022
+Northwest Fynbos_Seep,5,17774,2022
 Northwest Fynbos_Seep,6,36,2022
-Northwest Fynbos_Seep,7,916,2022
+Northwest Fynbos_Seep,7,900,2022
 Northwest Fynbos_Unchannelled valley-bottom,1,7808,2022
 Northwest Fynbos_Unchannelled valley-bottom,2,2658,2022
 Northwest Fynbos_Unchannelled valley-bottom,3,46,2022
