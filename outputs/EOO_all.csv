@@ -1,43 +1,39 @@
 "","type","eoo_km2"
 "Maputaland Coastal Belt_Depression","Maputaland Coastal Belt_Depression",35296.8280175299
-"Central Bushveld_Depression","Central Bushveld_Depression",153118.504257882
+"Central Bushveld_Depression","Central Bushveld_Depression",153062.046447127
 "Dry Highveld Grassland_Depression","Dry Highveld Grassland_Depression",222295.372758121
-"Lowveld_Depression","Lowveld_Depression",503501.634800794
+"Lowveld_Depression","Lowveld_Depression",502528.550730742
 "Mesic Highveld Grassland_Depression","Mesic Highveld Grassland_Depression",215528.320795828
-"Bushmanland_Depression","Bushmanland_Depression",149852.387264663
+"Bushmanland_Depression","Bushmanland_Depression",149512.883461994
 "Karoo Interior_Depression","Karoo Interior_Depression",405700.260439909
-"Namaqualand_Depression","Namaqualand_Depression",35047.1433363068
 "Eastern Kalahari Bushveld_Depression","Eastern Kalahari Bushveld_Depression",220927.507042465
 "Drakensberg Grassland_Depression","Drakensberg Grassland_Depression",87652.774377712
 "Eastern Fynbos-Renosterveld_Depression","Eastern Fynbos-Renosterveld_Depression",16108.1541280427
 "Albany Thicket_Depression","Albany Thicket_Depression",338259.869481617
-"Sub-escarpment Savanna_Depression","Sub-escarpment Savanna_Depression",118572.821282924
+"Sub-escarpment Savanna_Depression","Sub-escarpment Savanna_Depression",118531.281514401
 "Sub-Escarpment Grassland_Depression","Sub-Escarpment Grassland_Depression",157367.152334474
-"Mopane_Depression","Mopane_Depression",39936.4986743869
+"Mopane_Depression","Mopane_Depression",39273.1945915948
 "Northwest Fynbos_Depression","Northwest Fynbos_Depression",28828.4577976362
-"Kalahari Duneveld_Depression","Kalahari Duneveld_Depression",95960.8825981259
+"Namaqualand_Depression","Namaqualand_Depression",34263.7196512624
+"Kalahari Duneveld_Depression","Kalahari Duneveld_Depression",95960.0443011305
 "Knersvlakte_Depression","Knersvlakte_Depression",3661.97014982513
 "Southern Fynbos_Depression","Southern Fynbos_Depression",26966.1231590796
 "West Coast_Depression","West Coast_Depression",2474.31977502138
 "East Coast Renosterveld_Depression","East Coast Renosterveld_Depression",5515.560258511
 "Southwest Fynbos_Depression","Southwest Fynbos_Depression",3560.17910454696
-"Dry Highveld Grassland_Seep","Dry Highveld Grassland_Seep",268321.779753586
-"Dry Highveld Grassland_Floodplain","Dry Highveld Grassland_Floodplain",196743.160176542
-"Drakensberg Grassland_Floodplain","Drakensberg Grassland_Floodplain",77851.1761210583
-"Drakensberg Grassland_Seep","Drakensberg Grassland_Seep",82462.8627055627
-"Dry Highveld Grassland_Unchannelled valley-bottom","Dry Highveld Grassland_Unchannelled valley-bottom",238257.527446115
-"Drakensberg Grassland_Unchannelled valley-bottom","Drakensberg Grassland_Unchannelled valley-bottom",56270.5351465628
-"Karoo Interior_Floodplain","Karoo Interior_Floodplain",294679.015364621
-"Mesic Highveld Grassland_Unchannelled valley-bottom","Mesic Highveld Grassland_Unchannelled valley-bottom",227037.398511255
-"Mesic Highveld Grassland_Seep","Mesic Highveld Grassland_Seep",242807.256316578
-"Mesic Highveld Grassland_Floodplain","Mesic Highveld Grassland_Floodplain",188195.031628107
-"Karoo Interior_Seep","Karoo Interior_Seep",363773.306799406
-"Karoo Interior_Unchannelled valley-bottom","Karoo Interior_Unchannelled valley-bottom",205423.457388174
+"Mesic Highveld Grassland_Seep","Mesic Highveld Grassland_Seep",210301.971793871
+"Mesic Highveld Grassland_Floodplain","Mesic Highveld Grassland_Floodplain",161884.089487398
 "Central Bushveld_Floodplain","Central Bushveld_Floodplain",165517.085712354
 "Central Bushveld_Seep","Central Bushveld_Seep",153740.494281759
+"Dry Highveld Grassland_Floodplain","Dry Highveld Grassland_Floodplain",147590.131272844
+"Dry Highveld Grassland_Seep","Dry Highveld Grassland_Seep",189701.616680208
+"Mesic Highveld Grassland_Unchannelled valley-bottom","Mesic Highveld Grassland_Unchannelled valley-bottom",205920.040473548
+"Dry Highveld Grassland_Unchannelled valley-bottom","Dry Highveld Grassland_Unchannelled valley-bottom",181988.322651707
 "Central Bushveld_Unchannelled valley-bottom","Central Bushveld_Unchannelled valley-bottom",146689.172418653
-"Sub-escarpment Grassland_Floodplain","Sub-escarpment Grassland_Floodplain",134789.440442412
-"Sub-escarpment Grassland_Seep","Sub-escarpment Grassland_Seep",131741.627810132
+"Drakensberg Grassland_Seep","Drakensberg Grassland_Seep",8243.80313273197
+"Drakensberg Grassland_Floodplain","Drakensberg Grassland_Floodplain",3874.04154255874
+"Sub-escarpment Grassland_Floodplain","Sub-escarpment Grassland_Floodplain",55670.9944372326
+"Sub-escarpment Grassland_Seep","Sub-escarpment Grassland_Seep",61950.7484832261
 "Eastern Kalahari Bushveld_Seep","Eastern Kalahari Bushveld_Seep",71282.8928434148
 "Eastern Kalahari Bushveld_Unchannelled valley-bottom","Eastern Kalahari Bushveld_Unchannelled valley-bottom",104831.188963975
 "Lowveld_Floodplain","Lowveld_Floodplain",93456.8145638143
@@ -46,37 +42,40 @@
 "Mopane_Floodplain","Mopane_Floodplain",35300.6009900935
 "Mopane_Seep","Mopane_Seep",12961.127584166
 "Mopane_Unchannelled valley-bottom","Mopane_Unchannelled valley-bottom",4051.28800518616
-"Sub-escarpment Grassland_Unchannelled valley-bottom","Sub-escarpment Grassland_Unchannelled valley-bottom",117316.238930691
-"Sub-escarpment Savanna_Seep","Sub-escarpment Savanna_Seep",87480.1094811411
-"Sub-escarpment Savanna_Floodplain","Sub-escarpment Savanna_Floodplain",83434.9055599215
-"Sub-escarpment Savanna_Unchannelled valley-bottom","Sub-escarpment Savanna_Unchannelled valley-bottom",66041.9501205258
-"Pondoland Coastal Belt_Seep","Pondoland Coastal Belt_Seep",4511.93713816379
+"Sub-escarpment Grassland_Unchannelled valley-bottom","Sub-escarpment Grassland_Unchannelled valley-bottom",48068.9021695708
+"Sub-escarpment Savanna_Seep","Sub-escarpment Savanna_Seep",29089.7823125132
+"Sub-escarpment Savanna_Floodplain","Sub-escarpment Savanna_Floodplain",28431.2472692586
+"Sub-escarpment Savanna_Unchannelled valley-bottom","Sub-escarpment Savanna_Unchannelled valley-bottom",25333.9516584324
+"Pondoland Coastal Belt_Seep","Pondoland Coastal Belt_Seep",68.5696257181358
 "Kwa-Zulu Natal Coastal Belt_Seep","Kwa-Zulu Natal Coastal Belt_Seep",8814.81685899056
 "Kwa-Zulu Natal Coastal Belt_Floodplain","Kwa-Zulu Natal Coastal Belt_Floodplain",3886.41516609828
-"Pondoland Coastal Belt_Floodplain","Pondoland Coastal Belt_Floodplain",2978.64547019935
+"Pondoland Coastal Belt_Floodplain","Pondoland Coastal Belt_Floodplain",3.08728208934478
 "Kwa-Zulu Natal Coastal Belt_Unchannelled valley-bottom","Kwa-Zulu Natal Coastal Belt_Unchannelled valley-bottom",6929.90989198672
-"Pondoland Coastal Belt_Unchannelled valley-bottom","Pondoland Coastal Belt_Unchannelled valley-bottom",2092.69990566981
-"Maputaland Coastal Belt_Floodplain","Maputaland Coastal Belt_Floodplain",10711.3982441549
+"Pondoland Coastal Belt_Unchannelled valley-bottom","Pondoland Coastal Belt_Unchannelled valley-bottom",6.52854172593308
+"Drakensberg Grassland_Unchannelled valley-bottom","Drakensberg Grassland_Unchannelled valley-bottom",417.031334610491
+"Maputaland Coastal Belt_Floodplain","Maputaland Coastal Belt_Floodplain",10675.9729187575
 "Maputaland Coastal Belt_Seep","Maputaland Coastal Belt_Seep",10920.0014947478
-"Maputaland Coastal Belt_Unchannelled valley-bottom","Maputaland Coastal Belt_Unchannelled valley-bottom",8876.36765746226
-"Northwest Fynbos_Seep","Northwest Fynbos_Seep",17293.9673613455
-"Northwest Fynbos_Floodplain","Northwest Fynbos_Floodplain",19709.2016305412
+"Maputaland Coastal Belt_Unchannelled valley-bottom","Maputaland Coastal Belt_Unchannelled valley-bottom",8871.99562144948
+"Karoo Interior_Unchannelled valley-bottom","Karoo Interior_Unchannelled valley-bottom",135916.790477291
+"Karoo Interior_Seep","Karoo Interior_Seep",328782.483699357
 "Bushmanland_Unchannelled valley-bottom","Bushmanland_Unchannelled valley-bottom",14806.8910266866
 "Bushmanland_Seep","Bushmanland_Seep",37523.1550887446
-"Bushmanland_Floodplain","Bushmanland_Floodplain",88930.0760392545
-"Southern Fynbos_Seep","Southern Fynbos_Seep",68268.8445284912
-"Southwest Fynbos_Seep","Southwest Fynbos_Seep",29174.4190951886
-"West Coast_Seep","West Coast_Seep",14671.0481774388
-"Southern Fynbos_Floodplain","Southern Fynbos_Floodplain",62791.0091245054
+"Bushmanland_Floodplain","Bushmanland_Floodplain",74230.8729909196
+"Karoo Interior_Floodplain","Karoo Interior_Floodplain",265773.160588701
+"Northwest Fynbos_Floodplain","Northwest Fynbos_Floodplain",19026.2737437062
+"Southern Fynbos_Seep","Southern Fynbos_Seep",50412.4342956895
+"Northwest Fynbos_Seep","Northwest Fynbos_Seep",13047.223230101
+"Southwest Fynbos_Seep","Southwest Fynbos_Seep",29171.7639525009
+"West Coast_Seep","West Coast_Seep",14610.3844897701
+"Southern Fynbos_Floodplain","Southern Fynbos_Floodplain",47965.6590375956
 "West Coast_Floodplain","West Coast_Floodplain",14642.2971850755
 "Northwest Fynbos_Unchannelled valley-bottom","Northwest Fynbos_Unchannelled valley-bottom",6268.46654446993
-"West Coast_Unchannelled valley-bottom","West Coast_Unchannelled valley-bottom",4894.94310150165
+"West Coast_Unchannelled valley-bottom","West Coast_Unchannelled valley-bottom",4661.71919495778
 "Southwest Fynbos_Floodplain","Southwest Fynbos_Floodplain",28886.1613539266
 "Southwest Fynbos_Unchannelled valley-bottom","Southwest Fynbos_Unchannelled valley-bottom",16255.5640640855
 "East Coast Renosterveld_Floodplain","East Coast Renosterveld_Floodplain",24251.4717285404
 "East Coast Renosterveld_Seep","East Coast Renosterveld_Seep",24463.4230315251
 "East Coast Renosterveld_Unchannelled valley-bottom","East Coast Renosterveld_Unchannelled valley-bottom",14167.3016421709
-"Southern Fynbos_Unchannelled valley-bottom","Southern Fynbos_Unchannelled valley-bottom",49431.6923027947
-"Albany Thicket_Floodplain","Albany Thicket_Floodplain",51423.9875250064
-"Albany Thicket_Seep","Albany Thicket_Seep",76839.0004101366
-"Albany Thicket_Unchannelled valley-bottom","Albany Thicket_Unchannelled valley-bottom",7860.95868005967
+"Southern Fynbos_Unchannelled valley-bottom","Southern Fynbos_Unchannelled valley-bottom",27269.6567171255
+"Albany Thicket_Floodplain","Albany Thicket_Floodplain",2899.22048728571
+"Albany Thicket_Seep","Albany Thicket_Seep",4795.51667792391
