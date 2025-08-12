@@ -30,38 +30,15 @@ wetlands <- wetlands %>% mutate(fid = row_number())
 
 options(scipen = 999)
 
+# simplistic clean up drops 18 000 rows - so if this can be cleaned up it might help things 
 wet <- wetlands %>%
   # add area column 
   mutate(area_m2 = as.numeric(st_area(geom))) %>%
   # remove rows with NA in New_name (do  sum(is.na(wetlands$type)) to check numer there are 215)
-  filter(!is.na(type)) %>% 
-  # clean up PES (NA) and EC (/by zero issues)
-  mutate(pes24 = ifelse(EC22ALL == "#DIV/0!" | EC22ALL == "0" , NA , EC22ALL) ) %>%
-  mutate(pes18 = ifelse(EC18ALL == "#DIV/0!" | EC18ALL == "0" | EC18ALL == "fix", NA, EC18ALL) ) %>%
-  mutate(cond24 = ifelse(PES22ALL < 0 , NA, PES22ALL), 
-         cond18 = ifelse(PES18ALL < 0 , NA, PES18ALL)) %>%
-  # if pes2024 is NA but cond24 is 0 make pes F 
-  #mutate(pes24 = ifelse(is.na(pes24) & cond24 == 0, "F" , pes24)) %>%
-  # if pes2018 is missing use 2024  if 2024 missing use 2018 ? 
-  mutate(pes24 = ifelse(is.na(pes24) & !is.na(pes18), pes18, pes24)) %>%
-  mutate(pes18 = ifelse(is.na(pes18) & !is.na(pes24), pes24, pes18)) %>%  
-    # now deal with some pes but missing cond (D2)
-    mutate(cond24 = case_when(( is.na(cond24)) & pes24 == "A" ~ 95, 
-                            ( is.na(cond24)) & pes24 == "B" ~ 65,
-                            ( is.na(cond24)) & pes24 == "C" ~ 40,
-                            ( is.na(cond24)) & pes24 == "D" ~ 20,
-                            ( is.na(cond24)) & pes24 == "E" ~ 8,
-                            ( is.na(cond24)) & pes24 == "F" ~ 4, 
-                            TRUE ~ cond24)) %>%
-    mutate(cond18 = case_when(( is.na(cond18)) & pes18 == "A" ~ 95, 
-                              ( is.na(cond18)) & pes18 == "B" ~ 65,
-                              ( is.na(cond18)) & pes18 == "C" ~ 40,
-                              ( is.na(cond18)) & pes18 == "D" ~ 20,
-                              ( is.na(cond18)) & pes18 == "E" ~ 8,
-                              ( is.na(cond18)) & pes18 == "F" ~ 4, 
-                              TRUE ~ cond18)) %>%
-  # if pes2024  is still missing after all possible fixes  remove from dataset 
- filter(!is.na(pes24))
+  mutate(EC22ALL = ifelse(EC22ALL == "0", NA, EC22ALL), 
+         EC18ALL = ifelse(EC18ALL == "0"| EC18ALL =="fix" | EC18ALL =="#DIV/0!", NA, EC18ALL)) %>%
+  filter(if_all(c(type, EC22ALL, EC18ALL, EC22HYD), ~ !is.na(.x))) 
+ 
 
 # remove geometry for quicker summaries
 wet_tb <- st_drop_geometry(wet)
@@ -116,6 +93,7 @@ write.csv(eoo_df, "outputs/EOO_all.csv")
 **Criterion A2b A3 and B1ai (using rod) calculation**
 
 ```{r}
+| code-fold: true
 # cross tab estuaries with land cover 1990, 2014, 2018 and 2022 and calculate extent lost and rate of loss
 
 #Add data 
@@ -233,21 +211,20 @@ type_lc_metrics <- type_ras_ext %>%
 
 #overall summary
 wet_type_24 <- wet_tb %>%
-    group_by(type, pes24) %>%
+    group_by(type, EC22ALL) %>%
   summarise(area24_sum = sum(as.numeric(area_m2), na.rm = TRUE)) %>%
   ungroup() %>%
-  pivot_wider(names_from = pes24, values_from = area24_sum, values_fill = list(area24_sum = 0))  %>%
-  mutate(type24_m2 = rowSums(across(c(A, B, C, D, E, F)))) 
-  
+  pivot_wider(names_from = EC22ALL, values_from = area24_sum, values_fill = list(area24_sum = 0)) %>%
+  mutate(type24_m2 = rowSums(across(c(A, B, C, D, E, F))))
 
 wet_type_18 <- wet_tb %>%
-    group_by(type, pes18) %>%
+    group_by(type, EC18ALL) %>%
   summarise(area18_sum = sum(as.numeric(area_m2), na.rm = TRUE)) %>%
   ungroup() %>%
-  pivot_wider(names_from = pes18, values_from = area18_sum, values_fill = list(area18_sum = 0)) %>%
+  pivot_wider(names_from = EC18ALL, values_from = area18_sum, values_fill = list(area18_sum = 0)) %>%
   mutate(type18_m2 = rowSums(across(c(A, B, C, D, E, F)))) %>%
-  rename(A18=A, B18=B, C18=C, D18=D, E18=E, F18=F) 
- 
+  rename(A18=A, B18=B, C18=C, D18=D, E18=E, F18=F)
+  
 # PES results 24 for booklet narratives
 pes24_stats <- wet_type_24 %>%
     bind_rows(summarise(., type = "Total", across(where(is.numeric), ~sum(., na.rm = TRUE)) ) ) %>%
@@ -263,14 +240,17 @@ pes18_stats <- wet_type_18 %>%
 
 ```
 
-**Prepare for focused assessments of each element of decline PES22VEG**
+**Prepare for focused assessments of each element of decline**
+
+Using PESALL PESVEG PESWQ PESGEO PESHYD separately in a D3 assessment (this prevents the overall Wet Health score dominating the RLE) and allows us to see the symptom of decline more clearly
 
 ```{r}
-cscores <- wet_tb %>%
+# Calculate D2 based on rate of decline in PES score over period 2018-2024 projected forward to 2068, then assess % of decline over 50years - This would be much worse is we had real PES trends 
+D2fin <- wet_tb %>%
     group_by(type) %>%
     summarise(across(
-    c(call24 = cond24,
-      call18 = cond18,
+    c(call24 = PES22ALL,
+      call18 = PES18ALL,
       cveg24 = PES22VEG,
       cveg18 = PES18VEG,
       cwq24  = PES22WQ,
@@ -287,80 +267,97 @@ cscores <- wet_tb %>%
     c(call24, call18, cveg24, cveg18, cwq24, cwq18, cgeo24, cgeo18, chyd24, chyd18),
     ~ 1 - pmin(pmax(.x / type24_m2, 0), 1)
   )) %>%
-     select(type, call24, call18, cveg24, cveg18, cwq24,cwq18, cgeo24, cgeo18, chyd24, chyd18 )
+     select(type, call24, call18, cveg24, cveg18, cwq24,cwq18, cgeo24, cgeo18, chyd24, chyd18 ) %>%
+  # Calculate for D2 -  rate of decline in PES scores over a 50 year period 2018 to 2068    
+ mutate(call68 = pmin(pmax(call18 + ((call24 - call18) / (2022 - 2018) * 46), 0), 1)) %>%
+  mutate(cond_decline = pmin(pmax((call68 - call18) / call18, 0), 1)) %>% 
+  relocate(call68, .before = call24) %>%
+#D2 decline in PES  over 50 year period 
+    mutate(D2_24 = case_when(    cond_decline >= 0.8 ~ "CR", 
+                                 cond_decline >= 0.5 ~ "EN",
+                                 cond_decline >= 0.3 ~ "VU", 
+                                 TRUE ~ "LC")) %>%
+  mutate(D2_24 = factor(D2_24, levels = c("LC", "VU", "EN", "CR"), ordered = TRUE)) %>%
+  mutate(D2_18 = D2_24) %>%
+  select(type, call18,call24,call68,D2_18, D2_24)
 ```
 
-**Build table of Assessments**
+Alternative methods (full methods) for D3
+
+```{r}
+# Calculate D3 for each element of PES individually and overall 
+
+# Make a fuction to calculate D3 using extent in CDEF, DEF, and EF condition
+D3calc <- function(data, ec_col, out_col) {
+  data %>%
+    group_by(type, .data[[ec_col]]) %>%
+    summarise(area24_sum = sum(as.numeric(area_m2), na.rm = TRUE), .groups = "drop") %>%
+    pivot_wider(
+      names_from = all_of(ec_col),
+      values_from = area24_sum,
+      values_fill = list(area24_sum = 0)
+    ) %>%
+    mutate(type24_m2   = rowSums(across(c(A, B, C, D, E, F))),
+           prp24_bcdef = (B + C + D + E + F)/type24_m2,
+           prp24_cdef  = (C + D + E + F) / type24_m2,
+           prp24_def   = (D + E + F) / type24_m2,
+           prp24_ef    = (E + F) / type24_m2,
+           "{out_col}" := case_when(
+             prp24_ef  >= 0.9                        ~ "CR",
+             prp24_ef  >= 0.7 | prp24_def >= 0.9     ~ "EN",
+             prp24_ef  >= 0.5 | prp24_def >= 0.7 |
+               prp24_cdef >= 0.9                     ~ "VU",
+             TRUE                                    ~ "LC"
+           )) %>%
+    select(type, all_of(out_col))
+}
+
+# apply function to EC data 
+library(purrr)
+
+D3fin <- list(
+  D3calc(wet_tb, "EC22ALL", "D3_24"),
+  D3calc(wet_tb, "EC22VEG", "D3veg_24"),
+  D3calc(wet_tb, "EC22WQ",  "D3wq_24"),
+  D3calc(wet_tb, "EC22GEO", "D3geo_24"),
+  D3calc(wet_tb, "EC22HYD", "D3hyd_24"),
+  D3calc(wet_tb, "EC18ALL", "D3_18"),
+  D3calc(wet_tb, "EC18VEG", "D3veg_18"),
+  D3calc(wet_tb, "EC18WQ",  "D3wq_18"),
+  D3calc(wet_tb, "EC18GEO", "D3geo_18"),
+  D3calc(wet_tb, "EC18HYD", "D3hyd_18")
+) %>%
+  reduce(left_join, by = "type") %>%
+ # make all assessments factors to get MAX 
+  mutate(across( c(D3_18, D3veg_18, D3wq_18, D3geo_18, D3hyd_18, D3_24, D3veg_24, D3wq_24, D3geo_24, D3hyd_24), 
+                   ~ factor(., levels = c("LC", "VU", "EN", "CR"), ordered = TRUE)  ))  %>%
+ # Ensure highest risk category is assiged 
+   rowwise() %>%
+     mutate(D3fin_18 = max(c_across(c(D3_18, D3veg_18, D3wq_18, D3geo_18, D3hyd_18)), na.rm = TRUE), 
+            D3fin_24 = max(c_across(c(D3_24, D3veg_24, D3wq_24, D3geo_24, D3hyd_24)), na.rm = TRUE))
+
+# Repeat for 2018 results
+
+
+```
+
+**Build table of Assessments B1aii and bring in A2b A3, then add ETS (A3sa) , and join with D2 and D3 from above**
 
 ```{r}
 # Join the tables above - this makes a single table in which all the required metrics can be found to compute EPL and RLE
  
 wet_type_metrics <- wet_type_24 %>%
   left_join(wet_type_18, by = "type") %>%
-  left_join(cscores, by = "type") %>%
-  left_join(eoo_df, by = "type") %>%
-# Metrics for RLE  
-  # Calculate for D2 -  rate of decline in PES scores over a 50 year period 2018 to 2068    
-  mutate(call68 = pmin(pmax(call18 + ((call24 - call18) / (2022 - 2018) * 46), 0), 1)) %>%
-  mutate(cond_decline = pmin(pmax((call68 - call18) / call18, 0), 1)) %>% 
-  relocate(call68, .before = call24) %>%
-  # Calculate overall proportion in each pes group of severity  for D3 
-    mutate(prp18_bcdef = ( B18 + C18 + D18 + E18 + F18)/(type18_m2)) %>%   
-    mutate(prp18_cdef = ( C18 + D18 + E18 + F18)/(type18_m2) ) %>% 
-    mutate(prp18_def = ( D18 + E18 + F18 )/(type18_m2)) %>%   
-    mutate(prp18_ef = (E18 + F18)/(type24_m2)) %>%
-    mutate(prp24_bcdef = ( B+ C + D + E + F)/(type24_m2)) %>%    
-    mutate(prp24_cdef = ( C + D + E + F)/(type24_m2)) %>%    
-    mutate(prp24_def = ( D + E + F )/(type24_m2)) %>%    
-    mutate(prp24_ef= (E + F)/(type24_m2)) %>%
-  # Ongoing decline =  area of poor condition increases
+  left_join(type_lc_metrics) %>%
+  mutate(prp24_def = (D+E+F)/type24_m2, prp18_def = (D18+E18+F18)/type24_m2) %>%
+# Ongoing decline =  area of poor condition increases
     mutate(pes_decline1824 = ifelse(prp24_def > prp18_def, "decline1824", "nodecline1824"))  %>%
-  # Metrics for SA ETS  
-   mutate(prp18_ab = (A18+B18)/type18_m2) %>%
+# Metrics for SA ETS  
+   mutate(prp18_ab  = (A18+B18)/type18_m2) %>%
    mutate(prp18_abc = (A18+B18+C18)/type18_m2) %>%
-   mutate(prp24_ab = (A+B)/type24_m2) %>%
+   mutate(prp24_ab  = (A+B)/type24_m2) %>%
    mutate(prp24_abc = (A+B+C)/type24_m2) %>%
-#D2 decline in PES  over 50 year period 
-    mutate(D2_24 = case_when(    cond_decline >= 0.8 ~ "CR", 
-                                 cond_decline >= 0.5 ~ "EN",
-                                 cond_decline >= 0.3 ~ "VU", 
-                                 TRUE ~ "LC")) %>%
-   mutate(D2_18 = D2_24) %>% 
-  # PES 2014 unreliable to cannot be used to get rate - assumed to be same t1 and t2 
-# D3 assessment using PES as measure of functional decline due to biotic disruption /degradation
-  mutate(D3_18 = case_when( prp18_ef >= 0.9 ~ "CR", 
-                              prp18_ef >= 0.7 | prp18_def >=0.9 ~ "EN",
-                              prp18_ef >= 0.5 | prp18_def >=0.7 | 
-                                                prp18_cdef >= 0.9 ~ "VU", 
-                                 TRUE ~ "LC")) %>% 
-  mutate(D3_24 = case_when( prp24_ef >= 0.9 ~ "CR", 
-                              prp24_ef >= 0.7 | prp24_def >=0.9 ~ "EN",
-                              prp24_ef >= 0.5 | prp24_def >=0.7 | 
-                                               prp24_cdef >= 0.9 ~ "VU", 
-                               TRUE ~ "LC")) %>%  
-  #####ADD in an option that is much stricter on PES severity   
-  mutate(D3b_18 = case_when(  prp18_def >= 0.9 ~ "CR",
-                              prp18_def >= 0.7 | prp18_cdef >=0.9 ~ "EN",
-                              prp18_def >= 0.5 | prp18_cdef >=0.7 |
-                                                prp18_bcdef >= 0.9 ~ "VU",
-                                 TRUE ~ "LC")) %>%
-   mutate(D3b_24 = case_when( prp24_ef >= 0.9 ~ "CR",
-                               prp24_ef >= 0.7 | prp24_def >=0.9 ~ "EN",
-                               prp24_ef >= 0.5 | prp24_def >=0.7 |
-                                               prp24_bcdef >= 0.9 ~ "VU",
-                               TRUE ~ "LC")) %>%
-####### NEW D3 per element of functional decline veg, wq, geo, hydro
- mutate(across(
-    c(cveg24, cwq24, cgeo24, chyd24, cveg18, cwq18, cgeo18, chyd18),
-    ~ case_when(
-      .x >= 0.9 ~ "CR",
-      .x >= 0.7 ~ "EN",
-      .x >= 0.5 ~ "VU",
-      TRUE      ~ "LC"
-    ),
-    .names = "D3{.col}"
- ))  %>%          
-  # B1aii using ongoing decline calculated above add 2018 when PES data is available
+# B1aii using ongoing decline calculated above add 2018 when PES data is available
    mutate(B1aii_24 = case_when( pes_decline1824 == "decline1824" & eoo_km2  <= 2000 ~ "CR",
                                 pes_decline1824 == "decline1824" & eoo_km2  <= 20000 ~ "EN",
                                 pes_decline1824 == "decline1824" & eoo_km2  <= 50000 ~ "VU",
@@ -369,18 +366,7 @@ wet_type_metrics <- wet_type_24 %>%
                                 pes_decline1824 == "decline1824" & eoo_km2  <= 20000 ~ "EN",
                                 pes_decline1824 == "decline1824" & eoo_km2  <= 50000 ~ "VU",
                                  TRUE ~ "LC")) %>%
-   # re order cols 
-    relocate(B1aii_18, D2_18, D3_18, D3b_18, D3cveg18, D3cwq18, D3cgeo18, D3chyd18, B1aii_24, D2_24, D3_24, D3cveg24, D3cwq24, D3cgeo24, D3chyd24,  .after = pes_decline1824) %>%
-  # overall RLE outcome
-  # make all assessments factors to get MAX 
-    mutate(across( c(B1aii_18, D2_18,D3_18, D3b_18, D3cveg18, D3cwq18, D3cgeo18, D3chyd18, B1aii_24, D2_24, D3_24, D3b_24,  D3cveg24, D3cwq24, D3cgeo24, D3chyd24), 
-                   ~ factor(., levels = c("LC", "VU", "EN", "CR"), ordered = TRUE)  ))  %>%
- # Ensure highest risk cateroy is assiged 
-   rowwise() %>%
-     mutate(RLE18 = max(c_across(c(B1aii_18, D2_18,D3_18,  D3cveg18, D3cwq18, D3cgeo18, D3chyd18)), na.rm = TRUE), 
-            RLE24 = max(c_across(c(B1aii_24, D2_24, D3_24,  D3cveg24, D3cwq24, D3cgeo24, D3chyd24)), na.rm = TRUE)) %>%
-   ungroup() %>%
- # Add van Deventer 2018 ETS method: assuming A and B are intact rest is lost but also counting C towards VU (use DDfec as PES C)
+# Add van Deventer 2018 ETS method: assuming A and B are intact rest is lost but also counting C towards VU (use DDfec as PES C)
     mutate(A3sa_24 = case_when( prp24_ab < 0.2 ~ "CR", 
                                 prp24_ab < 0.35 ~ "EN",
                                 prp24_abc < 0.6 ~ "VU", 
@@ -388,8 +374,23 @@ wet_type_metrics <- wet_type_24 %>%
     mutate(A3sa_18 = case_when( prp18_ab < 0.2 ~ "CR", 
                                 prp18_ab < 0.35 ~ "EN",
                                 prp18_abc < 0.6 ~ "VU", 
-                                 TRUE ~ "LC")) %>%
-     # add in HGM type
+                                 TRUE ~ "LC")) %>% 
+# Bring in D2 and D3 assessments
+  left_join(D2fin, by = "type") %>%
+  left_join(D3fin, by = "type") %>%
+# re order cols 
+    relocate(A2b_18, A3_18,  A3sa_18, B1ai_18, B1aii_18, D2_18, D3_18, D3veg_18, D3wq_18, D3geo_18, D3hyd_18, D3fin_18, A2b_24, A3_24, A3sa_24, B1ai_24, B1aii_24, D2_24, D3_24, D3veg_24, D3wq_24, D3geo_24, D3hyd_24, D3fin_24,   .after = call68) %>%
+  # overall RLE outcome
+  # make all assessments factors to get MAX 
+    mutate(across( c(A2b_18, A3_18,  A3sa_18, B1ai_18, B1aii_18, D2_18, D3_18, D3veg_18, D3wq_18, D3geo_18, D3hyd_18, D3fin_18, A2b_24, A3_24, A3sa_24, B1ai_24, B1aii_24, D2_24, D3_24, D3veg_24, D3wq_24, D3geo_24, D3hyd_24, D3fin_24), 
+                   ~ factor(., levels = c("LC", "VU", "EN", "CR"), ordered = TRUE)  ))  %>%
+ # Ensure highest risk cateroy is assiged 
+   rowwise() %>%
+     mutate(RLE18 = max(c_across(c(A2b_18, A3_18,  B1ai_18, B1aii_18, D2_18, D3fin_18)), na.rm = TRUE), 
+            RLE24 = max(c_across(c(A2b_24, A3_24,  B1ai_24, B1aii_24, D2_24, D3fin_24)), na.rm = TRUE),
+            ETS18 = A3sa_18, ETS24 = A3sa_24) %>%
+   ungroup() %>%
+      # add in HGM type
    left_join(type_hgm_tb, by = "type") %>%
    relocate(hgm, .after = type)
    
@@ -516,9 +517,10 @@ ETS Summary per HGM zone
 # RLE A3 SA methods results 
 # COUNTS - summary for 2024 using SA methods 
 rle24sa_sum <- wet_type_metrics %>%
-    group_by(A3sa_24, hgm) %>%
+    group_by(ETS24, hgm) %>%
   summarise(count = n(),.groups = 'drop') %>%
-  pivot_wider(names_from = A3sa_24, 
+  complete(ETS24, hgm, fill = list(count = 0)) %>%  # <--- fills missing combos
+  pivot_wider(names_from = ETS24, 
               values_from = count, values_fill = 0) %>%
    relocate(VU, .after = EN) %>%
    # Add row-wise TOTAL
@@ -537,9 +539,10 @@ rle24sa_sum <- wet_type_metrics %>%
 
 # COUNTS - summary for 2018 using SA methods 
    rle18sa_sum <- wet_type_metrics %>%
-    group_by(A3sa_18, hgm) %>%
+    group_by(ETS18, hgm) %>%
   summarise(count = n(),.groups = 'drop') %>%
-  pivot_wider(names_from = A3sa_18, 
+  complete(ETS18, hgm, fill = list(count = 0)) %>%  # <--- fills missing combos
+     pivot_wider(names_from = ETS18, 
               values_from = count, values_fill = 0) %>%
    relocate(VU, .after = EN) %>%
    # Add row-wise TOTAL
@@ -558,9 +561,10 @@ rle24sa_sum <- wet_type_metrics %>%
    
 #EXENTS - summary for 2024  using SA methods 
  rle24sa_ext <- wet_type_metrics %>%
-    group_by(A3sa_24, hgm) %>%
+    group_by(ETS24, hgm) %>%
   summarise(extent = round(sum(type24_m2)/1000000, 0),.groups = 'drop') %>%
-  pivot_wider(names_from = A3sa_24, 
+  complete(ETS24, hgm, fill = list(count = 0)) %>%  # <--- fills missing combos
+   pivot_wider(names_from = ETS24, 
               values_from = extent, values_fill = 0) %>%
     relocate(VU, .after = EN) %>%
    # Add row-wise TOTAL
@@ -587,9 +591,10 @@ rle24sa_sum <- wet_type_metrics %>%
    #EXENTS - summary for 2018  using SA methods 
   
  rle18sa_ext <- wet_type_metrics %>%
-    group_by(A3sa_18, hgm) %>%
+    group_by(ETS18, hgm) %>%
   summarise(extent = round(sum(type18_m2)/1000000, 0),.groups = 'drop') %>%
-  pivot_wider(names_from = A3sa_18, 
+  complete(ETS18, hgm, fill = list(count = 0)) %>%  # <--- fills missing combos
+   pivot_wider(names_from = ETS18, 
               values_from = extent, values_fill = 0) %>%
     relocate(VU, .after = EN) %>%
    # Add row-wise TOTAL

@@ -15,8 +15,8 @@ EPL <- read.csv("C:/Rdata/EPL_wet/outputs/epl_wet_metrics_per_type.csv")
 
 # select only cols required and then join
 RLE <- RLE %>%
-  select(type, hgm, RLE18, RLE24, A3sa_18, A3sa_24, type24_m2) %>%
-  rename(RLEsa18 = A3sa_18, RLEsa24 = A3sa_24, zone = hgm) %>%
+  select(type, hgm, RLE18, RLE24, ETS18, ETS24, type24_m2) %>%
+  rename(RLEsa18 = ETS18, RLEsa24 = ETS24, zone = hgm) %>%
   mutate(extent = type24_m2/1e6)
 EPL <- EPL %>%
   select(type, EPL18_wp_ab_model, EPL24_wp_ab_model) %>% 
@@ -65,8 +65,8 @@ write.csv(wet_unluckies, file = "outputs/wet_unluckies.csv")
 Results using SA ETS
 
 ```{r}
-ETS <- read.csv("C:/Rdata/RLE_wet/outputs/rle_wet_metrics_per_type.csv") %>% select(type, hgm, A3sa_18, A3sa_24, type_m2) %>%  rename( ETS18 = A3sa_18, ETS24 = A3sa_24, zone = hgm) %>%
-mutate(extent = type_m2/1e6) %>% select(-type_m2)
+ETS <- read.csv("C:/Rdata/RLE_wet/outputs/rle_wet_metrics_per_type.csv") %>% select(type, hgm, ETS18, ETS24, type24_m2) %>%  rename( zone = hgm) %>%
+mutate(extent = type24_m2/1e6) %>% select(-type24_m2)
 
 wet_results_type_sa <- ETS %>%
   left_join(EPL, by = "type") %>%

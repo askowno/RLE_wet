@@ -37,24 +37,25 @@ wet <- wetlands %>%
   mutate(pes18 = ifelse(EC18ALL == "#DIV/0!" | EC18ALL == "0" | EC18ALL == "fix", NA, EC18ALL) ) %>%
   mutate(cond24 = ifelse(PES22ALL < 0 , NA, PES22ALL), 
          cond18 = ifelse(PES18ALL < 0 , NA, PES18ALL)) %>%
+  # if pes2024 is NA but cond24 is 0 make pes F 
+  #mutate(pes24 = ifelse(is.na(pes24) & cond24 == 0, "F" , pes24)) %>%
   # if pes2018 is missing use 2024  if 2024 missing use 2018 ? 
   mutate(pes24 = ifelse(is.na(pes24) & !is.na(pes18), pes18, pes24)) %>%
   mutate(pes18 = ifelse(is.na(pes18) & !is.na(pes24), pes24, pes18)) %>%  
-  mutate(cond24 = ifelse(is.na(pes24) & cond24 == 0, NA, cond24)) %>% 
-  # now deal with some pes but missing cond (D2)
-    mutate(cond24 = case_when((cond24 == 0 | is.na(cond24)) & pes24 == "A" ~ 95, 
-                            (cond24 == 0 | is.na(cond24)) & pes24 == "B" ~ 65,
-                            (cond24 == 0 | is.na(cond24)) & pes24 == "C" ~ 40,
-                            (cond24 == 0 | is.na(cond24)) & pes24 == "D" ~ 20,
-                            (cond24 == 0 | is.na(cond24)) & pes24 == "E" ~ 8,
-                            (cond24 == 0 | is.na(cond24)) & pes24 == "F" ~ 4, 
+    # now deal with some pes but missing cond (D2)
+    mutate(cond24 = case_when(( is.na(cond24)) & pes24 == "A" ~ 95, 
+                            ( is.na(cond24)) & pes24 == "B" ~ 65,
+                            ( is.na(cond24)) & pes24 == "C" ~ 40,
+                            ( is.na(cond24)) & pes24 == "D" ~ 20,
+                            ( is.na(cond24)) & pes24 == "E" ~ 8,
+                            ( is.na(cond24)) & pes24 == "F" ~ 4, 
                             TRUE ~ cond24)) %>%
-    mutate(cond18 = case_when((cond18 == 0 | is.na(cond18)) & pes18 == "A" ~ 95, 
-                              (cond18 == 0 | is.na(cond18)) & pes18 == "B" ~ 65,
-                              (cond18 == 0 | is.na(cond18)) & pes18 == "C" ~ 40,
-                              (cond18 == 0 | is.na(cond18)) & pes18 == "D" ~ 20,
-                              (cond18 == 0 | is.na(cond18)) & pes18 == "E" ~ 8,
-                              (cond18 == 0 | is.na(cond18)) & pes18 == "F" ~ 4, 
+    mutate(cond18 = case_when(( is.na(cond18)) & pes18 == "A" ~ 95, 
+                              ( is.na(cond18)) & pes18 == "B" ~ 65,
+                              ( is.na(cond18)) & pes18 == "C" ~ 40,
+                              ( is.na(cond18)) & pes18 == "D" ~ 20,
+                              ( is.na(cond18)) & pes18 == "E" ~ 8,
+                              ( is.na(cond18)) & pes18 == "F" ~ 4, 
                               TRUE ~ cond18)) %>%
   # if pes2024  is still missing after all possible fixes  remove from dataset 
  filter(!is.na(pes24))
