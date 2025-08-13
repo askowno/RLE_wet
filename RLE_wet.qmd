@@ -13,6 +13,7 @@ library(tidyverse)
 library(stringr)
 library(terra)
 library(PROJ)
+library(purrr)
 
 # Add data
 # Replace with your actual file path and layer name if needed
@@ -93,7 +94,7 @@ write.csv(eoo_df, "outputs/EOO_all.csv")
 **Criterion A2b A3 and B1ai (using rod) calculation**
 
 ```{r}
-| code-fold: true
+
 # cross tab estuaries with land cover 1990, 2014, 2018 and 2022 and calculate extent lost and rate of loss
 
 #Add data 
@@ -198,7 +199,7 @@ type_lc_metrics <- type_ras_ext %>%
 
 ```{r}
 #load land cover results (which includes eoo) to avoid rerunning slow terra commands
-#type_lc_metrics <- read.csv("outputs/type_lc_metrics.csv") 
+type_lc_metrics <- read.csv("outputs/type_lc_metrics.csv") 
 
 
 ```
@@ -437,20 +438,29 @@ rle24_sum <- wet_type_metrics %>%
 
 # make summary of extent of RLE 2024 for ploting 
  rle24_ext <- wet_type_metrics %>%
-    mutate(RLE24 = factor(RLE24, levels = expected_levels)) %>%   
-   group_by(RLE24, hgm) %>%
-  summarise(extent = round(sum(type24_m2)/1000000, 0),.groups = 'drop') %>%
-  complete(RLE24, hgm, fill = list(count = 0)) %>%  # <--- fills missing combos
-   pivot_wider(names_from = RLE24, 
-              values_from = extent, values_fill = 0) %>%
-    relocate(VU, .after = EN) %>%
-   # Add row-wise TOTAL
+  mutate(RLE24 = factor(RLE24, levels = expected_levels)) %>%   
+  group_by(RLE24, hgm) %>%
+  summarise(extent = round(sum(type24_m2, na.rm = TRUE) / 1000000, 0), .groups = 'drop') %>%
+  complete(RLE24, hgm, fill = list(extent = 0)) %>%  # <-- fill correct col
+  pivot_wider(
+    names_from = RLE24, 
+    values_from = extent, 
+    values_fill = 0
+  ) %>%
+  relocate(VU, .after = EN) %>%
+  # Add row-wise TOTAL
   rowwise() %>%
-  mutate(Total = sum(c_across(where(is.numeric)))) %>%
+  mutate(Total = sum(c_across(where(is.numeric)), na.rm = TRUE)) %>%
   ungroup() %>%
   # Add TOTAL row (column-wise sums)
-  bind_rows(summarise(., hgm = "Total", across(where(is.numeric), sum))) %>%
-    mutate(hgm = factor(hgm, levels = c("Total", "Unchannelled valley-bottom" , "Seep", "Floodplain","Depression"), ordered = TRUE)) %>% ## ggplot plots inverted factors!
+  bind_rows(
+    summarise(., hgm = "Total", across(where(is.numeric), ~ sum(.x, na.rm = TRUE)))
+  ) %>%
+  mutate(
+    hgm = factor(hgm, 
+                 levels = c("Total", "Unchannelled valley-bottom", "Seep", "Floodplain", "Depression"), 
+                 ordered = TRUE)
+  ) %>%
    arrange(hgm)
  
  # export a csv of results - EXTENT (km) of RLE 24 per slope zone
@@ -493,7 +503,7 @@ rle24_sum <- wet_type_metrics %>%
    mutate(RLE18 = factor(RLE18, levels = expected_levels)) %>%  
    group_by(RLE18, hgm) %>%
   summarise(extent = round(sum(type18_m2)/1000000, 0),.groups = 'drop') %>%
-  complete(RLE18, hgm, fill = list(count = 0)) %>%  # <--- fills missing combos
+  complete(RLE18, hgm, fill = list(extent = 0)) %>%  # <-- fill correct col
    pivot_wider(names_from = RLE18, 
               values_from = extent, values_fill = 0) %>%
     relocate(VU, .after = EN) %>%
@@ -563,7 +573,7 @@ rle24sa_sum <- wet_type_metrics %>%
  rle24sa_ext <- wet_type_metrics %>%
     group_by(ETS24, hgm) %>%
   summarise(extent = round(sum(type24_m2)/1000000, 0),.groups = 'drop') %>%
-  complete(ETS24, hgm, fill = list(count = 0)) %>%  # <--- fills missing combos
+  complete(ETS24, hgm, fill = list(extent = 0)) %>%  # <-- fill correct col
    pivot_wider(names_from = ETS24, 
               values_from = extent, values_fill = 0) %>%
     relocate(VU, .after = EN) %>%
@@ -593,7 +603,7 @@ rle24sa_sum <- wet_type_metrics %>%
  rle18sa_ext <- wet_type_metrics %>%
     group_by(ETS18, hgm) %>%
   summarise(extent = round(sum(type18_m2)/1000000, 0),.groups = 'drop') %>%
-  complete(ETS18, hgm, fill = list(count = 0)) %>%  # <--- fills missing combos
+  complete(ETS18, hgm, fill = list(extent = 0)) %>%  # <-- fill correct col
    pivot_wider(names_from = ETS18, 
               values_from = extent, values_fill = 0) %>%
     relocate(VU, .after = EN) %>%
@@ -692,7 +702,39 @@ ggsave(
   dpi = 300                               # Resolution
 )
 
-# 2018 plots of extent of RLE SA 
+# 2018 plots of RLE SA ############################################
+# COUNTS RLE 2018
+
+pd_rle18_count <- rle18_sum %>%
+    rename( `Critically Endangered` = CR,
+           `Endangered` = EN, 
+           `Vulnerable` = VU, 
+           `Least Concern` = LC ) # %>%
+  # select(-...1) # required if importing from CSV
+ 
+rle18_barplot_count <- nba_plot(pd_rle18_count,
+                  `hgm`,
+                  2:5,
+                 CHRT = "bar",
+                 NUM = TRUE,
+                 LAB = "Percentage of ecosystem types",
+                 SAVE = NULL,
+                 SCALE_TEXT = 0.6)
+
+rle18_barplot_count <- rle18_barplot_count +
+  theme(
+    legend.position = "bottom",             # keep it at the bottom
+    legend.margin = margin(l = -45, r = -5, t = -5, b = -5)) 
+
+#export the 2018 plot of counts 
+ggsave(
+  filename = "outputs/rle18_wet_barplot_count.jpeg", # File name
+  plot = rle18_barplot_count,                  # Plot object
+    width = 9, height = 7, units = "cm",   # Dimensions
+     dpi = 300 )                              # Resolution
+
+
+# EXTENT RLE 2018
 
 pd_rle18_ext <- rle18_ext %>%
      rename(`Critically Endangered` = CR,

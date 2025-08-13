@@ -39,3 +39,4 @@ rsconnect/
 # System files
 Thumbs.db       # Windows
 .RDataTmp1
+.RDataTmp3

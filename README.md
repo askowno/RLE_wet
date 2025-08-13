@@ -30,7 +30,7 @@ The IUCN RLE (v2) framework was applied and following criterion were assessed:
 
 -   Criterion A3 (historical decline in ecosystem extent), based on land cover 2022, compared to historical potential extent.
 
--   Criterion B1ai was applied using EOO calculations with ongoing decline defined as habitat loss RoD (Rate of Decline) of \>= 0.4% per year calculated frrm land cover change data
+-   Criterion B1ai was applied using EOO calculations with ongoing decline defined as habitat loss RoD (Rate of Decline) of \>= 0.4% per year calculated from land cover change data
 
 -   Criterion B1aii was applied using EOO calculations with ongoing decline defined as a decline in the extent of good/moderate condition estuarine extent (PES Classes A, B, C) from the previous PES assessment period (2018 - 2024).
 
@@ -61,7 +61,7 @@ Summary table - count of wetland ecosystem types per HGM zone per South African 
 Reflecting changes in RLE between 2018 and 2024 - This shows PES scores increased between 2018 and 2024
 
 | RLIe based on IUCN RLE framework | RLIe based on South African ETS framework |
-|----|----|
+|------------------------------------|------------------------------------|
 | ![](outputs/rlie_plot.jpeg) | ![](outputs/rliesa_plot.jpeg) |
 
 **Combined RLE and EPL results**
@@ -76,20 +76,20 @@ Simplified results for integration : [outputs/wet_results_for_integration.csv](o
 
 Highly threatened and under protected : [outputs/riv_unluckies.csv](outputs/wet_unluckies.csv)
 
-Highly threatened and under-protected ecosystems: 28% of wetlands types (23/81) are highly threatened (EN/CR) and under protected (NP/ PP).
+**Highly threatened and under-protected ecosystems:**
 
-SA ETS (van Deventer et al., 2019) and EPL results:
+28% of wetlands types (23/81) are highly threatened (EN/CR) and under protected (NP/ PP).
 
-Full results per type : [outputs/wet_results_type_sa.csv](outputs/wet_results_type_sa.csv)
+**Threat Status:**
 
-Simplified results for integration : [outputs/wet_results_sa_for_integration.csv](outputs/wet_results_sa_for_integration.csv)
+27/80 CR and EN = 33%; 50/80 Threatened = 61% (81% of depressions threatened)
 
-Highly threatened and under protected : [outputs/riv_unluckies_sa.csv](outputs/riv_unluckies_sa.csv)
-
-Highly threatened and under-protected ecosystems: xx% of wetlands types (xx) are highly threatened (EN/CR) and under protected (NP/ PP).
+51% extent is threatened (13% of extent is CR and EN)
 
 **River PES stats for 2024**
 
 56% of Wetland area in South Africa is in A or B condition
+
+14% in DEF condition
 
 [outputs/wet_pes24_per_type.csv](outputs/wet_pes24_per_type.csv)
