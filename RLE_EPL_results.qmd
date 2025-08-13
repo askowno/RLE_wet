@@ -106,3 +106,37 @@ write.csv(wet_results_type_sa, file = "outputs/wet_results_type_sa.csv")
 write.csv(wet_results_sa_for_integration, file = "outputs/wet_results_sa_for_integration.csv")
 write.csv(unlucky_wide_sa, file = "outputs/wet_unluckies_sa.csv")
 ```
+
+Spatial data output for maps
+
+```{r}
+# Prepare to output spatial data with combined RLE and EPL results
+
+# Add and clean up spatial data
+wetlands <- st_read("C:/Users/skownoa/Dropbox/NBAwork/Wetlands/wetl_NBA_20250811.gpkg")
+wet_v <- wetlands %>% 
+  mutate(fid = row_number()) %>%
+  mutate(EC22ALL = ifelse(EC22ALL == "0", NA, EC22ALL), 
+         EC18ALL = ifelse(EC18ALL == "0"| 
+                            EC18ALL =="fix" | 
+                            EC18ALL =="#DIV/0!", 
+                            NA, EC18ALL)) %>%
+  filter(if_all(c(type, EC22ALL, EC18ALL, EC22HYD), ~ !is.na(.x))) 
+  
+  
+wet_results_vector <- wet_v %>%
+  left_join(wet_results_for_integration, by = "type" )
+
+st_write(
+  wet_results_vector,
+  "C:/Users/skownoa/Dropbox/NBAwork/Wetlands/wet_results_vector.gpkg",
+  delete_dsn = TRUE
+)
+
+# make one I can open in ARCGIS - must move to unprojected (WKT conflict r to ARC)
+st_write(
+  st_transform(wet_results_vector, crs = 4326),
+  "C:/Users/skownoa/Dropbox/NBAwork/Wetlands/wet_results_vector_dd.gpkg",
+  delete_dsn = TRUE
+)
+```
