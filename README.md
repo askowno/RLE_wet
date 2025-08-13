@@ -82,9 +82,15 @@ Highly threatened and under protected : [outputs/riv_unluckies.csv](outputs/wet_
 
 **Threat Status:**
 
-27/80 CR and EN = 33%; 50/80 Threatened = 61% (81% of depressions threatened)
+Count - 27/80 CR and EN = 33%; 50/80 Threatened = 61% (81% of depressions threatened)
 
-51% extent is threatened (13% of extent is CR and EN)
+Extent - 51% is threatened (13% of extent is CR and EN)
+
+**EPL**
+
+Count - 19/80 NP (25%); 60/80 PP or NP (75%)
+
+Extent - 15% NP but 88% PP or NP
 
 **River PES stats for 2024**
 
