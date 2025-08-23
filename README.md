@@ -51,7 +51,7 @@ Summary table - count of wetland ecosystem types per HGM zone per IUCN RLE categ
 Summary table - count of wetland ecosystem types per HGM zone per South African ETS category [rle24sa_wet_count.csv](outputs/rle24sa_wet_count.csv)
 
 | RLE 2024 - count of types | RLE 2024 - extent of types |
-|------------------------------------|------------------------------------|
+|----|----|
 | ![](outputs/rle24_wet_barplot_count.jpeg) | ![](outputs/rle24_wet_barplot_ext.jpeg) |
 | South African ETS 2024 (count) | South African ETS 2024 (extent) |
 | ![](outputs/rle24sa_wet_barplot_count.jpeg) | ![](outputs/rle24sa_wet_barplot_ext.jpeg) |
@@ -61,7 +61,7 @@ Summary table - count of wetland ecosystem types per HGM zone per South African 
 Reflecting changes in RLE between 2018 and 2024 - This shows PES scores increased between 2018 and 2024
 
 | RLIe based on IUCN RLE framework | RLIe based on South African ETS framework |
-|------------------------------------|------------------------------------|
+|----|----|
 | ![](outputs/rlie_plot.jpeg) | ![](outputs/rliesa_plot.jpeg) |
 
 **Combined RLE and EPL results**
