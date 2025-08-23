@@ -38,7 +38,7 @@ The IUCN RLE (v2) framework was applied and following criterion were assessed:
 
 -   Criterion D3 was applied to the Wetland Ecological State Class (PES) data such that: Severity of biotic disruption of \>= 90% was assumed for PES classes E-F; Severity \>=70% was assigned to PES classes D-F; Severity \>=50% was assigned to PES classes C-F. D3 was applied to each element of PES; Vegetation, Water Quality, Geomorphology, Hydrology, and the overall Wet Health score that combines these elements.
 
-Each of the 81 wetland ecosystem types were assigned to one of the four risk categories: Critically Endangered, Endangered, Vulnerable and Least Concern. The highest risk category for these two criteria is selected as the threat / risk status for each river type.
+Each of the 82 wetland ecosystem types were assigned to one of the four risk categories: Critically Endangered, Endangered, Vulnerable and Least Concern. The highest risk category for these two criteria is selected as the threat / risk status for each river type.
 
 For consistency with past assessments the South African Ecosystem Threat Status framework (developed by [Nel et al., 2010](DOI:%2010.1111/j.1472-4642.2006.00308.x) and modified by [van Deventer et al., 2019](http://hdl.handle.net/20.500.12143/5847)) was applied in a separate assessment. This approach uses the proportion of each ecosystem type that is in a good - fair condition (PES class A B and C) and a set of thresholds. If less than 20% of a type (measured by length of river segment) is in a A or B condition then the type is categorised as Critically Endangered; if between 20-35% of the type is in A or B condition then the type is categorised as Endangered; If less than 60% of the type is in A or or C condition then the type is categorised as Vulnerable; if none of these thresholds are crossed then the type is Least Concern. The results are referred to as ETS (Ecosystem Threat Status) to differentiate them from RLE results.
 
@@ -78,7 +78,7 @@ Highly threatened and under protected : [outputs/riv_unluckies.csv](outputs/wet_
 
 **Highly threatened and under-protected ecosystems:**
 
-35% of wetlands types (29/81) are highly threatened (EN/CR) and under protected (NP/ PP). Over half of Depressions fall into this group.
+35% of wetlands types (29/82) are highly threatened (EN/CR) and under protected (NP/ PP). Over half of Depressions fall into this group.
 
 **Threat Status:**
 
