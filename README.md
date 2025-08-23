@@ -8,7 +8,7 @@ August 2025
 
 #### **Summary**
 
-This repository contains a workflow that results in the NBA 2025 Red List of Ecosystems indicators for (inland) wetland ecosystems of South Africa. The Quarto document [RLE_wet.qmd](RLE_wet.qmd) describes the import of the South African wetland database (version 20250811 ) prepared by SANBI. The data set covers 81 inland wetland ecosystem types in South Africa and includes per-feature ecosystem condition data in six categories (A-F) and Present Ecological State (PES) scores developed using an implementation of the WET-Health 2.0 framework ([Macfarlane et. al., 2020](https://frcsa.org.za/wp-content/uploads/2020/10/TT-820_Final-web.pdf)) by Nacelle Collins (Collins et al., in prep).
+This repository contains a workflow that results in the NBA 2025 Red List of Ecosystems indicators for (inland) wetland ecosystems of South Africa. The Quarto document [RLE_wet.qmd](RLE_wet.qmd) describes the import of the South African wetland database (version 20250823 ) prepared by SANBI. The data set covers 82 inland wetland ecosystem types in South Africa and includes per-feature ecosystem condition data in six categories (A-F) and Present Ecological State (PES) scores developed using an implementation of the WET-Health 2.0 framework ([Macfarlane et. al., 2020](https://frcsa.org.za/wp-content/uploads/2020/10/TT-820_Final-web.pdf)) by Nacelle Collins (Collins et al., in prep).
 
 -   Category A is natural, condition score \>= 90%
 
@@ -51,7 +51,7 @@ Summary table - count of wetland ecosystem types per HGM zone per IUCN RLE categ
 Summary table - count of wetland ecosystem types per HGM zone per South African ETS category [rle24sa_wet_count.csv](outputs/rle24sa_wet_count.csv)
 
 | RLE 2024 - count of types | RLE 2024 - extent of types |
-|----|----|
+|------------------------------------|------------------------------------|
 | ![](outputs/rle24_wet_barplot_count.jpeg) | ![](outputs/rle24_wet_barplot_ext.jpeg) |
 | South African ETS 2024 (count) | South African ETS 2024 (extent) |
 | ![](outputs/rle24sa_wet_barplot_count.jpeg) | ![](outputs/rle24sa_wet_barplot_ext.jpeg) |
@@ -61,7 +61,7 @@ Summary table - count of wetland ecosystem types per HGM zone per South African 
 Reflecting changes in RLE between 2018 and 2024 - This shows PES scores increased between 2018 and 2024
 
 | RLIe based on IUCN RLE framework | RLIe based on South African ETS framework |
-|----|----|
+|------------------------------------|------------------------------------|
 | ![](outputs/rlie_plot.jpeg) | ![](outputs/rliesa_plot.jpeg) |
 
 **Combined RLE and EPL results**
@@ -78,24 +78,24 @@ Highly threatened and under protected : [outputs/riv_unluckies.csv](outputs/wet_
 
 **Highly threatened and under-protected ecosystems:**
 
-28% of wetlands types (23/81) are highly threatened (EN/CR) and under protected (NP/ PP).
+35% of wetlands types (29/81) are highly threatened (EN/CR) and under protected (NP/ PP). Over half of Depressions fall into this group.
 
 **Threat Status:**
 
-Count - 27/80 CR and EN = 33%; 50/80 Threatened = 61% (81% of depressions threatened)
+Count - 37/82 (45%) CR or EN; 61/80 (74%) threatened while (90% of depressions are threatened)
 
-Extent - 51% is threatened (13% of extent is CR and EN)
+Extent - 86% is threatened (31% of extent is CR and EN)
 
 **EPL**
 
-Count - 19/80 NP (25%); 60/80 PP or NP (75%)
+Count - 19/82 NP (25%); 60/80 PP or NP (75%)
 
 Extent - 15% NP but 88% PP or NP
 
 **River PES stats for 2024**
 
-56% of Wetland area in South Africa is in A or B condition
+49% of Wetland area in South Africa is in A or B condition
 
-14% in DEF condition
+23% in DEF condition
 
 [outputs/wet_pes24_per_type.csv](outputs/wet_pes24_per_type.csv)

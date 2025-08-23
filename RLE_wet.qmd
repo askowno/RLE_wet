@@ -15,52 +15,56 @@ library(terra)
 library(PROJ)
 library(purrr)
 
-# Add data
-# Replace with your actual file path and layer name if needed
-wetlands <- st_read("C:/Users/skownoa/Dropbox/NBAwork/Wetlands/wetl_NBA_20250811.gpkg")
-wetlands <- wetlands %>% mutate(fid = row_number())
-#ensure it uses proj =  wgs84 aea cm 25 -24 -33
-# st_crs(wetlands)
+# Read PAs (projected layer) not required butmakes correcting proj easy
+pa <- st_read("C:/Users/skownoa/Dropbox/NBAwork/NLC_change/NLC_Change.gdb",
+              layer = "SANBI_PA_2024Q4_Mar2025")
 
+# Read Wetlands (unprojected layer)
+wetlands <- st_read("C:/Users/skownoa/Dropbox/NBAwork/Wetlands/wetl_NBA_20250823.gpkg",
+                    layer = "wetl_nba_20250823")
+
+# Reproject wetlands to PA's CRS
+wetlands <- st_transform(wetlands, crs = st_crs(pa))
+
+# add fid for each feature and ensure area_m2 is correct
+wetlands <- wetlands %>% mutate(fid = row_number()) %>% mutate(area_m2 = as.numeric(st_area(geom))) 
+
+
+# check cols
+# sort(unique(wetlands$type)) 
+# sort(unique(wetlands$bioregion)) 
+# sort(unique(wetlands$hgm1)) 
+# sort(unique(wetlands$EC18VEG)) 
 ```
 
 ### Clean up input data
 
 ```{r}
-## Clean up this version : there are 215 NA in type,  filter these out. Deal with NAs by using condition when available and fill cond if pes available, then fill forward and back between 2014 and 2018, then remove NA pes left over
+## Clean up this version 1) fill in missing type names by combining "Bioregion" and "_" and "hgm1" , and EC18VEG has a few "AA" change to "A". 
 
 options(scipen = 999)
 
-# simplistic clean up drops 18 000 rows - so if this can be cleaned up it might help things 
 wet <- wetlands %>%
-  # add area column 
-  mutate(area_m2 = as.numeric(st_area(geom))) %>%
-  # remove rows with NA in New_name (do  sum(is.na(wetlands$type)) to check numer there are 215)
-  mutate(EC22ALL = ifelse(EC22ALL == "0", NA, EC22ALL), 
-         EC18ALL = ifelse(EC18ALL == "0"| EC18ALL =="fix" | EC18ALL =="#DIV/0!", NA, EC18ALL)) %>%
-  filter(if_all(c(type, EC22ALL, EC18ALL, EC22HYD), ~ !is.na(.x))) 
+  # fix error in EC18VEG
+  mutate(EC18VEG = ifelse(EC18VEG == "AA", "A", EC18VEG)) %>%
+  # fix NA in type by combing bior and hgm1
+  mutate(type = ifelse(type == "" | is.na(type), str_c(bioregion, hgm1, sep = "_") , type)) %>%
+  # limit max PES to 100 and min to 0 (to ensure later use of values works) 
+  mutate(across(starts_with("PES"), ~ round(pmin(pmax(., 0), 100)))) %>%
+# drop M and Z coordinates for later computations like extract and hulls
+  st_zm(drop = TRUE, what = "ZM")
  
-
 # remove geometry for quicker summaries
 wet_tb <- st_drop_geometry(wet)
   
 # make a simple table of TYPE and HGM to join with results later 
-  type_hgm_tb <- wet_tb %>% select(type, hgm) %>% distinct(type, .keep_all = TRUE)
+  type_hgm_tb <- wet_tb %>% select(type, hgm1) %>% distinct(type, .keep_all = TRUE) %>% rename(hgm = hgm1)
 
 #   # check cols
-#  sort(unique(wet$bioregion)) 
-#  
-# # write new spatial output for Nancy using terra as sf outputs a gpkg that cant be read by ARCGIS due to WKT # 
-# # BUT NOTE YOU CANT DO THIS IN CUSTOM CRS SO USED UNPROJECTED WGS84 
-# wet_v <- wetlands %>%
-#       left_join(st_drop_geometry(wet_tb), by = "fid") %>%
-#       relocate(pes24, .after = pes18) %>%
-#       mutate(area_m2 = as.numeric(area_m2))
-# 
-# wet_v_dd <- st_transform(wet_v, 4326)
-# st_write(wet_v_dd, "C:/Users/skownoa/Dropbox/NBAwork/Wetlands/wetlands_20250731.gpkg", delete_dsn = TRUE) 
-
-
+# sort(unique(wet_tb$type)) 
+# check <- wet_tb %>%
+#   group_by(type) %>%
+#   summarise(tot_ha = sum(area_m2/10000) )
 ```
 
 **Calculate EOO using convex hulls in sf**
@@ -199,7 +203,7 @@ type_lc_metrics <- type_ras_ext %>%
 
 ```{r}
 #load land cover results (which includes eoo) to avoid rerunning slow terra commands
-type_lc_metrics <- read.csv("outputs/type_lc_metrics.csv") 
+#type_lc_metrics <- read.csv("outputs/type_lc_metrics.csv") 
 
 
 ```
@@ -207,7 +211,6 @@ type_lc_metrics <- read.csv("outputs/type_lc_metrics.csv")
 **RLE and ETS assessment of wetland ecosystem types - based on overall PES and Condition Scores**
 
 ```{r}
-
 #summarise by wetland type including  area per type per condition class - this allows for inclusion of condition in the RLE formula
 
 #overall summary
