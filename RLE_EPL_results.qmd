@@ -10,8 +10,9 @@ library(tidyverse)
 
 ```{r}
 # Load the RLE and EPL results for Estuaries and then combine them and join to estuaries patial data
-RLE <- read.csv("C:/Rdata/RLE_wet/outputs/rle_wet_metrics_per_type.csv")
-EPL <- read.csv("C:/Rdata/EPL_wet/outputs/epl_wet_metrics_per_type.csv")
+RLE <- read.csv("outputs/rle_wet_metrics_per_type.csv")
+EPL <- read.csv("https://raw.githubusercontent.com/askowno/EPL_wet/main/outputs/epl_wet_metrics_per_type.csv")
+
 
 # select only cols required and then join
 RLE <- RLE %>%
@@ -117,14 +118,14 @@ wet_results_vector <- wet %>%
 
 st_write(
   wet_results_vector,
-  "C:/Users/skownoa/Dropbox/NBAwork/Wetlands/wet_results_vector.gpkg", layer = "wetland_results_20250823",
+  "C:/Users/skownoa/Dropbox/NBAwork/Wetlands/wet_results_vector.gpkg", layer = "wetland_results_20250311",
   delete_dsn = TRUE
 )
 
 # make one I can open in ARCGIS - must move to unprojected (WKT conflict r to ARC)
 st_write(
   st_transform(wet_results_vector, crs = 4326),
-  "C:/Users/skownoa/Dropbox/NBAwork/Wetlands/wet_results_vector_dd.gpkg", layer = "wetland_results_20250823",
+  "C:/Users/skownoa/Dropbox/NBAwork/Wetlands/wet_results_vector_dd.gpkg", layer = "wetland_results_20260311",
   delete_dsn = TRUE
 )
 ```

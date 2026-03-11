@@ -15,8 +15,8 @@ library(terra)
 library(PROJ)
 library(purrr)
 
-# Read PAs (projected layer) not required butmakes correcting proj easy
-pa <- st_read("C:/Users/skownoa/Dropbox/NBAwork/NLC_change/NLC_Change.gdb",
+# Read PAs (projected layer) not required but makes correcting projection easy
+ pa <- st_read("C:/Users/skownoa/Dropbox/NBAwork/NLC_change/NLC_Change.gdb",
               layer = "SANBI_PA_2024Q4_Mar2025")
 
 # Read Wetlands (unprojected layer)
@@ -56,6 +56,8 @@ wet <- wetlands %>%
  
 # remove geometry for quicker summaries
 wet_tb <- st_drop_geometry(wet)
+
+#write.csv(wet_tb, "outputs/wet_tb__nba25_inputdata.csv")
   
 # make a simple table of TYPE and HGM to join with results later 
   type_hgm_tb <- wet_tb %>% select(type, hgm1) %>% distinct(type, .keep_all = TRUE) %>% rename(hgm = hgm1)
@@ -98,8 +100,9 @@ write.csv(eoo_df, "outputs/EOO_all.csv")
 **Criterion A2b A3 and B1ai (using rod) calculation**
 
 ```{r}
+## STOP - dont run this unless you what all the spatial intersections between wetlands and land cover recomputed . Skip to line 140 and import the metrics required to proceed. 
 
-# cross tab estuaries with land cover 1990, 2014, 2018 and 2022 and calculate extent lost and rate of loss
+# cross tab wetlands with land cover 1990, 2014, 2018 and 2022 and calculate extent lost and rate of loss
 
 #Add data 
 lc1990 <- rast("C:/Users/skownoa/Dropbox/NBAwork/NLC_change/nlc1990_7class.tif") 
@@ -134,6 +137,8 @@ lc7_rall <- lc7_list %>%  bind_rows() %>%
 # save to avoid rerunning extracts
 write_csv(lc7_rall, file = "outputs/lc7_rall.csv")
 
+
+########################START HERE to avoid rerunning spatial step
 lc7_rall <- read_csv("outputs/lc7_rall.csv") 
 
 type_ras_ext <- lc7_rall %>%   
@@ -246,10 +251,10 @@ pes18_stats <- wet_type_18 %>%
 
 **Prepare for focused assessments of each element of decline**
 
-Using PESALL PESVEG PESWQ PESGEO PESHYD separately in a D3 assessment (this prevents the overall Wet Health score dominating the RLE) and allows us to see the symptom of decline more clearly
+Using PESALL PESVEG PESWQ PESGEO PESHYD separately in a D2 assessment (this prevents the overall Wet Health score dominating the RLE) and allows us to see the symptom of decline more clearly
 
 ```{r}
-# Calculate D2 based on rate of decline in PES score over period 2018-2024 projected forward to 2068, then assess % of decline over 50years - This would be much worse is we had real PES trends 
+# Calculate D2 based on rate of decline in PES score over period 2018-2024 projected forward to 2068, then assess % of decline over 50years - This would be much worse if we had real PES trends 
 D2fin <- wet_tb %>%
     group_by(type) %>%
     summarise(across(
@@ -274,7 +279,7 @@ D2fin <- wet_tb %>%
      select(type, call24, call18, cveg24, cveg18, cwq24,cwq18, cgeo24, cgeo18, chyd24, chyd18 ) %>%
   # Calculate for D2 -  rate of decline in PES scores over a 50 year period 2018 to 2068    
  mutate(call68 = pmin(pmax(call18 + ((call24 - call18) / (2022 - 2018) * 46), 0), 1)) %>%
-  mutate(cond_decline = pmin(pmax((call68 - call18) / call18, 0), 1)) %>% 
+  mutate(cond_decline = pmin(pmax((call18 - call68) / call18, 0), 1)) %>% 
   relocate(call68, .before = call24) %>%
 #D2 decline in PES  over 50 year period 
     mutate(D2_24 = case_when(    cond_decline >= 0.8 ~ "CR", 
@@ -672,7 +677,7 @@ ggsave(
     width = 9, height = 7, units = "cm",   # Dimensions
      dpi = 300 )                              # Resolution
 
-## Make plots of extent per slope zone RLE approach  #########################################################
+## Make plots of extent per hgm zone RLE approach  #########################################################
 
 # 2024  plots of extent of RLE  
 pd_rle24_ext <- rle24_ext %>%
