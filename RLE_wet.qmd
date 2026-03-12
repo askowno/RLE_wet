@@ -93,7 +93,7 @@ eoo_df <- data.frame(
   select(!AREA_EOO)
 
 write.csv(eoo_df, "outputs/EOO_all.csv")
-#eoo_df <- read.csv("C:/Rdata/RLE_wet/outputs/EOO_all.csv")
+# eoo_df <- read.csv("outputs/EOO_all.csv")
 
 ```
 

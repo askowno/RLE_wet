@@ -118,14 +118,14 @@ wet_results_vector <- wet %>%
 
 st_write(
   wet_results_vector,
-  "C:/Users/skownoa/Dropbox/NBAwork/Wetlands/wet_results_vector.gpkg", layer = "wetland_results_20250311",
+  "C:/Users/skownoa/Dropbox/NBAwork/Wetlands/wet_results_vector.gpkg", layer = "wetland_results_20250823",
   delete_dsn = TRUE
 )
 
 # make one I can open in ARCGIS - must move to unprojected (WKT conflict r to ARC)
 st_write(
   st_transform(wet_results_vector, crs = 4326),
-  "C:/Users/skownoa/Dropbox/NBAwork/Wetlands/wet_results_vector_dd.gpkg", layer = "wetland_results_20260311",
+  "C:/Users/skownoa/Dropbox/NBAwork/Wetlands/wet_results_vector_dd.gpkg", layer = "wetland_results_20250823",
   delete_dsn = TRUE
 )
 ```
