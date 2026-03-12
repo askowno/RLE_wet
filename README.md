@@ -44,7 +44,7 @@ For consistency with past assessments the South African Ecosystem Threat Status 
 
 #### **Results:**
 
-Note: An error in the RLE_wet.qmd (line 279) was uncovered in March 2026, this line incorrectly calculated the decline in condition (PES), this repo contains the corrected outputs
+Note: An error in the RLE_wet.qmd (line 279) was uncovered in March 2026, this line incorrectly calculated the decline in condition (PES) used in criterion D2. The code for Criterion D3 was also adjusted to set PES condition of DEF as 90% biotic disruption (previously PES condition EF was considered 90% disruption). This repo contains the corrected outputs. Original outputs can be found at version 1.0.0 tag.
 
 The assessment results per inland wetland ecosystem type for both the IUCN RLE and South African ETS are presented here [rle_wet_metrics_per_type.csv](outputs/rle_wet_metrics_per_type.csv)
 
@@ -53,7 +53,7 @@ Summary table - count of wetland ecosystem types per HGM zone per IUCN RLE categ
 Summary table - count of wetland ecosystem types per HGM zone per South African ETS category [rle24sa_wet_count.csv](outputs/rle24sa_wet_count.csv)
 
 | RLE 2024 - count of types | RLE 2024 - extent of types |
-|----|----|
+|------------------------------------|------------------------------------|
 | ![](outputs/rle24_wet_barplot_count.jpeg) | ![](outputs/rle24_wet_barplot_ext.jpeg) |
 | South African ETS 2024 (count) | South African ETS 2024 (extent) |
 | ![](outputs/rle24sa_wet_barplot_count.jpeg) | ![](outputs/rle24sa_wet_barplot_ext.jpeg) |
@@ -63,7 +63,7 @@ Summary table - count of wetland ecosystem types per HGM zone per South African 
 Reflecting changes in RLE between 2018 and 2024 - This shows PES scores increased between 2018 and 2024
 
 | RLIe based on IUCN RLE framework | RLIe based on South African ETS framework |
-|----|----|
+|------------------------------------|------------------------------------|
 | ![](outputs/rlie_plot.jpeg) | ![](outputs/rliesa_plot.jpeg) |
 
 **Combined RLE and EPL results**

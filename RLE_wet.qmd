@@ -93,7 +93,7 @@ eoo_df <- data.frame(
   select(!AREA_EOO)
 
 write.csv(eoo_df, "outputs/EOO_all.csv")
-# eoo_df <- read.csv("outputs/EOO_all.csv")
+ eoo_df <- read.csv("outputs/EOO_all.csv")
 
 ```
 
@@ -294,9 +294,10 @@ D2fin <- wet_tb %>%
 Alternative methods (full methods) for D3
 
 ```{r}
-# Calculate D3 for each element of PES individually and overall 
+# Calculate D3 for each element of PES individually and overall
+# In the launch version of this analysis (v1.0.0)  90% disruption of biotic process was now assumed for PES condition E and F. In this revised  version v1.2.0 PES D, E and F are considered 90% biotic disruption.  
 
-# Make a fuction to calculate D3 using extent in CDEF, DEF, and EF condition
+# Make a function to calculate D3 using extent in CDEF, DEF, and EF condition
 D3calc <- function(data, ec_col, out_col) {
   data %>%
     group_by(type, .data[[ec_col]]) %>%
@@ -312,10 +313,9 @@ D3calc <- function(data, ec_col, out_col) {
            prp24_def   = (D + E + F) / type24_m2,
            prp24_ef    = (E + F) / type24_m2,
            "{out_col}" := case_when(
-             prp24_ef  >= 0.9                        ~ "CR",
-             prp24_ef  >= 0.7 | prp24_def >= 0.9     ~ "EN",
-             prp24_ef  >= 0.5 | prp24_def >= 0.7 |
-               prp24_cdef >= 0.9                     ~ "VU",
+             prp24_def  >= 0.9                        ~ "CR",
+             prp24_def  >= 0.7 | prp24_cdef >= 0.9     ~ "EN",
+             prp24_def  >= 0.5 | prp24_cdef >= 0.7     ~ "VU",
              TRUE                                    ~ "LC"
            )) %>%
     select(type, all_of(out_col))
@@ -340,7 +340,7 @@ D3fin <- list(
  # make all assessments factors to get MAX 
   mutate(across( c(D3_18, D3veg_18, D3wq_18, D3geo_18, D3hyd_18, D3_24, D3veg_24, D3wq_24, D3geo_24, D3hyd_24), 
                    ~ factor(., levels = c("LC", "VU", "EN", "CR"), ordered = TRUE)  ))  %>%
- # Ensure highest risk category is assiged 
+ # Ensure highest risk category is assigned 
    rowwise() %>%
      mutate(D3fin_18 = max(c_across(c(D3_18, D3veg_18, D3wq_18, D3geo_18, D3hyd_18)), na.rm = TRUE), 
             D3fin_24 = max(c_across(c(D3_24, D3veg_24, D3wq_24, D3geo_24, D3hyd_24)), na.rm = TRUE))
